@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir build
 cd tex
 
 for file in *
