@@ -1,12 +1,43 @@
 #!/bin/bash
 
-printf "------------PDFLATEX------------\n"
-pdflatex -synctex=1 -interaction=nonstopmode -output-directory=./build ./tex/*.tex
-printf "\n------------BIBTEX--------------\n"
 cd tex
-bibtex ../build/praca_magisterska.aux
+
+for file in *
+do
+  if [[ $file == *".tex"* ]] && [[ $file == *"_content.tex"* ]] && [[ $file != *"praca_magisterska"* ]]
+  then
+    printf "\n------------PDFLATEX $file------------\n"
+    pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build $file
+  fi
+done
+
+printf "\n-----------PDFLATEX Praca magisterska-------------\n"
+pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build praca_magisterska.tex
+
+cd ../build
+
+cp ../tex/praca_magisterska.bib .
+printf "\n------------BIBTEX--------------\n"
+bibtex praca_magisterska.aux
+rm  praca_magisterska.bib
+
+cd ../tex
+
+printf "\n-----------PDFLATEX Praca magisterska-------------\n"
+pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build praca_magisterska.tex
+
 cd ..
-printf "\n-----------PDFLATEX-------------\n"
-pdflatex -synctex=1 -interaction=nonstopmode -output-directory=./build ./tex/*.tex
-mv ./build/*.pdf ./pdf
+cd build
+
+for file in *
+do
+  if [[ $file == *".pdf"* ]]
+  then
+    echo "Created $file"
+    mv $file ../pdf
+  fi
+done
+
+cd ..
+
 evince ./pdf/praca_magisterska.pdf &
