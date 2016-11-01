@@ -1,6 +1,24 @@
-\section{Metoda "Brut Force"}
-\subsection{Metoda wyjściowa}
+\section{Metoda "Brutal Force"}
+\subsection{Algorytm wyjściowy}
 \subsubsection{Opis}
+Metoda ta opiera się zarówno na intuicji jak i na rozwiązaniu zaproponowanym przez Dantziga dla problemu plecakowego \cite{DantzigArticle}. Jest to metoda która w prosty sposób - nie używając złożonych modeli matematycznych, pozwala osiągnąć optymalny rozkrój materiału.
+
+Pierwszym krokiem jest posortowanie malejąco po długości elementów wyściowych. $l_1 \ge l_2 \ge ... \ge l_m$
+
+Drugim krokiem jest pobranie pierwszego elementu z kolejki i sprawdzenie, jak wiele razy dana długość zawiera się w długości elementu bazowego. Obliczone zostaje ile materiału pozostało w elemencie bazowym. Pobierany jest następny odcinek z kolejki. Zostaje sprawdzone ile razy zawiera się w pozostałej długości.
+\begin{equation}\label{base_dantizg}
+a_1 = [L/l_1], a_2 = [(L-l_1*a_1)/l_2], a_3 = [(L-(l_1*a_1+l_2*a_2))/l_3], ...
+\end{equation}
+Kroki te powtarzane są dopóki kolejka się nie skończy.
+
+Każdy element wyjściowy posiada określoną liczebność jaką powinien osiągnąć na końcu procesu. Jeśli licznik jest równy zeru wówczas długość jest pomijana. Koniecznie jest sprawdzenie czy otrzymany wynik jest mniejszy lub równy od wymaganej ilości:
+\begin{itemize}
+  \item Jeśli stwierdzenie jest prawdziwe - długość z której elementy są wycinane zostanie zmniejszona o liczbę wystąpień wykrojów w aktywności (zestawie elementów wykroju) pomnożoną przez długość elementu, a licznik wymaganych odcinków danej długości zostanie zmniejszony o odpowiednią liczbę wystąpień
+  \item Jeśli stwierdzenie jest fałszywe - długość z której elementy są wycinane zostanie zmniejszona o liczbę dostępnych wykrojów pomnożoną przez długość elementu, a licznik wymaganych odcinków danej długości zostanie ustawiony na zero.
+\end{itemize}
+Po zakończeniu przebiegu algorytmu dla danego układu wykrojów określa się ile razy dana aktywność może zostać użyta. Można to wyznaczyć poprzez obliczenie $g = min\{z_i/a_i\}, i \in {0,..,m}$, gdzie $z$ to pozostała ilość wykrojów elementu $i$, $a$ to ilość wykrojów elementu $i$ w danej aktywności. Następnie zmniejsza się o $g$ licznik dostępnych odcinków danego elementu dla którego $a_i > 0$.
+
+Cały proces powtarzany jest do momentu aż wszytskie wymagane elementy zostaną wycięte.
 \subsubsection{Przykład}
 \subsection{Rozszerzenie o szerokość cięcia}
 \subsection{Rozszerzenie o wiele długości bazowych}

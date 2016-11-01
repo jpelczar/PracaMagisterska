@@ -5,7 +5,7 @@ cd tex
 
 for file in *
 do
-  if [[ $file == *".tex"* ]] && [[ $file == *"_content.tex"* ]] && [[ $file != *"praca_magisterska"* ]]
+  if [[ $file == *".tex"* ]] && [[ $file != *"_content"* ]] && [[ $file != *"praca_magisterska"* ]]
   then
     printf "\n------------PDFLATEX $file------------\n"
     pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build $file
@@ -23,6 +23,9 @@ bibtex praca_magisterska.aux
 rm  praca_magisterska.bib
 
 cd ../tex
+
+printf "\n-----------PDFLATEX Praca magisterska-------------\n"
+pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build praca_magisterska.tex
 
 printf "\n-----------PDFLATEX Praca magisterska-------------\n"
 pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build praca_magisterska.tex
