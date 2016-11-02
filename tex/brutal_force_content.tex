@@ -18,13 +18,18 @@ Każdy element wyjściowy posiada określoną liczebność jaką powinien osi�
 Po zakończeniu przebiegu algorytmu dla danego układu wykrojów określa się ile razy dana aktywność może zostać użyta. Można to wyznaczyć poprzez obliczenie $g = min\{z_i/a_i\}, i \in {0,..,m}$, gdzie $z$ to pozostała ilość wykrojów elementu $i$, $a$ to ilość wykrojów elementu $i$ w danej aktywności. Następnie zmniejsza się o $g$ licznik dostępnych odcinków danego elementu dla którego $a_i > 0$.
 
 Cały proces powtarzany jest do momentu aż wszytskie wymagane elementy zostaną wycięte.
+
 \subsection{Rozszerzenie o szerokość cięcia}
 W warunkach rzeczywistych elementy wycinane są za pomocą ostrza które ma niezerową szerokość. Wówczas metodę obliczania należy rozszerzyć jeśli ma odpowiadać warunkom rzeczywistym. Szerokość cięcia wlicza się w odpad. Jest kilka przypadków wliczania szerokości ostrza.
 
 Jeżeli element jest równy długości bazowej wówczas nie wlicza się szerokości cięcia. Natomiast jeżeli materiał bazowy ma zostać pocięty na kilka elmentów wówczas do każdego dolicza się szerokość cięcia. Szczególnym przypadkiem jest, gdy ostatni element wraz z szerokością ostrza jest dłuższy niż długość odcinka, który został po wycięciu wcześniejszych elementów.
 
-Gdyby szerokość cięcia nie zostałą uwzględniona w obliczeniach wówczas dla elementu wejściowego o długości 6000mm i wymaganych odcinkach 4500mm oraz 1500mm, obie długości zostały wycięte z materiału bazowego. Skutkiem takiego postępowania byłby element krótszy o szerokość ostrza. Zazwyczaj dłuŋość ta może być akceptowana jako toleracncja dokładności maszyny. Jednak dla poprawności obliczeń wielkość ta powinna zostać uwzględniona.
+Gdyby szerokość cięcia nie zostałą uwzględniona w obliczeniach wówczas dla elementu wejściowego o długości 6000mm i wymaganych odcinkach 4500mm oraz 1500mm, obie długości zostały wycięte z jednego segmentu materiału bazowego. Skutkiem takiego postępowania byłby element krótszy o szerokość ostrza. Zazwyczaj dłuŋość ta może być akceptowana jako toleracncja dokładności maszyny. Jednak dla poprawności obliczeń wielkość ta powinna zostać uwzględniona.
 
 \subsection{Rozszerzenie o wiele długości bazowych}
+Dla zmniejszenia odpadu można użyć kilku długości bazowych. Rozszerzenie to wprowadza następująca zmianę algorytmu: obliczenia układu muszą zostać powtórzone dla każdego elementu wejściowego. Następnie wybierany jest ten rozkrój, który daje mniejszy odpad. Modyfikacja ta znacząco wpływa na wydajność metody. Jeżeli $n$ oznacza złożoność obliczeniową podstawowego algorytmu, a $m$ oznacza liczbę odcinków wejściowych, wówczas nowa złożonośc obliczeniowa wynosi $m*n$.
+
 \subsection{Rozszerzenie o cenę materiału wsadowego}
+Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada cenę za metr bieżący materiału, umożliwia to obliczenie kosztu odpadu i wybranie tańszej opcji wykroju.
+
 \subsection{Przykład}
