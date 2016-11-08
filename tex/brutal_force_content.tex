@@ -2,20 +2,28 @@
 \subsection{Algorytm wyjściowy}
 Metoda ta opiera się zarówno na intuicji jak i na rozwiązaniu zaproponowanym przez Dantziga dla problemu plecakowego \cite{DantzigArticle}. Jest to metoda która w prosty sposób - nie używając złożonych modeli matematycznych, pozwala osiągnąć optymalny rozkrój materiału.
 
-Pierwszym krokiem jest posortowanie malejąco po długości elementów wyściowych $l_1 \ge l_2 \ge ... \ge l_m$.
+Pierwszym krokiem jest posortowanie elementów wyściowych malejąco wzgęldem ich długości $l_1 \ge l_2 \ge ... \ge l_m$ i umieszczenie w ten sposób w kolejce.
 
-Drugim krokiem jest pobranie pierwszego elementu z kolejki i sprawdzenie, jak wiele razy dana długość zawiera się w długości elementu bazowego. Obliczone zostaje ile materiału pozostało w elemencie bazowym. Pobierany jest następny odcinek z kolejki. Zostaje sprawdzone ile razy zawiera się w pozostałej długości.
+Drugim krokiem jest pobranie pierwszego elementu z kolejki i sprawdzenie, jak wiele razy jego długość zawiera się w długości elementu bazowego. Obliczone zostaje ile materiału pozostało w elemencie bazowym po docięciu najdłuższych elementów. Następnie pobierany jest kolejny odcinek z kolejki. Następuje sprawdzenie ile razy zawiera się on w pozostałej długości.
 \begin{equation}\label{base_dantizg}
-a_1 = [L/l_1], a_2 = [(L-l_1*a_1)/l_2], a_3 = [(L-(l_1*a_1+l_2*a_2))/l_3], ...
+\begin{split}
+& a_1 = [L/l_1],\\
+& a_2 = [(L-l_1 a_1)/l_2],\\
+& a_3 = [(L-(l_1 a_1+l_2 a_2))/l_3], ...
+\end{split}
 \end{equation}
 Kroki te powtarzane są dopóki kolejka się nie skończy.
 
-Każdy element wyjściowy posiada określoną liczebność jaką powinien osiągnąć na końcu procesu. Jeśli licznik jest równy zeru wówczas długość jest pomijana. Koniecznie jest sprawdzenie czy otrzymany wynik jest mniejszy lub równy od wymaganej ilości:
+Każdy element wyjściowy posiada określoną liczebność jaką powinien osiągnąć pod koniec procesu cięcia. Jeśli na danym etapie procesu cięcia wymagana liczba elementów danego typu spada do zera, wówczas jest on pomijany w dalszej pracy algorytmu. Koniecznie jest sprawdzenie czy liczba uzyskanych elementów danego typu jest mniejsza lub równa od wymaganej:
 \begin{itemize}
-  \item Jeśli stwierdzenie jest prawdziwe - długość z której elementy są wycinane zostanie zmniejszona o liczbę wystąpień wykrojów w aktywności (zestawie elementów wykroju) pomnożoną przez długość elementu, a licznik wymaganych odcinków danej długości zostanie zmniejszony o odpowiednią liczbę wystąpień
-  \item Jeśli stwierdzenie jest fałszywe - długość z której elementy są wycinane zostanie zmniejszona o liczbę dostępnych wykrojów pomnożoną przez długość elementu, a licznik wymaganych odcinków danej długości zostanie ustawiony na zero.
+  \item Jeśli stwierdzenie jest prawdziwe - długość z której elementy są wycinane zostanie zmniejszona o liczbę wystąpień elementu pomnożoną przez jego długość, a licznik wymaganych odcinków danej długości zostanie zmniejszony o odpowiednią liczbę wystąpień
+  \item Jeśli stwierdzenie jest fałszywe - długość z której elementy są wycinane zostanie zmniejszona o liczbę pozostałych wykrojów pomnożoną przez długość elementu, a licznik wymaganych odcinków danej długości zostanie ustawiony na zero.
 \end{itemize}
-Po zakończeniu przebiegu algorytmu dla danego układu wykrojów określa się ile razy dana aktywność może zostać użyta. Można to wyznaczyć poprzez obliczenie $g = floor\{min\{z_i/a_i\}\}, i \in {0,..,m}, f \in Z$, gdzie $z$ to pozostała ilość wykrojów elementu $i$, $a$ to ilość wykrojów elementu $i$ w danej aktywności. Następnie zmniejsza się o $g$ licznik dostępnych odcinków danego elementu dla którego $a_i > 0$.
+Po zakończeniu przebiegu algorytmu dla jednego układu rozkroju, można określić ile razy będzie on użyty. Zostaje to wyznaczone poprzez obliczenie
+\begin{equation}
+g = floor\{min\{z_i/a_i\}\}, i \in [0..m], g \in Z
+\end{equation}
+gdzie $g$ to liczba ile razy dany schemat może zostać użyty, $z$ to liczbność wyjściowego elementu $i$ która pozostała do wycięcia, $a$ to ilość wykrojów elementu $i$ w bierzącym układzie, $m$ to liczba długości umieszczonych w rozkroju. Następnie licznik wymaganych odcinków elemntu $i$ zostaje zmniejszony o $g a_i$.
 
 Cały proces powtarzany jest do momentu aż wszytskie wymagane elementy zostaną wycięte.
 
@@ -31,6 +39,8 @@ Dla zmniejszenia odpadu można użyć kilku długości bazowych. Rozszerzenie t
 
 \subsection{Rozszerzenie o cenę materiału wsadowego}
 Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada cenę za metr bieżący materiału, umożliwia to obliczenie kosztu odpadu i wybranie tańszej opcji wykroju.
+
+\clearpage
 
 \subsection{Przykład}
 \begin{enumerate}
@@ -64,7 +74,7 @@ Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada c
       \item Rozkrój 7000mm: 3500mm, 3000mm. Odpad $7000 - 6500 = 500 * 0.002 = 1.0\$$
       \item ------------
       \item Wybrano rozkrój 3500mm, 2000mm na długości 7000mm ze względu na mniejszy koszt odpadu.
-      \item 0x3500mm; 0x3000mm; 3x2000mm; 5x500mm
+      \item Do realizacji posostało: 0x3500mm; 0x3000mm; 3x2000mm; 5x500mm
     \end{itemize}
     \item Drugi rozkrój
     \begin{itemize}
@@ -77,7 +87,7 @@ Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada c
       \item Rozkój 7000mm: 3x2000mm, 500mm. Odpad $7000 - 6500 = 500 * 0.002 = 1.0\$$
       \item ------------
       \item Wybrano rozkrój 3x2000mm, 500mm na długości 7000mm ze względu na mniejszy koszt odpadu
-      \item 0x3500mm, 0x3000mm, 0x2000mm, 4x500mm
+      \item Do realizacji posostało: 0x3500mm, 0x3000mm, 0x2000mm, 4x500mm
     \end{itemize}
     \item Trzeci rozkrój
     \begin{itemize}
@@ -88,7 +98,7 @@ Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada c
       \item Rozkrój 7000mm: 4x500mm. Odpad $7000 - 4*500 = 5000 * 0.002 = 10\$$
       \item ------------
       \item Wybrano rozkrój 4x500 na długości 7000mm ze względu na mniejszy koszt odpadu
-      \item 0x3500mm, 0x3000mm, 0x2000mm, 0x500mm
+      \item Do realizacji posostało: 0x3500mm, 0x3000mm, 0x2000mm, 0x500mm
     \end{itemize}
     \item Podsumowanie
     \begin{itemize}
@@ -97,6 +107,8 @@ Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada c
     \end{itemize}
   \end{itemize}
 \end{enumerate}
+
+\clearpage
 
 \subsection{Podsumowanie}
 Przedstawiony algorytm jest intuicyjny oraz zwraca poprawne wyniki. Główną wadą jest brak świadomości o następnym kroku oraz kolejnych wykrojach. Dla przykładu: Zosatło 1000mm materiału, do dyspozycji (z długości mniejszych niż 1000mm) jest odcinek 900mm oraz dwa elementy 480mm. Algorytm przydzieli odcinek 900mm, jednak lepszym wyborem byłoby użycie dwóch odcinków 480mm.
