@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir build
+mkdir -p build
 cd tex
 
 for file in *
@@ -44,4 +44,4 @@ done
 
 cd ..
 
-evince ./pdf/praca_magisterska.pdf &
+okular ./pdf/praca_magisterska.pdf &
