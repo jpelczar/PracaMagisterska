@@ -4,17 +4,60 @@ Problem plecakowy jest zagadnieniem optymailzacyjnym. Problem ten swoją nazwę 
 Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób że zysk zostanie zmaksymalizowany, a pojemość placaka lub plecaków nie zostanie przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że raczej nispotykane jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależna od rozmieszczenia elementów oraz plecaków:
 \begin{itemize}
   \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma profitów $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$. Może być sformułowany jako problem maksymalizacji:
-  \begin{equation}
-    \begin{aligned}\label{01knapsack}
+  \begin{equation}\label{01Knapsack}
+    \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
       &&& x_j \in \{0,1\},\quad j = 1,\dots,n \\
     \end{aligned}
   \end{equation}
-  \item \textit{Ograniczony problem plecakowy} - każdy element może być wybrany ograniczoną ilość razy.
-  \item \textit{Problem plecakowy wielokrotnego wyboru} - elementy powinny być wybierane z klas rozłącznych.
-  \item \textit{Wielokrotny problem plecakowy} - wiele plecaków jest wypełnianych równocześnie.
-  \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ który jest problemem programowania całkowitego z dodatnimi współczynnikami.
+  gdzie $x_j$ jest wartością binarną. Jeżeli $x_j = 1$ wtedy $j$-ty element powinien znaleźć się w plecaku, w innym przypadku $x_j = 0$.
+  \item \textit{Ograniczony problem plecakowy} - każdy element może być wybrany ograniczoną ilość razy. Zmianą w obecnym problemie względem problemu 0-1 jest ograniczona $m_j$ ilość elementów $j$:
+  \begin{equation}\label{boundedKnapsack}
+    \begin{aligned}
+      & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
+      &&& x_j \in \{0,1\dots,m_j\},\quad j = 1,\dots,n \\
+    \end{aligned}
+  \end{equation}
+  \item \textit{Nieograniczony problem plecakowy} - jest rozszerzeniem problemu ograniczonego o nielimitowaną liczbę dostępnych elementów:
+  \begin{equation}\label{unboundedKnapsack}
+    \begin{aligned}
+      & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
+      &&& x_j \in \mathbb{N}_0,\quad j = 1,\dots,n \\
+    \end{aligned}
+  \end{equation}
+  Każda zmienna $x_j$ w metodzie niograniczonej zostanie ograniczona poprzez pojemność $c$, gdy waga każdego z elementów jest równa przynajmniej jeden. W ogólnym przypadku transformacja problemu nieograniczonego w ograniczony nie przynosi korzyści
+  \item \textit{Problem plecakowy wielokrotnego wyboru} - elementy powinny być wybierane z klas rozłącznych. Problem ten jest generalizacją problemu 0-1. Możliwy jest wybór dokładnie jednego elementu $j$ z każdej grupy $N_i$, $i=1,\dots,k$:
+  \begin{equation}\label{multichoiceKnapsack}
+    \begin{aligned}
+      & \textrm{maksymalizacja} & & \sum_{i=1}^k \sum_{j \in N_i} p_{ij}x_{ij}, \\
+      & \textrm{w odniesieniu do} & & \sum_{i=1}^k \sum_{j \in N_i} w_{ij}x_{ij} \le c, \\
+      &&& \sum_{j \in N_i} x_{ij} = 1, \quad i =1,\dots,k, \\
+      &&& x_j \in\{0,1\},\quad i = 1,\dots,k, \quad j \in N_i. \\
+    \end{aligned}
+  \end{equation}
+  Zmienna binarna $x_{ij} = 1$ określa że $j$-ty element został wybrany z $i$-tej grupy. Ograniczenie $\sum_{j \in N_i} x_{ij} = 1, \quad i =1,\dots,k$ wymusza wybór dokładnie jednego elementu z każdej grupy.
+  \item \textit{Wielokrotny problem plecakowy} - mozliwość wypełnienia wielu pleckaków. Jeśli jest możliwość załadowania $n$ elmentów do $m$ pleckaów o róznych pojemnościahc $c_i$ w taki sposób że zysk będzie jak największy:
+  \begin{equation}\label{multiKnapsack}
+    \begin{aligned}
+      & \textrm{maksymalizacja} & & \sum_{i=1}^k \sum_{j \in N_i} p_{ij}x_{ij}, \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n  w_{ij}x_{ij} \le c_i, \quad i =1,\dots,m \\
+      &&& \sum_{j \in N_i} x_{ij} \le 1, \quad i =1,\dots,k, \\
+      &&& x_j \in\{0,1\},\quad i = 1,\dots,m, \quad j =1,\dots,n. \\
+    \end{aligned}
+  \end{equation}
+  Zmienna $x_{ij} = 1$ określa że $j$-ty element powinien zostać umiesczony w $i$-tym plecaku, podczas gdy ogranicznie $\sum_{j=1}^n  w_{ij}x_{ij} \le c_i$ zapewnia że restrykcja dotycząca pojemności plecaka zostanie zachowana. Ogranicznie $\sum_{j \in N_i} x_{ij} \le 1$ zapewnia że każdy element zostanie wybrany tylko raz.
+  \item \textit{Bin-packing problem}
+  \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ który jest problemem programowania całkowitego z dodatnimi współczynnikami:
+  \begin{equation}\label{generalKnapsack}
+    \begin{aligned}
+      & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c_i, \quad i=1,\dots,m, \\
+      &&& x_j \in \mathbb{N}_0,\quad j = 1,\dots,n. \\
+    \end{aligned}
+  \end{equation}
 \end{itemize}
 
 \subsection{Możliwe rozwiązania}
