@@ -1,0 +1,28 @@
+\section{Knapsack Problem - Problem plecakowy}
+Problem plecakowy jest zagadnieniem optymailzacyjnym. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując ten problem zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. Knapsack Problem zaczął być intensywnie badany po pionierskiej pracy Dantziga \cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja róznorodnych problemów programowania całkowitego \cite{PisingerThesis}.
+\subsection{Różnorodność problemu plecakowego}
+Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób że zysk zostanie zmaksymalizowany, a pojemość placaka lub plecaków nie zostanie przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że raczej nispotykane jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależna od rozmieszczenia elementów oraz plecaków:
+\begin{itemize}
+  \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma profitów $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$. Może być sformułowany jako problem maksymalizacji:
+  \begin{equation}
+    \begin{aligned}\label{01knapsack}
+      & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
+      &&& x_j \in \{0,1\},\quad j = 1,\dots,n \\
+    \end{aligned}
+  \end{equation}
+  \item \textit{Ograniczony problem plecakowy} - każdy element może być wybrany ograniczoną ilość razy.
+  \item \textit{Problem plecakowy wielokrotnego wyboru} - elementy powinny być wybierane z klas rozłącznych.
+  \item \textit{Wielokrotny problem plecakowy} - wiele plecaków jest wypełnianych równocześnie.
+  \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ który jest problemem programowania całkowitego z dodatnimi współczynnikami.
+\end{itemize}
+
+\subsection{Możliwe rozwiązania}
+
+Dopóki problem plecakowy należy do problemów $NP-trudnych$ nie jest znane inne dokładne rozwiązanie niż wyliczenie przestrzeni rozwiązań. Użycie poniższych technik może ograniczyć pracochłonność otrzymania rozwiązania:
+\begin{itemize}
+  \item \textit{Metoda podziału i ograniczeń} - pełna enumeracja rozwiązań, ale ograniczenia są użyte do znalezienia węzłów które nie mogą doprowadzić do poprawy rozwiązania. Metoda ta często jest stosowana do problemu plecakowego od momentu gdy Kolesar \cite{KolesarArticle} zaprezentował pierwszy algorytm w 1967 roku.
+  \item \textit{Programownaie dynamiczne} - może być traktowane jako enumeracja wszerz z pewnymi zasadami dominacji. Czasem testy brzegowe są dodawane do algorytmu programowania dynamicznego, wtedy algorytm ten staje się "zaawansowaną" formą metody podziału i ograniczeń.
+  \item \textit{Przestrzeń stanów relaksacji} - jest to relaksacja metody programowania dynamicznego w której współczynniki są skalowane przez ustaloną wartość. Dzięki tej metodzie zmniejsza się czas oraz złożoność algorytmu, ale rozwiązanie traci optymalność. Algorytm ten jest często wykorzystywany jako wydajny algorytm aproksymacji problemu plecakowego.
+  \item \textit{Przetwarzanie wstępne} - pewna liczba zmiennych zostaje ustalona jako wartość optymalana, używając testów brzegowych do wykluczenia pewnych wartości z rozwiązania.
+\end{itemize}

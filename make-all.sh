@@ -44,4 +44,4 @@ done
 
 cd ..
 
-okular ./pdf/praca_magisterska.pdf &
+xreader ./pdf/praca_magisterska.pdf &

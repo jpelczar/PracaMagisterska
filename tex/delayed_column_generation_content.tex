@@ -1,7 +1,10 @@
 \newcommand{\mf}[1]{\textbf{\textit{#1}}}
 \newcommand{\tsub}[1]{\textsubscript{#1}}
 \newcommand{\tsuper}[1]{\textsuperscript{#1}}
-\section{Algorytm "Delayed Column Generation" - Gilmore i Gomory}
+
+\section{Metoda "Delayed Column Generation"}
+
+\subsection{Algorytm}
 
 \begin{equation}\label{length_eq}
 L \ge l_1a_1+\dots+l_ma_m
@@ -53,3 +56,10 @@ Jeśli stosunek nie jest równy zero wtedy $k$-ty element wektora \mf{P}, $y_k$ 
 Degeneracja w razie wystąpienia może być obsłużona w tradycyjny sposób. Pewne środki ostrożności powinny zostać podjęte w celu uniknięcia cykliczności. Nowa kolumna \mf{N}\tsuper{1} z dodatnimi elementami $x_1',\dots,x_{m+1}'$ która jest niezależna pd \mf{N} jest dołączana do \mf{G} i wybór takiego $y_i > 0$ dla którego $x_i = 0$ który jest elementem osiowym jets dokonywany na podstawie takiego $i$ dla którego $x_i' > 0$ oraz $x_i'/y_i$ jest najmniejsze. Gdy element osiowy zostanie wybrany, wówczas eliminacja Gaussa zachodzi tak jak w poprzednim przypadku na powiększonej macierzy \mf{G}. Dodatkowa kolumna jest przechowywane w \mf{G} dopóki istnieje takie $i$ dla którego $x_i/y_i$ jest dodatnie i skończone, jeśłi warunek ten jest spełniony wówczas kolumna zostaje usunięta. Powinno to nastąpić w przypadku gdy nie istnieje takie $i$ dla którego $x_i/y_i$ oraz $x_i'/y_i$ są dodatnie i skończone. Wówczas powinna zostać dodana kolumna \mf{N}\tsuper{2} nizależna od \mf{N} oraz \mf{N}\tsuper{1}. Podobnie dowolna liczba kolumn może zostac dodana i usunięta gdy przestanie byc potrzebna. Dopóki kolumny są niezależne w czasie dodawania i pozostają takie po eliminacji Gaussa, nie potrzeba więcej jak $m$ nowych kolumn. Każda dodana kolumna definiuje nowy problem liniowy który eliminuje problem cykliczności tak długo aż degeneracja nie wystąpi.
 
 \end{enumerate}
+
+\subsection{Metody użyte w implementacji}
+
+\subsubsection{Dwufazowa metoda simplex}
+\subsubsection{Metoda podziału i ograniczeń}
+
+\subsection{Przykład}

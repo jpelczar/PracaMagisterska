@@ -4,6 +4,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {figures/} }
+\numberwithin{equation}{section}
 \hypersetup{
     colorlinks=true,
     linktoc=all,
@@ -21,8 +24,16 @@
 \maketitle
 \tableofcontents
 
+\include{introduction_content}
+\include{knapsack_content}
+\include{cutting_stock_content}
 \include{brutal_force_content}
+\include{delayed_column_generation_content}
+\include{comparison_content}
+\include{implementation_content}
+\include{conclusion_content}
 
+\listoffigures
 \bibliographystyle{abbrv}
 \bibliography{praca_magisterska}
 

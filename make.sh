@@ -10,4 +10,4 @@ cd ..
 
 mkdir -p ./build
 mv ./build/$1.pdf ./pdf
-okular ./pdf/$1.pdf &
+xreader ./pdf/$1.pdf &
