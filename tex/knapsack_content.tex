@@ -1,14 +1,24 @@
 \section{Knapsack Problem - Problem plecakowy}
-Problem plecakowy jest zagadnieniem optymailzacyjnym. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując ten problem zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. Knapsack Problem zaczął być intensywnie badany po pionierskiej pracy Dantziga \cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja róznorodnych problemów programowania całkowitego \cite{PisingerThesis}.
+Problem plecakowy jest zagadnieniem optymailzacyjnym. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując ten problem zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. Knapsack Problem zaczął być intensywnie badany po pionierskiej pracy Dantziga\cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja róznorodnych problemów programowania całkowitego\cite{PisingerThesis}.
+\subsection{Zastosowanie}
+Problem plecakowy stosowany jest nie tylko w sytuacji wynikającej bezpośrednio z nazwy. Znajduje on zastosowanie w wielu dziedzinach życia oraz nauki. Diffi i Helman\cite{DiffieHelmanArticle} w 1976 roku oraz Merkle i Helman\cite{MerkleHelmanArticle} w 1978 roku zaproponowali problem plecakowy jako podstawę do enkrypcji kluczy prywatnych. Jednakże podejście to w latach późniejszych zostało złamane przez środowisko kryptograficzne i jego miejsce zajęły bardziej odporne algorytmy.
+
+"Knapsack problem" jest stosowany również podczas załadunku kontenerów służacych do przewozu materiałów drogą morską. Ładowność oraz gabaryty ładowanych elementów są ograniczane przez budowę i wytrzymałość kontenera.
+
+Problem ten stosowany jest również w dziedzinie finansów. Jest on podstawowym narzędziem do optymalizacji portfela inwestycyjnego. Poprzez uogólnienie i modyfikacje problemu plecakowego zjawiska ekonomiczne mogą być modelowane z większą dokładnością. Przykładowo możliwe jest zakupienie 0, 1, 2 lub więcej akcji inwestycyjnych, a zakup kolejnych akcji może przynieść obniżenie przychodu.
+
+Wiele problemów związanych z planowaniem może być przyrównana do problemu plecakowego gdzie czas wykonywania operacji na maszynie jest zasobem deficytowym. Jest on szczególnie uwydatniony gdy od aktywności maszyny zależy kapitał przedsiębiorstwa. Poprzez rozwiązanie problemu plecakowego możliwe jest przewidzenie zapotrzebowania na materiały podaczas procesu tak aby warunki zamówinia zostały spełnione\cite{BartholdiChapter}.
+
+Kolejnym zagadnieniem wynikającym z problemu plecakowego jest problem optymalnego rozkroju, zostanie on przedstawiony w rozdziale \ref{sec:cuttingStockProblem}.
 \subsection{Różnorodność problemu plecakowego}
-Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób że zysk zostanie zmaksymalizowany, a pojemość placaka lub plecaków nie zostanie przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że raczej nispotykane jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależna od rozmieszczenia elementów oraz plecaków:
+Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób że zysk zostanie zmaksymalizowany, a pojemość placaka lub plecaków nie zostanie przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że raczej nispotykane jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależna od rozmieszczenia elementów oraz ilości plecaków\cite{PisingerThesis}:
 \begin{itemize}
   \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma profitów $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$. Może być sformułowany jako problem maksymalizacji:
   \begin{equation}\label{01Knapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
-      &&& x_j \in \{0,1\},\quad j = 1,\dots,n \\
+      &&& x_j \in \{0,1\},& j = 1,\dots,n \\
     \end{aligned}
   \end{equation}
   gdzie $x_j$ jest wartością binarną. Jeżeli $x_j = 1$ wtedy $j$-ty element powinien znaleźć się w plecaku, w innym przypadku $x_j = 0$.
@@ -17,7 +27,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
-      &&& x_j \in \{0,1\dots,m_j\},\quad j = 1,\dots,n \\
+      &&& x_j \in \{0,1\dots,m_j\},& j = 1,\dots,n \\
     \end{aligned}
   \end{equation}
   \item \textit{Nieograniczony problem plecakowy} - jest rozszerzeniem problemu ograniczonego o nielimitowaną liczbę dostępnych elementów:
@@ -25,7 +35,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
-      &&& x_j \in \mathbb{N}_0,\quad j = 1,\dots,n \\
+      &&& x_j \in \mathbb{N}_0,& j = 1,\dots,n \\
     \end{aligned}
   \end{equation}
   Każda zmienna $x_j$ w metodzie niograniczonej zostanie ograniczona poprzez pojemność $c$, gdy waga każdego z elementów jest równa przynajmniej jeden. W ogólnym przypadku transformacja problemu nieograniczonego w ograniczony nie przynosi korzyści
@@ -34,8 +44,8 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{i=1}^k \sum_{j \in N_i} p_{ij}x_{ij}, \\
       & \textrm{w odniesieniu do} & & \sum_{i=1}^k \sum_{j \in N_i} w_{ij}x_{ij} \le c, \\
-      &&& \sum_{j \in N_i} x_{ij} = 1, \quad i =1,\dots,k, \\
-      &&& x_j \in\{0,1\},\quad i = 1,\dots,k, \quad j \in N_i. \\
+      &&& \sum_{j \in N_i} x_{ij} = 1, & i =1,\dots,k, \\
+      &&& x_j \in\{0,1\},& i = 1,\dots,k, \quad j \in N_i. \\
     \end{aligned}
   \end{equation}
   Zmienna binarna $x_{ij} = 1$ określa że $j$-ty element został wybrany z $i$-tej grupy. Ograniczenie $\sum_{j \in N_i} x_{ij} = 1, \quad i =1,\dots,k$ wymusza wybór dokładnie jednego elementu z każdej grupy.
@@ -43,28 +53,38 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
   \begin{equation}\label{multiKnapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{i=1}^k \sum_{j \in N_i} p_{ij}x_{ij}, \\
-      & \textrm{w odniesieniu do} & & \sum_{j=1}^n  w_{ij}x_{ij} \le c_i, \quad i =1,\dots,m \\
-      &&& \sum_{j \in N_i} x_{ij} \le 1, \quad i =1,\dots,k, \\
-      &&& x_j \in\{0,1\},\quad i = 1,\dots,m, \quad j =1,\dots,n. \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n  w_jx_{ij} \le c_i, & i =1,\dots,m \\
+      &&& \sum_{j \in N_i} x_{ij} \le 1, & i =1,\dots,k, \\
+      &&& x_j \in\{0,1\},& i = 1,\dots,m, \quad j =1,\dots,n. \\
     \end{aligned}
   \end{equation}
   Zmienna $x_{ij} = 1$ określa że $j$-ty element powinien zostać umiesczony w $i$-tym plecaku, podczas gdy ogranicznie $\sum_{j=1}^n  w_{ij}x_{ij} \le c_i$ zapewnia że restrykcja dotycząca pojemności plecaka zostanie zachowana. Ogranicznie $\sum_{j \in N_i} x_{ij} \le 1$ zapewnia że każdy element zostanie wybrany tylko raz.
-  \item \textit{Bin-packing problem}
+  \item \textit{Bin-packing problem} - bardzo często spotykana wersja problemu plecakowego/ Problem ten polega na umieszczeniu $n$ elementów w jak najmniejszej liczbie opakowań:
+  \begin{equation}\label{binPacking}
+    \begin{aligned}
+      & \textrm{maksymalizacja} & & \sum_{i=1}^n y_i \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_{ij} \le cy_i, & i=1,\dots,n, \\
+      &&& \sum_{i=1}^n x_{ij} = 1, & j=1,\dots,n, \\
+      &&& y_i \in \{0,1\}, & i=1,\dots,n, \\
+      &&& x_{ij} \in \{0,1\} & i=1,\dots,m, \quad j = 1,\dots,n,
+    \end{aligned}
+  \end{equation}
+  gdzie $y_i$ określa czy $i$-te opakowanie zostało użyte, a $x_{ij}$ stanowi czy $j$-ty element powinen zostać umieszcozny w $i$-tym opakowaniu
   \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ który jest problemem programowania całkowitego z dodatnimi współczynnikami:
   \begin{equation}\label{generalKnapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
-      & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c_i, \quad i=1,\dots,m, \\
-      &&& x_j \in \mathbb{N}_0,\quad j = 1,\dots,n. \\
+      & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c_i, & i=1,\dots,m, \\
+      &&& x_j \in \mathbb{N}_0, & j = 1,\dots,n. \\
     \end{aligned}
   \end{equation}
 \end{itemize}
 
 \subsection{Możliwe rozwiązania}
 
-Dopóki problem plecakowy należy do problemów $NP-trudnych$ nie jest znane inne dokładne rozwiązanie niż wyliczenie przestrzeni rozwiązań. Użycie poniższych technik może ograniczyć pracochłonność otrzymania rozwiązania:
+Dopóki problem plecakowy należy do problemów $NP-trudnych$ nie jest znane inne dokładne rozwiązanie niż wyszczególnienie przestrzeni rozwiązań. Użycie poniższych technik może ograniczyć pracochłonność otrzymania rozwiązania\cite{PisingerThesis}:
 \begin{itemize}
-  \item \textit{Metoda podziału i ograniczeń} - pełna enumeracja rozwiązań, ale ograniczenia są użyte do znalezienia węzłów które nie mogą doprowadzić do poprawy rozwiązania. Metoda ta często jest stosowana do problemu plecakowego od momentu gdy Kolesar \cite{KolesarArticle} zaprezentował pierwszy algorytm w 1967 roku.
+  \item \textit{Metoda podziału i ograniczeń} - pełna wyliczenie rozwiązań, ale ograniczenia są użyte do znalezienia węzłów które nie mogą doprowadzić do poprawy rozwiązania. Metoda ta często jest stosowana do problemu plecakowego od momentu gdy Kolesar \cite{KolesarArticle} zaprezentował pierwszy algorytm w 1967 roku.
   \item \textit{Programownaie dynamiczne} - może być traktowane jako enumeracja wszerz z pewnymi zasadami dominacji. Czasem testy brzegowe są dodawane do algorytmu programowania dynamicznego, wtedy algorytm ten staje się "zaawansowaną" formą metody podziału i ograniczeń.
   \item \textit{Przestrzeń stanów relaksacji} - jest to relaksacja metody programowania dynamicznego w której współczynniki są skalowane przez ustaloną wartość. Dzięki tej metodzie zmniejsza się czas oraz złożoność algorytmu, ale rozwiązanie traci optymalność. Algorytm ten jest często wykorzystywany jako wydajny algorytm aproksymacji problemu plecakowego.
   \item \textit{Przetwarzanie wstępne} - pewna liczba zmiennych zostaje ustalona jako wartość optymalana, używając testów brzegowych do wykluczenia pewnych wartości z rozwiązania.
