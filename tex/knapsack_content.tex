@@ -92,8 +92,10 @@ Rozwiązanie problemu plecakowego jest możliwe przy użyciu różnych metod:
 \end{itemize}
 
 \subsubsection{Metoda podziału i ograniczeń}
+Algorytm ten polega na wypisaniu wszystkich możliwych rozwiązań używając struktury drzewiastej. Algorytm przechodzi kolejno po gałęziach drzewa które reprezentują podzbiory rozwiązania. Każda gałąź jest sprawdzana zadanymi warunkami brzegowymi i jest odrzucana jeśli nie poprawi rozwiąznaia. Przedstawione zostanie rozwiązanie ogólnego problemu plecakowego (\ref{generalKnapsack}) \cite{ChvatalBook}. 
+
 \subsubsection{Programowanie dynamiczne}
-Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które można rozwiązać rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1.
+Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które można rozwiązać rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1 \cite{GoddardLecture}.
 
 Jeśli elementy są oznaczone jako $1,\dots,n$ wtedy podproblem będzie odpowiedzialny za znalezienie optymalnego rozwiązania dla $S_k = \{1,2,\dots,k \}$. Niemożliwe jest opisanie rozwiązania końcowego $S_n$ na podstawie podproblemów $S_k$. Rekursywne sformułowanie podproblemu:
 \begin{equation}\label{recursiveDynamic}
