@@ -82,10 +82,51 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
 
 \subsection{Możliwe rozwiązania}
 
-Dopóki problem plecakowy należy do problemów $NP-trudnych$ nie jest znane inne dokładne rozwiązanie niż wyszczególnienie przestrzeni rozwiązań. Użycie poniższych technik może ograniczyć pracochłonność otrzymania rozwiązania\cite{PisingerThesis}:
+Problem plecakowy należy do grupy problemów $\mathcal{NP}$-Trudnych. Rozwiązanie problemów z tej grupy jest co najmniej tak trudne, jak rozwiązanie każdego problemu z całej klasy $\mathcal{NP}$. Problem $\mathcal{NP}$-Trudny to problem obliczeniowy dla którego znalezienie rozwiązania problemu nie jest możliwe z wielomianową złożonościa obliczeniową. Problemy $\mathcal{NP}$-Trudne obejmują zarówno problemy decyzyjne jak również problemy przeszukiwania czy też problemy optymalizacyjne.
+
+Rozwiązanie problemu plecakowego jest możliwe przy użyciu różnych metod:
 \begin{itemize}
-  \item \textit{Metoda podziału i ograniczeń} - pełna wyliczenie rozwiązań, ale ograniczenia są użyte do znalezienia węzłów które nie mogą doprowadzić do poprawy rozwiązania. Metoda ta często jest stosowana do problemu plecakowego od momentu gdy Kolesar \cite{KolesarArticle} zaprezentował pierwszy algorytm w 1967 roku.
-  \item \textit{Programownaie dynamiczne} - może być traktowane jako enumeracja wszerz z pewnymi zasadami dominacji. Czasem testy brzegowe są dodawane do algorytmu programowania dynamicznego, wtedy algorytm ten staje się "zaawansowaną" formą metody podziału i ograniczeń.
-  \item \textit{Przestrzeń stanów relaksacji} - jest to relaksacja metody programowania dynamicznego w której współczynniki są skalowane przez ustaloną wartość. Dzięki tej metodzie zmniejsza się czas oraz złożoność algorytmu, ale rozwiązanie traci optymalność. Algorytm ten jest często wykorzystywany jako wydajny algorytm aproksymacji problemu plecakowego.
-  \item \textit{Przetwarzanie wstępne} - pewna liczba zmiennych zostaje ustalona jako wartość optymalana, używając testów brzegowych do wykluczenia pewnych wartości z rozwiązania.
+  \item \textit{Metoda podziału i ograniczeń} - Metoda ta często jest stosowana do problemu plecakowego od momentu gdy Kolesar \cite{KolesarArticle} zaprezentował pierwszy algorytm w 1967 roku.
+  \item \textit{Programownaie dynamiczne} - Gdy zostaną dodane warunki brzegowe wtedy algorytm ten staje się "zaawansowaną" formą metody podziału i ograniczeń.
+  \item \textit{Relaksacja przestrzeni stanów} - relaksacja programowani dynamicznego gdzie współczynniki są skalowane przez pewną stałą wartość.
 \end{itemize}
+
+\subsubsection{Metoda podziału i ograniczeń}
+\subsubsection{Programowanie dynamiczne}
+Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które można rozwiązać rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1.
+
+Jeśli elementy są oznaczone jako $1,\dots,n$ wtedy podproblem będzie odpowiedzialny za znalezienie optymalnego rozwiązania dla $S_k = \{1,2,\dots,k \}$. Niemożliwe jest opisanie rozwiązania końcowego $S_n$ na podstawie podproblemów $S_k$. Rekursywne sformułowanie podproblemu:
+\begin{equation}\label{recursiveDynamic}
+  \begin{aligned}
+    B[k,w] =
+    \begin{cases}
+    & B[k-1,w] \quad \textrm{jeśli} \quad w_k > w, \\
+    & max\{B[k-1,w], B[k-1,w-w_k] + b_k\} \quad \textrm{jeśli} \quad  w_k \le w.
+    \end{cases}
+  \end{aligned}
+\end{equation}
+Z powyższego równania wynika że najlepszy podzbiór podproblemu $S_k$ z całkowitą wagą $w$ jest najlepszym podzbiorem dla $S_{k-1}$ którego całkowita waga wymosi $w$ lub jest najlepszym podzbiorem dla $S_{k-1}$ którego całkowita waga wynosi $w-w_k$ plus $k$-ty element. Złożoność programowania dynamicznego to $O(n*W)$. Algorytm jako dane wejściowe przyjmuje maksymalną wartość ciężaru $W$, oraz dwie listy: listę wag $w_1,\dots,w_n$ oraz odpowiadającą jej listę zysku $b_1,\dots,b_n$.
+\begin{algorithm}
+  \caption{Programowanie dynamiczne - problem plecakowy 0-1}
+  \begin{algorithmic}[1]
+    \For {w := 0 TO W}
+      \State B[0,w] := 0
+    \EndFor
+    \For {i := 1 TO n}
+      \State B[i,0] := 0
+    \EndFor
+    \For {i := 1 TO n}
+      \For {w := 0 TO W}
+        \If {$w_i \le w$}
+          \If {$b_i + B[i-1,w-w_i] > B[i-1,w]$}
+            \State $B[i,w] := b_i + B[i-1,w-w_i]$
+          \Else
+            \State $B[i,w] := B[i-1,w]$
+          \EndIf
+        \Else
+          \State $B[i,w] := B[i-1,w]$
+        \EndIf
+      \EndFor
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
