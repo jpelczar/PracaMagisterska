@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage[T1]{polski}
+\usepackage{tikz}
+\usepackage{fontspec}
+\usetikzlibrary{graphdrawing,graphdrawing.trees}
+\begin{document}
+  \begin{tikzpicture}
+    \begin{scope}
+     [grow=right, tree layout,level distance=25mm,text depth=.1em,text height=.8em]
+      \node {root}
+        child{
+          node(1){$x_1=0$}
+          child{
+            node(2){Usunięta}
+            }
+        }
+        child{
+          node(17){$x_1=1$}
+          child{
+            node(18){Usunięta}
+          }
+        }
+        child{
+          node(26){$x_1=2$}
+          child{
+            node(27){$x_2=0$}
+            child{
+              node(98){Usunięta}
+            }
+          }
+          child {
+            node(32){$x_2=1$}
+            child{
+              node(33){$x_3=0$}
+              child{
+                node(34){$x_4=0$}
+              }
+            }
+          }
+        }
+        child{
+          node(35){$x_1=3$}
+          child{
+            node(36){$x_2=0$}
+            child{
+              node(37){$x_3=0$}
+              child{
+                node(38){$x_4=0$}
+              }
+            }
+          }
+        };
+      \end{scope}
+  \end{tikzpicture}
+\end{document}

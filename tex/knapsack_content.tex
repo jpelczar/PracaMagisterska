@@ -108,9 +108,11 @@ Głównym elementem algorytmu jest stworzenie drzewa wyliczeń. Przykładowo dla
     &&& x_j \in \mathbb{N}_0
   \end{aligned}
 \end{equation*}
+
 \begin{figure}
-  \includegraphics[width=\textwidth]{../image/chvatal_book_sample.png}
-\caption{Drzewo wyliczeń możliwych rozwiązań} \label{fig:chvatalBBTree}
+  \includegraphics[width=\textwidth,center]{../image/chvatal_book_sample.png}%
+  \caption{Drzewo wyliczeń możliwych rozwiązań}
+  \label{fig:chvatalBBTree}
 \end{figure}
 drzewo będzie miało 13 liści (\cref{fig:chvatalBBTree}). Jeśli z jednego węzła wychodzi więcej niż jedna gałąź wówczas potomek o większej przechowywanej wartości jest umieszczany wyżej. Każdy następny węzeł jest obliczany według wzoru:
 \begin{equation*}\label{eq:chvatalBBTree}
@@ -119,16 +121,92 @@ drzewo będzie miało 13 liści (\cref{fig:chvatalBBTree}). Jeśli z jednego wę
     & x_1 = \lfloor{c/w_1}\rfloor
   \end{aligned}
 \end{equation*}
-Drzewo (\cref{fig:chvatalBBTree}) jest drzewem po redukcji. Aby odrzucić węzły niepełniające warunków nierówności stosowany jest skrót: Poszukjąc rozwiązania $x_1,x_2,\dots,x_m$ ustawione zsotaje $k = m-1$. Jeśli zachodzi taka potrzeba zmienna $k$ jest dekrementowana dpóki nie zostanie znalezione $x_k > 0$. Wówczas $x_k = x_{k-1}$, a wartości $x_{k+1}, x_{k+2}, \dots,x_m$ są otrzymywane ze wzoru (\cref{eq:chvatalBBTree}).
+Aby odrzucić węzły które nie mogą polepszyć rozwiązania i pozostawić tylko te gałęźie które dają szansę na rozwiązanie optymalne, należy przejść następujące kroki:
+Poszukując rozwiązania $x_1,x_2,\dots,x_m$ ustawione zostaje $k = m-1$. Jeśli zachodzi taka potrzeba zmienna $k$ jest dekrementowana dopóki nie zostanie znalezione $x_k > 0$. Wówczas $x_k = x_{k-1}$, a wartości $x_{k+1}, x_{k+2}, \dots,x_m$ są otrzymywane ze wzoru (\cref{eq:chvatalBBTree}).
 
 Dla bieżącego rozwiązania $x_1^*,\dots,x_m^*$ zachodzi $\sum_{i=1}^m p_ix_i^* = M$. Maksymalne $k$ takie że $ k \le m - 1$ oraz $x_k > 0$ zostaje określone przechodząc od węzłów $x_1,x_2,\dots,x_m$ w stronę korzenia. Podobnie jak wcześniej niech $\bar{x}_i = x_i$ dla $i=1,2,\dots,k-1$ oraz $\bar{x}_k = x_k -1$ będą zmiennymi kandydującymi do rozwiązania. Aby okreslić czy $\bar{x_i}$ polepszy rozwiązanie $x_i^*$. Zgodnie z (\cref{eq:BBeff}) dla każdej zmiennej $x_{k+1}, x_{k+2}, \dots, x_m$ wydajność wynosi maksymalnie $p_{k+1}/w_{k+1}$, tak więc
 \begin{equation*}
-  \sum_{i=k+1}^m p_i\bar{x}_i \le {p_{k+1}}/{w_{k+1}}\sum_{i=k+1}^m w_i \bar{x}_i
+  \sum_{i=k+1}^m p_i\bar{x}_i \le \frac{p_{k+1}}{w_{k+1}}\sum_{i=k+1}^m w_i \bar{x}_i
 \end{equation*}
 połączone razem z (\cref{unboundedKnapsack}) zwraca:
 \begin{equation}
-  \sum_{i=1}^m p_i\bar{x}_i \le \sum_{i=1}^m w_i \bar{x}_i + {p_i}/{w_{i}}( c - \sum_{i=1}^k w_i\bar{x}_i ).
+  \sum_{i=1}^m p_i\bar{x}_i \le \sum_{i=1}^m w_i \bar{x}_i + \frac{p_i}{w_{i}}( c - \sum_{i=1}^k w_i\bar{x}_i ).
 \end{equation}
+
+Zgodnie z zasadami drzewa wyliczeń, nierówność
+\begin{equation} \label{eq:enumerationTreeConstraint}
+  \sum_{i=1}^k p_x\bar{x}_i + \frac{p_{k+1}}{w_{k+1}}(c - \sum_{i=1}^kw_i\bar{x}_i) \le M
+\end{equation}
+określa że ścieżka $\bar{x}_1, \dots, \bar{x}_k$ jest niegorsza niż pozostałe. Jeśli wszystkie współczynniki $p_1,\dots,p_m$ są dodatnimi liczbami całkowitymi, wówczas również $M$ jest liczbą całkowitą, a silna nierówność (\ref{eq:enumerationTreeConstraint}) może zostać zastąpiona słabą
+\begin{equation} \label{eq:weakEnumerationTreeConstraint}
+  \sum_{i=1}^k p_x\bar{x}_i + \frac{p_{k+1}}{w_{k+1}}(c - \sum_{i=1}^kw_i\bar{x}_i) < M + 1
+\end{equation}
+Dla wcześniejszego przykładu powyższy krok mający na celu redukcję drzewa, następuje inicjalizacja zmiennych:
+\begin{equation*}
+  \begin{aligned}
+    & x_1 = \lfloor120/33\rfloor = 3 \\
+    & x_2 = \lfloor(120-99)/49\rfloor = 0 \\
+    & x_3 = \lfloor(120-99)/51\rfloor = 0 \\
+    & x_4 = \lfloor(120-99)/99\rfloor = 0
+  \end{aligned}
+\end{equation*}
+Z powyższego wynika że początkowe rozwiązanie to $x_1^* = 3, x_2^*=x_3^*=x_4^*=0$ oraz $M = 12$. Początkowo $k=3$, następnie wystepuje redukcja $k$ dopóki $k=1$ z $x_k > 0$ nie zostanie znalezione. Wówczas $x_1=3$ zostaje zaminione na $x_1=2$. Przed sprawdzeniem gałęzi $x_1=2$ przeprowadzony zostaje test (\ref{eq:weakEnumerationTreeConstraint}) z $k=1$ oraz $\bar{x}_1 = 2$.
+Wówczas lewa strona nierówności wynosi
+\begin{equation*}
+  8 + \frac{5}{49}(120-66) = 13.5
+\end{equation*}
+i jest nie mniejsza niż $M + 1 = 13$, gałąź może być warta sprawdzenia.
+Następnie obliczenie kolejnej ścieżki
+\begin{equation*}
+  \begin{aligned}
+    & x_2 = \lfloor(120-66)/49\rfloor = 1 \\
+    & x_3 = \lfloor(120-115)/51\rfloor = 0 \\
+    & x_4 = \lfloor(120-115)/99\rfloor = 0
+  \end{aligned}
+\end{equation*}
+i zastąpienie poprzedniego rozwiązania przez $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$ oraz $M = 13$. Powtórzony zostaje krok z redukcją $k=3$ dopóki $k=2$ oraz dopóki nie zostanie znalezione $x_k>0$. Wówczas $x_2=1$ zostaje zamienione na $x_2=0$. Aby określić czy ścieżka $x_1=2, x_2=0$ jest warta sprawdzenia, zostaje przeprowadzony test (\ref{eq:weakEnumerationTreeConstraint}) z $k=2$ oraz $\bar{x}_1 = 2, \bar{x}_2 = 0$. Lewa strona nierówności wynosi
+\begin{equation*}
+  \begin{aligned}
+    8+\frac{5}{51}(120-66) = 13.3
+  \end{aligned}
+\end{equation*}
+co jest mniejsze niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $k$ dalej jest dekrementowane, a kroki sa powtarzane. Dla $x_1=1$ wynik testu to $12.9 < 14$, a dla $x_1=0$ wynik to $12.2 < 14$ więc gałęzie te są odcinane. Tak więc optymalnym rozwiązaniem jest  $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$. Drzewo wyliczeń zostało zredukowane do postaci \ref{fig:reducedchvatalBBtree}.
+Jeśli odcięta jest gałąź $\bar{x}_1, \dots, \bar{x}_k$ wówczas odcięt również zostaje pozostała część gałęzi bez przeprowadzania dodatkowych testów.
+
+Algorytm dla metody podziału i ograniczeń do rozwiązania problemu plecakowego, został przedstawiony poniżej
+
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \State M := 0
+    \State k := 0
+    \For {j := k+1 TO m} \label{alg:step2}
+      \State $ x_j = \lfloor{(c - \sum_{i=1}^{j-1}w_ix_i)/w_j}\rfloor$
+    \EndFor
+    \State k := m
+    \If {$\sum_{i=1}^m p_ix_i > M$}
+      \State M := $\sum_{i=1}^m p_ix_i$
+      \For {j := 1 TO m}
+        \State $x_j^* = x_j$
+      \EndFor
+    \EndIf
+    \If {$k = 1$} \label{alg:step4}
+      \State stop
+    \Else
+      \State $k=k-1$
+    \EndIf
+    \If {$x_k = 0$}
+      \State idź do linii \ref{alg:step4}
+    \Else
+      \State $x_k = x_k - 1$
+    \EndIf
+    \If {!$\sum_{i=1}^k p_x\bar{x}_i + \frac{p_{k+1}}{w_{k+1}}(c - \sum_{i=1}^kw_i\bar{x}_i) < M + 1$}
+      \State idź do linii \ref{alg:step2}
+    \Else
+      \State idź do linii \ref{alg:step4}
+    \EndIf
+  \end{algorithmic}
+    \caption{Metoda podziału i ograniczeń - problem plecakowy}
+\end{algorithm}
 
 \subsubsection{Programowanie dynamiczne}
 Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które można rozwiązać rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1 \cite{GoddardLecture}.
