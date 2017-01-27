@@ -171,6 +171,13 @@ i zastąpienie poprzedniego rozwiązania przez $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=
   \end{aligned}
 \end{equation*}
 co jest mniejsze niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $k$ dalej jest dekrementowane, a kroki sa powtarzane. Dla $x_1=1$ wynik testu to $12.9 < 14$, a dla $x_1=0$ wynik to $12.2 < 14$ więc gałęzie te są odcinane. Tak więc optymalnym rozwiązaniem jest  $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$. Drzewo wyliczeń zostało zredukowane do postaci \ref{fig:reducedchvatalBBtree}.
+
+\begin{figure}
+  \includegraphics[width=\textwidth,center]{../image/reduced_chvatal_book_sample.png}%
+  \caption{Drzewo wyliczeń możliwych rozwiązań}
+  \label{fig:reducedchvatalBBtree}
+\end{figure}
+
 Jeśli odcięta jest gałąź $\bar{x}_1, \dots, \bar{x}_k$ wówczas odcięt również zostaje pozostała część gałęzi bez przeprowadzania dodatkowych testów.
 
 Algorytm dla metody podziału i ograniczeń do rozwiązania problemu plecakowego, został przedstawiony poniżej
