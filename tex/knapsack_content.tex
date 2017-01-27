@@ -9,7 +9,7 @@ Problem ten stosowany jest również w dziedzinie finansów. Jest on podstawowym
 
 Wiele problemów związanych z planowaniem może być przyrównana do problemu plecakowego gdzie czas wykonywania operacji na maszynie jest zasobem deficytowym. Jest on szczególnie uwydatniony gdy od aktywności maszyny zależy kapitał przedsiębiorstwa. Poprzez rozwiązanie problemu plecakowego możliwe jest przewidzenie zapotrzebowania na materiały podaczas procesu tak aby warunki zamówinia zostały spełnione\cite{BartholdiChapter}.
 
-Kolejnym zagadnieniem wynikającym z problemu plecakowego jest problem optymalnego rozkroju, zostanie on przedstawiony w rozdziale \ref{sec:cuttingStockProblem}.
+Kolejnym zagadnieniem wynikającym z problemu plecakowego jest problem optymalnego rozkroju, zostanie on przedstawiony w rozdziale \cref{sec:cuttingStockProblem}.
 \subsection{Różnorodność problemu plecakowego}
 Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób że zysk zostanie zmaksymalizowany, a pojemość placaka lub plecaków nie zostanie przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że raczej nispotykane jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależna od rozmieszczenia elementów oraz ilości plecaków\cite{PisingerThesis}:
 \begin{itemize}
@@ -18,7 +18,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
-      &&& x_j \in \{0,1\},& j = 1,\dots,n \\
+      &&& x_j \in \{0,1\},& j = 1,\dots,n
     \end{aligned}
   \end{equation}
   gdzie $x_j$ jest wartością binarną. Jeżeli $x_j = 1$ wtedy $j$-ty element powinien znaleźć się w plecaku, w innym przypadku $x_j = 0$.
@@ -27,7 +27,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
-      &&& x_j \in \{0,1\dots,m_j\},& j = 1,\dots,n \\
+      &&& x_j \in \{0,1\dots,m_j\},& j = 1,\dots,n
     \end{aligned}
   \end{equation}
   \item \textit{Nieograniczony problem plecakowy} - jest rozszerzeniem problemu ograniczonego o nielimitowaną liczbę dostępnych elementów:
@@ -35,7 +35,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c, \\
-      &&& x_j \in \mathbb{N}_0,& j = 1,\dots,n \\
+      &&& x_j \in \mathbb{N}_0,& j = 1,\dots,n
     \end{aligned}
   \end{equation}
   Każda zmienna $x_j$ w metodzie niograniczonej zostanie ograniczona poprzez pojemność $c$, gdy waga każdego z elementów jest równa przynajmniej jeden. W ogólnym przypadku transformacja problemu nieograniczonego w ograniczony nie przynosi korzyści
@@ -45,7 +45,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
       & \textrm{maksymalizacja} & & \sum_{i=1}^k \sum_{j \in N_i} p_{ij}x_{ij}, \\
       & \textrm{w odniesieniu do} & & \sum_{i=1}^k \sum_{j \in N_i} w_{ij}x_{ij} \le c, \\
       &&& \sum_{j \in N_i} x_{ij} = 1, & i =1,\dots,k, \\
-      &&& x_j \in\{0,1\},& i = 1,\dots,k, \quad j \in N_i. \\
+      &&& x_j \in\{0,1\},& i = 1,\dots,k, \quad j \in N_i.
     \end{aligned}
   \end{equation}
   Zmienna binarna $x_{ij} = 1$ określa że $j$-ty element został wybrany z $i$-tej grupy. Ograniczenie $\sum_{j \in N_i} x_{ij} = 1, \quad i =1,\dots,k$ wymusza wybór dokładnie jednego elementu z każdej grupy.
@@ -55,7 +55,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
       & \textrm{maksymalizacja} & & \sum_{i=1}^k \sum_{j \in N_i} p_{ij}x_{ij}, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n  w_jx_{ij} \le c_i, & i =1,\dots,m \\
       &&& \sum_{j \in N_i} x_{ij} \le 1, & i =1,\dots,k, \\
-      &&& x_j \in\{0,1\},& i = 1,\dots,m, \quad j =1,\dots,n. \\
+      &&& x_j \in\{0,1\},& i = 1,\dots,m, \quad j =1,\dots,n.
     \end{aligned}
   \end{equation}
   Zmienna $x_{ij} = 1$ określa że $j$-ty element powinien zostać umiesczony w $i$-tym plecaku, podczas gdy ogranicznie $\sum_{j=1}^n  w_{ij}x_{ij} \le c_i$ zapewnia że restrykcja dotycząca pojemności plecaka zostanie zachowana. Ogranicznie $\sum_{j \in N_i} x_{ij} \le 1$ zapewnia że każdy element zostanie wybrany tylko raz.
@@ -75,7 +75,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
       & \textrm{w odniesieniu do} & & \sum_{j=1}^n w_jx_j \le c_i, & i=1,\dots,m, \\
-      &&& x_j \in \mathbb{N}_0, & j = 1,\dots,n. \\
+      &&& x_j \in \mathbb{N}_0, & j = 1,\dots,n.
     \end{aligned}
   \end{equation}
 \end{itemize}
@@ -92,7 +92,43 @@ Rozwiązanie problemu plecakowego jest możliwe przy użyciu różnych metod:
 \end{itemize}
 
 \subsubsection{Metoda podziału i ograniczeń}
-Algorytm ten polega na wypisaniu wszystkich możliwych rozwiązań używając struktury drzewiastej. Algorytm przechodzi kolejno po gałęziach drzewa które reprezentują podzbiory rozwiązania. Każda gałąź jest sprawdzana zadanymi warunkami brzegowymi i jest odrzucana jeśli nie poprawi rozwiąznaia. Przedstawione zostanie rozwiązanie ogólnego problemu plecakowego (\ref{generalKnapsack}) \cite{ChvatalBook}. 
+Algorytm ten polega na wypisaniu wszystkich możliwych rozwiązań używając struktury drzewiastej. Algorytm przechodzi kolejno po gałęziach drzewa które reprezentują podzbiory rozwiązania. Każda gałąź jest sprawdzana zadanymi warunkami brzegowymi i jest odrzucana jeśli nie poprawi rozwiąznaia. Przedstawione zostanie rozwiązanie nieograniczonego problemu plecakowego (\cref{unboundedKnapsack}) \cite{ChvatalBook}. Współczynniki $w_1,\dots,w_m$, $p_1, \dots, p_m$ oraz $c$ są nieujemne. Stosunek $p_j/w_j$ jest wartością jednej jednostki długości $j$-tego elementu. Stosunek ten jest \textit{wydajnością} zmiennej $x_j$. Pierwszym krokiem algorytmu jest posortowanie zmiennych w porządku malęjącym względem wydajności:
+\begin{equation} \label{eq:BBeff}
+  p_1/w_1 \ge p_2/w_2 \ge \cdots \ge p_m/w_m
+\end{equation}
+Dla posortowanych elementów każde rozwiązanie optymalne (\cref{unboundedKnapsack}) spełnia warunek:
+\begin{equation}
+  c - \sum_{j=1}^m w_jx_j < w_m
+\end{equation}
+Głównym elementem algorytmu jest stworzenie drzewa wyliczeń. Przykładowo dla problemu który zawiera 13 rozwiązań:
+\begin{equation*}
+  \begin{aligned}
+    & \textrm{maksymalizacja} & &  4x_1 + 5x_2 + 5x_3 + 2x_4\\
+    & \textrm{w odniesieniu do} & & 33x_1 + 49x_2 + 51x_3+22x_4 \le 120\\
+    &&& x_j \in \mathbb{N}_0
+  \end{aligned}
+\end{equation*}
+\begin{figure}
+  \includegraphics[width=\textwidth]{../image/chvatal_book_sample.png}
+\caption{Drzewo wyliczeń możliwych rozwiązań} \label{fig:chvatalBBTree}
+\end{figure}
+drzewo będzie miało 13 liści (\cref{fig:chvatalBBTree}). Jeśli z jednego węzła wychodzi więcej niż jedna gałąź wówczas potomek o większej przechowywanej wartości jest umieszczany wyżej. Każdy następny węzeł jest obliczany według wzoru:
+\begin{equation*}\label{eq:chvatalBBTree}
+  \begin{aligned}
+    & x_j = \lfloor{(c - \sum_{i=1}^{j-1}w_ix_i)/w_j}\rfloor \qquad i = 1,2,\dots,m \\
+    & x_1 = \lfloor{c/w_1}\rfloor
+  \end{aligned}
+\end{equation*}
+Drzewo (\cref{fig:chvatalBBTree}) jest drzewem po redukcji. Aby odrzucić węzły niepełniające warunków nierówności stosowany jest skrót: Poszukjąc rozwiązania $x_1,x_2,\dots,x_m$ ustawione zsotaje $k = m-1$. Jeśli zachodzi taka potrzeba zmienna $k$ jest dekrementowana dpóki nie zostanie znalezione $x_k > 0$. Wówczas $x_k = x_{k-1}$, a wartości $x_{k+1}, x_{k+2}, \dots,x_m$ są otrzymywane ze wzoru (\cref{eq:chvatalBBTree}).
+
+Dla bieżącego rozwiązania $x_1^*,\dots,x_m^*$ zachodzi $\sum_{i=1}^m p_ix_i^* = M$. Maksymalne $k$ takie że $ k \le m - 1$ oraz $x_k > 0$ zostaje określone przechodząc od węzłów $x_1,x_2,\dots,x_m$ w stronę korzenia. Podobnie jak wcześniej niech $\bar{x}_i = x_i$ dla $i=1,2,\dots,k-1$ oraz $\bar{x}_k = x_k -1$ będą zmiennymi kandydującymi do rozwiązania. Aby okreslić czy $\bar{x_i}$ polepszy rozwiązanie $x_i^*$. Zgodnie z (\cref{eq:BBeff}) dla każdej zmiennej $x_{k+1}, x_{k+2}, \dots, x_m$ wydajność wynosi maksymalnie $p_{k+1}/w_{k+1}$, tak więc
+\begin{equation*}
+  \sum_{i=k+1}^m p_i\bar{x}_i \le {p_{k+1}}/{w_{k+1}}\sum_{i=k+1}^m w_i \bar{x}_i
+\end{equation*}
+połączone razem z (\cref{unboundedKnapsack}) zwraca:
+\begin{equation}
+  \sum_{i=1}^m p_i\bar{x}_i \le \sum_{i=1}^m w_i \bar{x}_i + {p_i}/{w_{i}}( c - \sum_{i=1}^k w_i\bar{x}_i ).
+\end{equation}
 
 \subsubsection{Programowanie dynamiczne}
 Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które można rozwiązać rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1 \cite{GoddardLecture}.
