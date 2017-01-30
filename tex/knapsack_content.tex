@@ -1,19 +1,19 @@
 \section{Knapsack Problem - Problem plecakowy}
-Problem plecakowy jest zagadnieniem optymailzacyjnym. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując ten problem zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. Knapsack Problem zaczął być intensywnie badany po pionierskiej pracy Dantziga\cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja róznorodnych problemów programowania całkowitego\cite{PisingerThesis}.
+Problem plecakowy jest zagadnieniem z zakresu optymalizacji. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując go zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. "Knapsack Problem" zaczął być intensywnie badany po pionierskiej pracy Dantziga\cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja różnorodnych problemów programowania całkowitego\cite{PisingerThesis}.
 \subsection{Zastosowanie}
-Problem plecakowy stosowany jest nie tylko w sytuacji wynikającej bezpośrednio z nazwy. Znajduje on zastosowanie w wielu dziedzinach życia oraz nauki. Diffi i Helman\cite{DiffieHelmanArticle} w 1976 roku oraz Merkle i Helman\cite{MerkleHelmanArticle} w 1978 roku zaproponowali problem plecakowy jako podstawę do enkrypcji kluczy prywatnych. Jednakże podejście to w latach późniejszych zostało złamane przez środowisko kryptograficzne i jego miejsce zajęły bardziej odporne algorytmy.
+Problem plecakowy stosowany jest nie tylko w sytuacji wynikającej bezpośrednio z nazwy. Znajduje on zastosowanie w wielu dziedzinach życia oraz nauki. Diffi i Helman\cite{DiffieHelmanArticle} w 1976 roku oraz Merkle i Helman\cite{MerkleHelmanArticle} w 1978 roku zaproponowali problem plecakowy jako podstawę do enkrypcji kluczy prywatnych. Jednakże klucze oparte na tym algorytmie w latach późniejszych zostały złamane przez środowisko kryptograficzne i jego miejsce zajęły bardziej odporne podejścia.
 
-"Knapsack problem" jest stosowany również podczas załadunku kontenerów służacych do przewozu materiałów drogą morską. Ładowność oraz gabaryty ładowanych elementów są ograniczane przez budowę i wytrzymałość kontenera.
+"Knapsack Problem" jest stosowany również podczas załadunku kontenerów służacych do przewozu materiałów drogą morską. Ładowność oraz gabaryty ładowanych elementów są ograniczane przez budowę i wytrzymałość kontenera.
 
 Problem ten stosowany jest również w dziedzinie finansów. Jest on podstawowym narzędziem do optymalizacji portfela inwestycyjnego. Poprzez uogólnienie i modyfikacje problemu plecakowego zjawiska ekonomiczne mogą być modelowane z większą dokładnością. Przykładowo możliwe jest zakupienie 0, 1, 2 lub więcej akcji inwestycyjnych, a zakup kolejnych akcji może przynieść obniżenie przychodu.
 
-Wiele problemów związanych z planowaniem może być przyrównana do problemu plecakowego gdzie czas wykonywania operacji na maszynie jest zasobem deficytowym. Jest on szczególnie uwydatniony gdy od aktywności maszyny zależy kapitał przedsiębiorstwa. Poprzez rozwiązanie problemu plecakowego możliwe jest przewidzenie zapotrzebowania na materiały podaczas procesu tak aby warunki zamówinia zostały spełnione\cite{BartholdiChapter}.
+Wiele problemów związanych z planowaniem może być przyrównana do problemu plecakowego, dla przykładu czas wykonywania operacji na maszynie jest zasobem deficytowym. Jest on szczególnie uwydatniony gdy od aktywności maszyny zależy zysk przedsiębiorstwa. Poprzez rozwiązanie problemu plecakowego możliwe jest przewidzenie zapotrzebowania na materiały podaczas procesu tak aby warunki zamówienia zostały spełnione\cite{BartholdiChapter}.
 
 Kolejnym zagadnieniem wynikającym z problemu plecakowego jest problem optymalnego rozkroju, zostanie on przedstawiony w rozdziale \cref{sec:cuttingStockProblem}.
 \subsection{Różnorodność problemu plecakowego}
-Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób że zysk zostanie zmaksymalizowany, a pojemość placaka lub plecaków nie zostanie przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że raczej nispotykane jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależna od rozmieszczenia elementów oraz ilości plecaków\cite{PisingerThesis}:
+Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób aby zysk został zmaksymalizowany, a pojemość placaka lub wielu plecaków nie została przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że mozliwe jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależne od rozmieszczenia elementów oraz ilości plecaków\cite{PisingerThesis}:
 \begin{itemize}
-  \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma profitów $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$. Może być sformułowany jako problem maksymalizacji:
+  \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma zysków $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$. Może być sformułowany jako problem maksymalizacji:
   \begin{equation}\label{01Knapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
@@ -49,7 +49,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \end{aligned}
   \end{equation}
   Zmienna binarna $x_{ij} = 1$ określa że $j$-ty element został wybrany z $i$-tej grupy. Ograniczenie $\sum_{j \in N_i} x_{ij} = 1, \quad i =1,\dots,k$ wymusza wybór dokładnie jednego elementu z każdej grupy.
-  \item \textit{Wielokrotny problem plecakowy} - mozliwość wypełnienia wielu pleckaków. Jeśli jest możliwość załadowania $n$ elmentów do $m$ pleckaów o róznych pojemnościahc $c_i$ w taki sposób że zysk będzie jak największy:
+  \item \textit{Wielokrotny problem plecakowy} - możliwość wypełnienia wielu pleckaków. Jeśli jest możliwość załadowania $n$ elmentów do $m$ pleckaów o różnych pojemnościach $c_i$ w taki sposób że zysk będzie jak największy:
   \begin{equation}\label{multiKnapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{i=1}^k \sum_{j \in N_i} p_{ij}x_{ij}, \\
@@ -59,7 +59,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \end{aligned}
   \end{equation}
   Zmienna $x_{ij} = 1$ określa że $j$-ty element powinien zostać umiesczony w $i$-tym plecaku, podczas gdy ogranicznie $\sum_{j=1}^n  w_{ij}x_{ij} \le c_i$ zapewnia że restrykcja dotycząca pojemności plecaka zostanie zachowana. Ogranicznie $\sum_{j \in N_i} x_{ij} \le 1$ zapewnia że każdy element zostanie wybrany tylko raz.
-  \item \textit{Bin-packing problem} - bardzo często spotykana wersja problemu plecakowego/ Problem ten polega na umieszczeniu $n$ elementów w jak najmniejszej liczbie opakowań:
+  \item \textit{Bin-packing problem} - bardzo często spotykana wersja problemu plecakowego. Problem ten polega na umieszczeniu $n$ elementów w jak najmniejszej liczbie opakowań:
   \begin{equation}\label{binPacking}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{i=1}^n y_i \\
@@ -70,7 +70,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \end{aligned}
   \end{equation}
   gdzie $y_i$ określa czy $i$-te opakowanie zostało użyte, a $x_{ij}$ stanowi czy $j$-ty element powinen zostać umieszcozny w $i$-tym opakowaniu
-  \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ który jest problemem programowania całkowitego z dodatnimi współczynnikami:
+  \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ, który jest problemem programowania całkowitego z dodatnimi współczynnikami:
   \begin{equation}\label{generalKnapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
@@ -82,17 +82,17 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
 
 \subsection{Możliwe rozwiązania}
 
-Problem plecakowy należy do grupy problemów $\mathcal{NP}$-Trudnych. Rozwiązanie problemów z tej grupy jest co najmniej tak trudne, jak rozwiązanie każdego problemu z całej klasy $\mathcal{NP}$. Problem $\mathcal{NP}$-Trudny to problem obliczeniowy dla którego znalezienie rozwiązania problemu nie jest możliwe z wielomianową złożonościa obliczeniową. Problemy $\mathcal{NP}$-Trudne obejmują zarówno problemy decyzyjne jak również problemy przeszukiwania czy też problemy optymalizacyjne.
+Problem plecakowy należy do grupy problemów $\mathcal{NP}$-Trudnych. Rozwiązanie problemów z tej grupy jest co najmniej tak trudne, jak rozwiązanie każdego problemu z całej klasy $\mathcal{NP}$. Problem $\mathcal{NP}$-Trudny to problem obliczeniowy dla którego znalezienie rozwiązania problemu możliwe jest z wielomianową złożonościa obliczeniową. Problemy $\mathcal{NP}$-Trudne obejmują zarówno problemy decyzyjne jak również problemy przeszukiwania czy też problemy optymalizacyjne.
 
 Rozwiązanie problemu plecakowego jest możliwe przy użyciu różnych metod:
 \begin{itemize}
   \item \textit{Metoda podziału i ograniczeń} - Metoda ta często jest stosowana do problemu plecakowego od momentu gdy Kolesar \cite{KolesarArticle} zaprezentował pierwszy algorytm w 1967 roku.
   \item \textit{Programownaie dynamiczne} - Gdy zostaną dodane warunki brzegowe wtedy algorytm ten staje się "zaawansowaną" formą metody podziału i ograniczeń.
-  \item \textit{Relaksacja przestrzeni stanów} - relaksacja programowani dynamicznego gdzie współczynniki są skalowane przez pewną stałą wartość.
+  \item \textit{Relaksacja przestrzeni stanów} - relaksacja programowania dynamicznego gdzie współczynniki są skalowane przez pewną stałą wartość.
 \end{itemize}
 
 \subsubsection{Metoda podziału i ograniczeń}
-Algorytm ten polega na wypisaniu wszystkich możliwych rozwiązań używając struktury drzewiastej. Algorytm przechodzi kolejno po gałęziach drzewa które reprezentują podzbiory rozwiązania. Każda gałąź jest sprawdzana zadanymi warunkami brzegowymi i jest odrzucana jeśli nie poprawi rozwiąznaia. Przedstawione zostanie rozwiązanie nieograniczonego problemu plecakowego (\cref{unboundedKnapsack}) \cite{ChvatalBook}. Współczynniki $w_1,\dots,w_m$, $p_1, \dots, p_m$ oraz $c$ są nieujemne. Stosunek $p_j/w_j$ jest wartością jednej jednostki długości $j$-tego elementu. Stosunek ten jest \textit{wydajnością} zmiennej $x_j$. Pierwszym krokiem algorytmu jest posortowanie zmiennych w porządku malęjącym względem wydajności:
+Algorytm ten polega na wypisaniu wszystkich możliwych rozwiązań używając struktury drzewa. Algorytm przechodzi kolejno po gałęziach które reprezentują podzbiory rozwiązania. Każda gałąź jest sprawdzana zadanymi warunkami brzegowymi i zostaje odrzucona jeśli nie poprawia rozwiąznaia. Przedstawione zostanie rozwiązanie nieograniczonego problemu plecakowego (\cref{unboundedKnapsack}) \cite{ChvatalBook}. Współczynniki $w_1,\dots,w_m$, $p_1, \dots, p_m$ oraz $c$ są nieujemne. Stosunek $p_j/w_j$ jest wartością jednej jednostki długości $j$-tego elementu. Stosunek ten jest nazywany \textit{wydajnością} zmiennej $x_j$. Pierwszym krokiem algorytmu jest posortowanie zmiennych w porządku malęjącym względem wydajności:
 \begin{equation} \label{eq:BBeff}
   p_1/w_1 \ge p_2/w_2 \ge \cdots \ge p_m/w_m
 \end{equation}
@@ -100,7 +100,7 @@ Dla posortowanych elementów każde rozwiązanie optymalne (\cref{unboundedKnaps
 \begin{equation}
   c - \sum_{j=1}^m w_jx_j < w_m
 \end{equation}
-Głównym elementem algorytmu jest stworzenie drzewa wyliczeń. Przykładowo dla problemu który zawiera 13 rozwiązań:
+Głównym elementem algorytmu jest stworzenie drzewa wyliczeń oraz przeprowadzenie jego redukcji. Przykładowo dla problemu który zawiera 13 rozwiązań:
 \begin{equation*}
   \begin{aligned}
     & \textrm{maksymalizacja} & &  4x_1 + 5x_2 + 5x_3 + 2x_4\\
@@ -114,17 +114,16 @@ Głównym elementem algorytmu jest stworzenie drzewa wyliczeń. Przykładowo dla
   \caption{Drzewo wyliczeń możliwych rozwiązań}
   \label{fig:chvatalBBTree}
 \end{figure}
-drzewo będzie miało 13 liści (\cref{fig:chvatalBBTree}). Jeśli z jednego węzła wychodzi więcej niż jedna gałąź wówczas potomek o większej przechowywanej wartości jest umieszczany wyżej. Każdy następny węzeł jest obliczany według wzoru:
+drzewo będzie miało 13 liści (\cref{fig:chvatalBBTree}). Jeśli dany węzeł posiada więcej niż jedno dziecko, wówczas potomek o większej przechowywanej wartości zostaje umieszczony wyżej. Każdy następny węzeł jest obliczany według wzoru:
 \begin{equation*}\label{eq:chvatalBBTree}
   \begin{aligned}
     & x_j = \lfloor{(c - \sum_{i=1}^{j-1}w_ix_i)/w_j}\rfloor \qquad i = 1,2,\dots,m \\
     & x_1 = \lfloor{c/w_1}\rfloor
   \end{aligned}
 \end{equation*}
-Aby odrzucić węzły które nie mogą polepszyć rozwiązania i pozostawić tylko te gałęźie które dają szansę na rozwiązanie optymalne, należy przejść następujące kroki:
-Poszukując rozwiązania $x_1,x_2,\dots,x_m$ ustawione zostaje $k = m-1$. Jeśli zachodzi taka potrzeba zmienna $k$ jest dekrementowana dopóki nie zostanie znalezione $x_k > 0$. Wówczas $x_k = x_{k-1}$, a wartości $x_{k+1}, x_{k+2}, \dots,x_m$ są otrzymywane ze wzoru (\cref{eq:chvatalBBTree}).
+Podczas poszukiwania węzłów które nie mogą polepszyć rozwiązania i gałęzi które dają szansę na rozwiązanie optymalne $x_1,x_2,\dots,x_m$ ustawione zostaje $k = m-1$. Jeśli zachodzi taka potrzeba zmienna $k$ jest dekrementowana dopóki nie zostanie znalezione takie $x_k$, że $x_k > 0$. Wówczas $x_k = x_{k-1}$, a wartości $x_{k+1}, x_{k+2}, \dots,x_m$ są otrzymywane ze wzoru (\cref{eq:chvatalBBTree}).
 
-Dla bieżącego rozwiązania $x_1^*,\dots,x_m^*$ zachodzi $\sum_{i=1}^m p_ix_i^* = M$. Maksymalne $k$ takie że $ k \le m - 1$ oraz $x_k > 0$ zostaje określone przechodząc od węzłów $x_1,x_2,\dots,x_m$ w stronę korzenia. Podobnie jak wcześniej niech $\bar{x}_i = x_i$ dla $i=1,2,\dots,k-1$ oraz $\bar{x}_k = x_k -1$ będą zmiennymi kandydującymi do rozwiązania. Aby okreslić czy $\bar{x_i}$ polepszy rozwiązanie $x_i^*$. Zgodnie z (\cref{eq:BBeff}) dla każdej zmiennej $x_{k+1}, x_{k+2}, \dots, x_m$ wydajność wynosi maksymalnie $p_{k+1}/w_{k+1}$, tak więc
+Dla bieżącego rozwiązania $x_1^*,\dots,x_m^*$ zachodzi $\sum_{i=1}^m p_ix_i^* = M$. Maksymalne $k$ takie, że $ k \le m - 1$ oraz $x_k > 0$ zostaje określone przechodząc od węzłów $x_1,x_2,\dots,x_m$ w kierunku korzenia. Podobnie jak wcześniej, niech $\bar{x}_i = x_i$ dla $i=1,2,\dots,k-1$ oraz $\bar{x}_k = x_k -1$ będą zmiennymi kandydującymi do rozwiązania. Aby okreslić czy $\bar{x_i}$ polepszy rozwiązanie $x_i^*$. Zgodnie z (\cref{eq:BBeff}) dla każdej zmiennej $x_{k+1}, x_{k+2}, \dots, x_m$ wydajność wynosi maksymalnie $p_{k+1}/w_{k+1}$, tak więc
 \begin{equation*}
   \sum_{i=k+1}^m p_i\bar{x}_i \le \frac{p_{k+1}}{w_{k+1}}\sum_{i=k+1}^m w_i \bar{x}_i
 \end{equation*}
@@ -137,11 +136,11 @@ Zgodnie z zasadami drzewa wyliczeń, nierówność
 \begin{equation} \label{eq:enumerationTreeConstraint}
   \sum_{i=1}^k p_x\bar{x}_i + \frac{p_{k+1}}{w_{k+1}}(c - \sum_{i=1}^kw_i\bar{x}_i) \le M
 \end{equation}
-określa że ścieżka $\bar{x}_1, \dots, \bar{x}_k$ jest niegorsza niż pozostałe. Jeśli wszystkie współczynniki $p_1,\dots,p_m$ są dodatnimi liczbami całkowitymi, wówczas również $M$ jest liczbą całkowitą, a silna nierówność (\ref{eq:enumerationTreeConstraint}) może zostać zastąpiona słabą
-\begin{equation} \label{eq:weakEnumerationTreeConstraint}
+określa że ścieżka $\bar{x}_1, \dots, \bar{x}_k$ jest niegorsza niż pozostałe. Jeśli wszystkie współczynniki $p_1,\dots,p_m$ są dodatnimi liczbami całkowitymi, wówczas również $M$ jest liczbą całkowitą, a słaba nierówność (\ref{eq:enumerationTreeConstraint}) może zostać zastąpiona mocną
+\begin{equation} \label{eq:strongEnumerationTreeConstraint}
   \sum_{i=1}^k p_x\bar{x}_i + \frac{p_{k+1}}{w_{k+1}}(c - \sum_{i=1}^kw_i\bar{x}_i) < M + 1
 \end{equation}
-Dla wcześniejszego przykładu powyższy krok mający na celu redukcję drzewa, następuje inicjalizacja zmiennych:
+Dla wcześniejszego przykładu powyższy krok mający na celu redukcję drzewa przyjmuje postać:
 \begin{equation*}
   \begin{aligned}
     & x_1 = \lfloor120/33\rfloor = 3 \\
@@ -150,13 +149,13 @@ Dla wcześniejszego przykładu powyższy krok mający na celu redukcję drzewa, 
     & x_4 = \lfloor(120-99)/99\rfloor = 0
   \end{aligned}
 \end{equation*}
-Z powyższego wynika że początkowe rozwiązanie to $x_1^* = 3, x_2^*=x_3^*=x_4^*=0$ oraz $M = 12$. Początkowo $k=3$, następnie wystepuje redukcja $k$ dopóki $k=1$ z $x_k > 0$ nie zostanie znalezione. Wówczas $x_1=3$ zostaje zaminione na $x_1=2$. Przed sprawdzeniem gałęzi $x_1=2$ przeprowadzony zostaje test (\ref{eq:weakEnumerationTreeConstraint}) z $k=1$ oraz $\bar{x}_1 = 2$.
+Z powyższego wynika że początkowe rozwiązanie to $x_1^* = 3, x_2^*=x_3^*=x_4^*=0$ oraz $M = 12$. Początkowo $k=3$, następnie wystepuje redukcja $k$ dopóki nie zostanie znalezione takie $k=1$ dla którego istnieje $x_k > 0$. Wówczas $x_1=3$ zostaje zaminione na $x_1=2$. Przed sprawdzeniem gałęzi $x_1=2$ przeprowadzony zostaje test (\ref{eq:strongEnumerationTreeConstraint}) z $k=1$ oraz $\bar{x}_1 = 2$.
 Wówczas lewa strona nierówności wynosi
 \begin{equation*}
   8 + \frac{5}{49}(120-66) = 13.5
 \end{equation*}
-i jest nie mniejsza niż $M + 1 = 13$, gałąź może być warta sprawdzenia.
-Następnie obliczenie kolejnej ścieżki
+i jest nie mniejsza niż $M + 1 = 13$ z czego wynika że gałąź może być warta sprawdzenia.
+Następnie zostaje obliczona kolejna ścieżka
 \begin{equation*}
   \begin{aligned}
     & x_2 = \lfloor(120-66)/49\rfloor = 1 \\
@@ -164,13 +163,13 @@ Następnie obliczenie kolejnej ścieżki
     & x_4 = \lfloor(120-115)/99\rfloor = 0
   \end{aligned}
 \end{equation*}
-i zastąpienie poprzedniego rozwiązania przez $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$ oraz $M = 13$. Powtórzony zostaje krok z redukcją $k=3$ dopóki $k=2$ oraz dopóki nie zostanie znalezione $x_k>0$. Wówczas $x_2=1$ zostaje zamienione na $x_2=0$. Aby określić czy ścieżka $x_1=2, x_2=0$ jest warta sprawdzenia, zostaje przeprowadzony test (\ref{eq:weakEnumerationTreeConstraint}) z $k=2$ oraz $\bar{x}_1 = 2, \bar{x}_2 = 0$. Lewa strona nierówności wynosi
+i zastąpuje ona poprzednie rozwiązanie $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$ oraz $M = 13$. Powtórzony zostaje krok z redukcją $k=3$ dopóki nie zostanie znalezione takie $k=2$ dla którego istanieje $x_k>0$. Wówczas $x_2=1$ zostaje zamienione na $x_2=0$. Aby określić czy ścieżka $x_1=2, x_2=0$ jest warta sprawdzenia, zostaje przeprowadzony test (\ref{eq:strongEnumerationTreeConstraint}) z $k=2$ oraz $\bar{x}_1 = 2, \bar{x}_2 = 0$. Lewa strona nierówności wynosi
 \begin{equation*}
   \begin{aligned}
     8+\frac{5}{51}(120-66) = 13.3
   \end{aligned}
 \end{equation*}
-co jest mniejsze niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $k$ dalej jest dekrementowane, a kroki sa powtarzane. Dla $x_1=1$ wynik testu to $12.9 < 14$, a dla $x_1=0$ wynik to $12.2 < 14$ więc gałęzie te są odcinane. Tak więc optymalnym rozwiązaniem jest  $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$. Drzewo wyliczeń zostało zredukowane do postaci \ref{fig:reducedchvatalBBtree}.
+Jest ona mniejsza niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $k$ dalej jest zmniejszane, a kroki sa powtarzane. Dla $x_1=1$ wynik testu to $12.9 < 14$, a dla $x_1=0$ wynik to $12.2 < 14$ więc gałęzie te są odcinane. Tak więc optymalnym rozwiązaniem jest  $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$. Drzewo wyliczeń zostało zredukowane do postaci \ref{fig:reducedchvatalBBtree}.
 
 \begin{figure}
   \includegraphics[width=\textwidth,center]{../image/reduced_chvatal_book_sample.png}%
@@ -216,7 +215,7 @@ Algorytm dla metody podziału i ograniczeń do rozwiązania problemu plecakowego
 \end{algorithm}
 
 \subsubsection{Programowanie dynamiczne}
-Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które można rozwiązać rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1 \cite{GoddardLecture}.
+Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które mogą zostać rozwiązane rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1 \cite{GoddardLecture}.
 
 Jeśli elementy są oznaczone jako $1,\dots,n$ wtedy podproblem będzie odpowiedzialny za znalezienie optymalnego rozwiązania dla $S_k = \{1,2,\dots,k \}$. Niemożliwe jest opisanie rozwiązania końcowego $S_n$ na podstawie podproblemów $S_k$. Rekursywne sformułowanie podproblemu:
 \begin{equation}\label{recursiveDynamic}
