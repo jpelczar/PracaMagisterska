@@ -146,7 +146,7 @@ Dla wcześniejszego przykładu powyższy krok mający na celu redukcję drzewa p
     & x_1 = \lfloor120/33\rfloor = 3 \\
     & x_2 = \lfloor(120-99)/49\rfloor = 0 \\
     & x_3 = \lfloor(120-99)/51\rfloor = 0 \\
-    & x_4 = \lfloor(120-99)/99\rfloor = 0
+    & x_4 = \lfloor(120-99)/22\rfloor = 0
   \end{aligned}
 \end{equation*}
 Z powyższego wynika że początkowe rozwiązanie to $x_1^* = 3, x_2^*=x_3^*=x_4^*=0$ oraz $M = 12$. Początkowo $k=3$, następnie wystepuje redukcja $k$ dopóki nie zostanie znalezione takie $k=1$ dla którego istnieje $x_k > 0$. Wówczas $x_1=3$ zostaje zaminione na $x_1=2$. Przed sprawdzeniem gałęzi $x_1=2$ przeprowadzony zostaje test (\ref{eq:strongEnumerationTreeConstraint}) z $k=1$ oraz $\bar{x}_1 = 2$.
@@ -160,7 +160,7 @@ Następnie zostaje obliczona kolejna ścieżka
   \begin{aligned}
     & x_2 = \lfloor(120-66)/49\rfloor = 1 \\
     & x_3 = \lfloor(120-115)/51\rfloor = 0 \\
-    & x_4 = \lfloor(120-115)/99\rfloor = 0
+    & x_4 = \lfloor(120-115)/22\rfloor = 0
   \end{aligned}
 \end{equation*}
 i zastąpuje ona poprzednie rozwiązanie $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$ oraz $M = 13$. Powtórzony zostaje krok z redukcją $k=3$ dopóki nie zostanie znalezione takie $k=2$ dla którego istanieje $x_k>0$. Wówczas $x_2=1$ zostaje zamienione na $x_2=0$. Aby określić czy ścieżka $x_1=2, x_2=0$ jest warta sprawdzenia, zostaje przeprowadzony test (\ref{eq:strongEnumerationTreeConstraint}) z $k=2$ oraz $\bar{x}_1 = 2, \bar{x}_2 = 0$. Lewa strona nierówności wynosi
