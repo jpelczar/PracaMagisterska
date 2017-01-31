@@ -11,6 +11,7 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{tikz}
 \usepackage{wrapfig}
+
 \graphicspath{ {figures/} }
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
@@ -25,10 +26,11 @@
     urlcolor=black
 }
 \graphicspath{ {../image} }
+\setcounter{secnumdepth}{5}
 
 \title{Optymalizacja wykorzystania materiału w procesie rozkroju rur}
 \author{Jakub Pelczar}
-\date{\today\\v0.1.1}
+\date{\today\\v0.2}
 
 \begin{document}
 
@@ -38,8 +40,8 @@
 \include{introduction_content}
 \include{knapsack_content}
 \include{cutting_stock_content}
-\include{brutal_force_content}
-\include{delayed_column_generation_content}
+% \include{brutal_force_content}
+% \include{delayed_column_generation_content}
 \include{comparison_content}
 \include{implementation_content}
 \include{conclusion_content}

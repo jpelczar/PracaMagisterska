@@ -1,4 +1,5 @@
 \section{Knapsack Problem - Problem plecakowy}
+\label{sec:knapsackProblem}
 Problem plecakowy jest zagadnieniem z zakresu optymalizacji. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując go zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. "Knapsack Problem" zaczął być intensywnie badany po pionierskiej pracy Dantziga\cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja różnorodnych problemów programowania całkowitego\cite{PisingerThesis}.
 \subsection{Zastosowanie}
 Problem plecakowy stosowany jest nie tylko w sytuacji wynikającej bezpośrednio z nazwy. Znajduje on zastosowanie w wielu dziedzinach życia oraz nauki. Diffi i Helman\cite{DiffieHelmanArticle} w 1976 roku oraz Merkle i Helman\cite{MerkleHelmanArticle} w 1978 roku zaproponowali problem plecakowy jako podstawę do enkrypcji kluczy prywatnych. Jednakże klucze oparte na tym algorytmie w latach późniejszych zostały złamane przez środowisko kryptograficzne i jego miejsce zajęły standardy które są bardziej odporne na złamanie (przykładowo XTR).
@@ -11,7 +12,7 @@ Wiele problemów związanych z planowaniem może być przyrównana do problemu p
 
 Kolejnym zagadnieniem wynikającym z problemu plecakowego jest problem optymalnego rozkroju, zostanie on przedstawiony w rozdziale \cref{sec:cuttingStockProblem}.
 \subsection{Różnorodność problemu plecakowego}
-Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób aby zysk został zmaksymalizowany, a pojemość placaka lub wielu plecaków nie została przekroczona. Wszystkie typy problemu należą do rodziny problemów $NP-trudnych$ co oznacza, że mozliwe jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależne od rozmieszczenia elementów oraz ilości plecaków\cite{PisingerThesis}:
+Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób aby zysk został zmaksymalizowany, a pojemość placaka lub wielu plecaków nie została przekroczona. Wszystkie typy problemu należą do rodziny problemów $\mathcal{NP}$-Trudnych co oznacza, że mozliwe jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależne od rozmieszczenia elementów oraz ilości plecaków\cite{PisingerThesis}:
 \begin{itemize}
   \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma zysków $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$. Może być sformułowany jako problem maksymalizacji:
   \begin{equation}\label{01Knapsack}

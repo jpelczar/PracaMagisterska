@@ -1,16 +1,17 @@
 #!/bin/bash
 
 mkdir -p build
+mkdir -p pdf
 cd tex
 
-for file in *
-do
-  if [[ $file == *".tex"* ]] && [[ $file != *"_content"* ]] && [[ $file != *"praca_magisterska"* ]]
-  then
-    printf "\n------------PDFLATEX $file------------\n"
-    pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build $file
-  fi
-done
+# for file in *
+# do
+#   if [[ $file == *".tex"* ]] && [[ $file != *"_content"* ]] && [[ $file != *"praca_magisterska"* ]]
+#   then
+#     printf "\n------------PDFLATEX $file------------\n"
+#     pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build $file
+#   fi
+# done
 
 printf "\n-----------PDFLATEX Praca magisterska-------------\n"
 pdflatex -synctex=1 -interaction=nonstopmode -output-directory=../build praca_magisterska.tex

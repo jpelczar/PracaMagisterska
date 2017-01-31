@@ -1,2 +1,184 @@
 \section{Cutting Stock Problem - Problem optymalnego rozkroju}
 \label{sec:cuttingStockProblem}
+\newcommand{\mf}[1]{\textbf{\textit{#1}}}
+\newcommand{\tsub}[1]{\textsubscript{#1}}
+\newcommand{\tsuper}[1]{\textsuperscript{#1}}
+
+\subsection{Wprowadzenie}
+
+Problem optymalnego rozkroju jest problemem wykroju zadanej liczby elementów z wielu elementów podstawowych takich, jak rury, arkusze papieru lub metalu, w taki sposób aby zminimalizować niewykorzystany materiał (odpad). Jest to problem optymalizacyjny znajdujący zastosowanie głównie w przemyśle.  W odniesieniu do  złożoności obliczeniowej jets to problem z rodziny problemów $\mathcal{NP}$-Trudnych, który może zostać zredukowany do problemu plecakowego (\cref{sec:knapsackProblem}). W rozdziale tym zostanie opisany jednowymiarowy problem optymalnego rozkoroju.
+
+\subsection{Metoda "Delayed Column Generation"}
+Metoda ta została zparoponowana przez Gilmore'a i Gomorego w 1961 roku[\ref{GilmoreGomoryV1Article}]. Gdy problem optymalnego rokroju zostanie sformułowany jako problem programowania całkowitego wówczas liczba zmiennych wchodzących w skład równań powoduje że rozwiązanie jest nieosiąglane. Dla przykładu gdy podstawowa długość to 200 z której ma zostać wycięte 40 różnych elementów o długościach od 20 do 80 wówczas liczba róznych wzorców rozkroju może osiągnąć nawet 100 milionów. Czas potrzebny do przejścia po samych rozkrojach byłby niosiagalny. Metoda ta pozwala na ciągłą generację nowych rozwiązań. Jest ona również metodą która znosi restrykcję liczb całkowitych w trakcie obliczania wyniku, dlatego wynik zostaje zaokraglony w górę, co odnosi skutek w tym że jest produkowane więcej lub tyle samo elementów niż jest wymagane przez zlecenie. Wynikiem tej metody jest rozwiązanie najbliższe optymalnemu.
+\subsubsection{Algorytm}
+
+\begin{equation}\label{length_eq}
+L \ge l_1a_1+\dots+l_ma_m
+\end{equation}
+
+\begin{equation}\label{cost_eq}
+b_1a_1+\dots+b_ma_m > c
+\end{equation}
+
+\begin{enumerate}
+\item Określnie $m$ poczatkowych rokrojów i ich kosztu w następujący sposób: dla każdego $i$ wybranie długości bazowej $L_j$ dla której $L_j > l_i$ i określenie $i$-tego rokroju jako wycięcie $a_{ii} = [L_j / l_i]$ elementów o długości $l_i$ z długości $L_j$. Koszt $i$-tego rozkroju będzie równy kosztowi $c_j$ długości $L_j$ z której $i$-ta operacja wycina odcinki o długości $l_i$.
+\item Uformowanie macierzy \mf{B}
+\[
+\begin{matrix}
+1 & -c_1  & -c_2  & \dots & -c_m \\
+0 & a_{11}  & 0 & \dots & 0 \\
+0 & 0 & a_{22}  & \dots & 0 \\
+\vdots&\vdots&\vdots&\ddots&\vdots \\
+0 & 0 & 0 & \dots & a_{mm}
+\end{matrix}
+\]
+gdzie $a_{ii}$ jest ilością odcinków o długości $l_i$ wyciętych w $i$-tym rozkroju z długości bazowej o koszcie $c_j$. Ostatnie $m$ kolumn jets powiązane z rozkrojami. Dane te będą aktualizowane gdy zostanie znaleziony wynik który poprawi rozwiązanie.
+
+Utworzenie $m$ $m+1$ wymiarowych wektorów kolumnowych \mf{S\tsub{1}},...,\mf{S\tsub{m}} odnoszących się do zmiennych dodatkowych, gdzie \mf{S\tsub{i}} posiada same zera z wyjątkiem wiersza $(i+1)$ w którym jest $-1$. Dodatkowo utworzenie $m+1$ wymiarowego wektora kolumnowego \mf{N'} który jako pierwszy element przyjmuje 0, a w następnych $i$-tych wierszach posiada wartośic $N_i$.
+
+Obliczenie \mf{B}\tsuper{-1} która wynosi:
+\[
+\begin{matrix}
+1 & c_1/a_{11}  & c_2/a_{22}  & \dots & c_m/a_{mm} \\
+0 & 1/a_{11}  & 0 & \dots & 0 \\
+0 & 0 & 1/a_{22}  & \dots & 0 \\
+\vdots&\vdots&\vdots&\ddots&\vdots \\
+0 & 0 & 0 & \dots & 1/a_{mm}
+\end{matrix}
+\]
+
+Niech $\mf{N} = \mf{B}^{-1} \cdotp \mf{N'}$. Sprawdzając czy pierwszy element z $\mf{B}\tsuper{-1} \cdotp \mf{P}$ jest dodatni można określić czy istnieje możliwość polepszenia rozwiązania. Wektor kolumnowy \mf{P} jets wektorem złożonym ze zmiennych nieuzytych w bieżącym rozwiązaniu, np. pierwszy element to negatywny koszt, a pozostałe $m$ wierszy jest równe zmiennym $a_{ij}$.
+
+\item Z powyższego puntku wynika że jeśli $i$-ta zmienna dodatkowa która nie wchodzi w skład rozwiązania może ulepszyć rozwiązanie wtedy i tylko wtedy gdy $(i+1)$ element pierwszego wiersza \mf{B}\tsuper{-1} jest ujemny.
+
+\item Jeśli nie jest możliwe polepszenie rozwiązania nalezy określić czy wprowadznie nowego rozkroju ulepszy bieżące rozwiązanie. Jets to możliwe poprzez sprawdznie czy dla $L$ z kosztem $c$ istnieje rozwiązanie nierówności \ref{length_eq} oraz \ref{cost_eq}, gdzie $b_1,\dots,b_m$ to ostatnie $m$ elementów w piwerwszym wierszu \mf{B}\tsuper{-1}. Jeśli te nierównoście nie posiadają rozwiąania dla dowolnej długości $L_1,\dots,L_k$ z kosztem odpowiednio $c_1,\dots,c_m$ wtedy bieżące rozwiązanie jest minimum. Rozwiązanie i jego koszt jest określone poprzez \mf{N}, gdzie pierwszy wiersz to koszt, a pozostałe $m$ wierszy jest, w kolejności, odpowiednimi wartościami $m$-tej kolumny z \mf{B}\tsuper{-1}.
+
+Jeśli nowy rozkrój poprawi rozwiązanie wtedy formowany jest nowy wektor \mf{P} ze współczynnikami, w kolejności $-c,a_1,a_2,\dots,a_m$.
+
+\item Wprowadznie zarówno dodatkowej zmiennej jak i nowego rozkroju może poprawić rozwiązanie. W obu przypadkach \mf{P} będzie kolumnowym wektorem ze zmiennymi. Dla określenia nowych \mf{B}\tsuper{-1} oraz \mf{N} które opisują ulepszone rozwiązanie i jego koszt, co pozawala na przejście przez kkroki 3, 4 oraz kontynujacje kroku 5 w nastepujący sposób: Obliczenie $\mf{B}\tsuper{-1} \cdotp \mf{P}$ - niech elementy wynikime będą elementy $y_1,\dots,y_m,y_{m+1}$ oraz niech elementami bierzącego wektora \mf{N} będą $x_1,\dots,x_m,x_{m+1}$. Ustalenie $i$, $ i \ge 2$ dla każdego $y_i > 0$, $x_i \ge 0$ oraz $x_i/y_i$ jest najminiejsze i przypisanie tej wartości do zmiennej $k$. Minimalny stosunek powinien być zerem aby można było wykorzystać metodę degeneracji.
+
+Jeśli stosunek nie jest równy zero wtedy $k$-ty element wektora \mf{P}, $y_k$ będzie elementem wokół którego zajdzie eliminacja Gaussa odbywająca się równocześnie na \mf{B}\tsuper{-1}, $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Eliminacja ta przebiega na macierzy $(m+1) \times (m+3)$ wymiarowej \mf{G} uformowanej z \mf{B}\tsuper{-1} poprzez dołączenie kolumn $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Pierwsze $m+1$ kolumn \mf{G'} formuje nową macierz \mf{B}\tsuper{-1}, a kolumna $m+2$ to nowy wektor \mf{N}. Zależność między kolumnami \mf{B}\tsuper{-1} a rozkrojami lub zmiennymi dodatkowymi jets aktualizowana poprzez usunięcie $k$-tej kolumny i podmienieniu jej na nowy rozkruj lub zmienną dodatkową.
+
+Degeneracja w razie wystąpienia może być obsłużona w tradycyjny sposób. Pewne środki ostrożności powinny zostać podjęte w celu uniknięcia cykliczności. Nowa kolumna \mf{N}\tsuper{1} z dodatnimi elementami $x_1',\dots,x_{m+1}'$ która jest niezależna pd \mf{N} jest dołączana do \mf{G} i wybór takiego $y_i > 0$ dla którego $x_i = 0$ który jest elementem osiowym jets dokonywany na podstawie takiego $i$ dla którego $x_i' > 0$ oraz $x_i'/y_i$ jest najmniejsze. Gdy element osiowy zostanie wybrany, wówczas eliminacja Gaussa zachodzi tak jak w poprzednim przypadku na powiększonej macierzy \mf{G}. Dodatkowa kolumna jest przechowywane w \mf{G} dopóki istnieje takie $i$ dla którego $x_i/y_i$ jest dodatnie i skończone, jeśłi warunek ten jest spełniony wówczas kolumna zostaje usunięta. Powinno to nastąpić w przypadku gdy nie istnieje takie $i$ dla którego $x_i/y_i$ oraz $x_i'/y_i$ są dodatnie i skończone. Wówczas powinna zostać dodana kolumna \mf{N}\tsuper{2} nizależna od \mf{N} oraz \mf{N}\tsuper{1}. Podobnie dowolna liczba kolumn może zostac dodana i usunięta gdy przestanie byc potrzebna. Dopóki kolumny są niezależne w czasie dodawania i pozostają takie po eliminacji Gaussa, nie potrzeba więcej jak $m$ nowych kolumn. Każda dodana kolumna definiuje nowy problem liniowy który eliminuje problem cykliczności tak długo aż degeneracja nie wystąpi.
+
+\end{enumerate}
+
+\subsubsection{Metody użyte w implementacji}
+
+\paragraph{Dwufazowa metoda simplex}
+\paragraph{Metoda podziału i ograniczeń}
+
+\subsubsection{Przykład}
+
+\subsection{Metoda "Brutal Force"}
+\subsubsection{Algorytm wyjściowy}
+Metoda ta opiera się zarówno na intuicji jak i na rozwiązaniu zaproponowanym przez Dantziga dla problemu plecakowego \cite{DantzigArticle}. Jest to metoda która w prosty sposób - nie używając złożonych modeli matematycznych, pozwala osiągnąć optymalny rozkrój materiału.
+
+Pierwszym krokiem jest posortowanie elementów wyściowych malejąco wzgęldem ich długości $l_1 \ge l_2 \ge ... \ge l_m$ i umieszczenie w ten sposób w kolejce.
+
+Drugim krokiem jest pobranie pierwszego elementu z kolejki i sprawdzenie, jak wiele razy jego długość zawiera się w długości elementu bazowego. Obliczone zostaje ile materiału pozostało w elemencie bazowym po docięciu najdłuższych elementów. Następnie pobierany jest kolejny odcinek z kolejki. Następuje sprawdzenie ile razy zawiera się on w pozostałej długości.
+\begin{equation}\label{base_dantizg}
+\begin{split}
+& a_1 = [L/l_1],\\
+& a_2 = [(L-l_1 a_1)/l_2],\\
+& a_3 = [(L-(l_1 a_1+l_2 a_2))/l_3], ...
+\end{split}
+\end{equation}
+Kroki te powtarzane są dopóki kolejka się nie skończy.
+
+Każdy element wyjściowy posiada określoną liczebność jaką powinien osiągnąć pod koniec procesu cięcia. Jeśli na danym etapie procesu cięcia wymagana liczba elementów danego typu spada do zera, wówczas jest on pomijany w dalszej pracy algorytmu. Koniecznie jest sprawdzenie czy liczba uzyskanych elementów danego typu jest mniejsza lub równa od wymaganej:
+\begin{itemize}
+  \item Jeśli stwierdzenie jest prawdziwe - długość z której elementy są wycinane zostanie zmniejszona o liczbę wystąpień elementu pomnożoną przez jego długość, a licznik wymaganych odcinków danej długości zostanie zmniejszony o odpowiednią liczbę wystąpień
+  \item Jeśli stwierdzenie jest fałszywe - długość z której elementy są wycinane zostanie zmniejszona o liczbę pozostałych wykrojów pomnożoną przez długość elementu, a licznik wymaganych odcinków danej długości zostanie ustawiony na zero.
+\end{itemize}
+Po zakończeniu przebiegu algorytmu dla jednego układu rozkroju, można określić ile razy będzie on użyty. Zostaje to wyznaczone poprzez obliczenie
+\begin{equation}
+g = floor\{min\{z_i/a_i\}\}, i \in [0..m], g \in Z
+\end{equation}
+gdzie $g$ to liczba ile razy dany schemat może zostać użyty, $z$ to liczbność wyjściowego elementu $i$ która pozostała do wycięcia, $a$ to ilość wykrojów elementu $i$ w bierzącym układzie, $m$ to liczba długości umieszczonych w rozkroju. Następnie licznik wymaganych odcinków elemntu $i$ zostaje zmniejszony o $g a_i$.
+
+Cały proces powtarzany jest do momentu aż wszytskie wymagane elementy zostaną wycięte.
+
+\subsubsection{Rozszerzenie o szerokość cięcia}
+W warunkach rzeczywistych elementy wycinane są za pomocą ostrza które ma niezerową grubość. Wówczas metodę obliczania należy rozszerzyć jeśli ma odpowiadać warunkom rzeczywistym. Szerokość cięcia wlicza się w odpad. Jest kilka przypadków wliczania szerokości ostrza.
+
+Jeżeli element jest równy długości bazowej wówczas nie wlicza się szerokości cięcia. Natomiast jeżeli materiał bazowy ma zostać pocięty na kilka elmentów wówczas do każdego dolicza się szerokość cięcia. Szczególnym przypadkiem jest, gdy ostatni element wraz z szerokością ostrza jest dłuższy niż długość odcinka, który został po wycięciu wcześniejszych elementów.
+
+Gdyby szerokość cięcia nie zostałą uwzględniona w obliczeniach wówczas dla elementu wejściowego o długości 6000mm i wymaganych odcinkach 4500mm oraz 1500mm, obie długości zostały wycięte z jednego segmentu materiału bazowego. Skutkiem takiego postępowania byłby element krótszy o szerokość ostrza. Zazwyczaj długość ta może być akceptowana jako toleracncja dokładności maszyny. Jednak dla poprawności obliczeń wielkość ta powinna zostać uwzględniona.
+
+\subsubsection{Rozszerzenie o wiele długości bazowych}
+Dla zmniejszenia odpadu można użyć kilku długości bazowych. Rozszerzenie to wprowadza następująca zmianę algorytmu: obliczenia układu muszą zostać powtórzone dla każdego elementu wejściowego. Następnie wybierany jest ten rozkrój, który daje mniejszy odpad. Modyfikacja ta znacząco wpływa na wydajność metody. Jeżeli $n$ oznacza złożoność obliczeniową podstawowego algorytmu, a $m$ oznacza liczbę odcinków wejściowych, wówczas nowa złożonośc obliczeniowa wynosi $m*n$. % a może n^m
+
+\subsubsection{Rozszerzenie o cenę materiału wsadowego}
+Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada cenę za metr bieżący materiału, umożliwia to obliczenie kosztu odpadu i wybranie tańszej opcji wykroju.
+
+\clearpage
+
+\subsubsection{Przykład}
+\begin{enumerate}
+  \item Dane wejściowe
+  \begin{itemize}
+    \item 6000mm - 3\$/mb
+    \item 7000mm - 2\$/mb
+    \item szerokość cięcia: 10mm
+  \end{itemize}
+  \item Dane wyjściowe
+  \begin{itemize}
+    \item 1x3500mm
+    \item 1x3000mm
+    \item 3x2000mm
+    \item 5x500mm
+  \end{itemize}
+  \item Przebieg algorytmu
+  \begin{itemize}
+    \item Pierwszy rozkrój
+    \begin{itemize}
+      \item 3500mm mieści się raz w 6000mm. Zostaje $2500 - 10 = 2490$mm.
+      \item 3000mm nie mieści się w 2490mm.
+      \item 2000mm mieści się raz w 2490mm. Zostaje $490 - 10 = 480$mm.
+      \item 500mm nie mieści się w 480mm.
+      \item Rozkrój 6000mm: 3500mm, 2000mm. Odpad $6000 - 5500 = 500 * 0.003 = 1.5\$$
+      \item ------------
+      \item 3500mm mieści się dwa razy w 7000mm. Dostępny jest jeden odcinek 3500mm. Zostaje $3500 - 10 = 3490$mm.
+      \item 3000mm mieści sie raz w 3490mm. Zostaje $490 - 10 = 480$mm.
+      \item 2000mm nie mieści się w 480mm.
+      \item 500mm nie mieści się w 480mm.
+      \item Rozkrój 7000mm: 3500mm, 3000mm. Odpad $7000 - 6500 = 500 * 0.002 = 1.0\$$
+      \item ------------
+      \item Wybrano rozkrój 3500mm, 2000mm na długości 7000mm ze względu na mniejszy koszt odpadu.
+      \item Do realizacji posostało: 0x3500mm; 0x3000mm; 3x2000mm; 5x500mm
+    \end{itemize}
+    \item Drugi rozkrój
+    \begin{itemize}
+      \item 2000mm mieści się trzy razy w 6000mm. Uwzględniając szerokość cięcia - zostaną użyte tylko dwa elementy od długości 2000mm. Zostaje $2000 - 2*10 = 1980$mm.
+      \item 500mm mieści się trzy razy w 1980mm. Zostaje $480 - 3*10 = 450$mm.
+      \item Rozkrój 6000mm: 2x2000mm, 3x500mm. Odpad $6000 - 5500 = 500 *0.003 = 1.5\$$
+      \item ------------
+      \item 2000mm mieści się trzy razy w 7000mm. Zostaje $1000 - 3*10 = 970$mm.
+      \item 500mm mieści się raz w 970mm. Zostaje $470 - 10 = 460$mm.
+      \item Rozkój 7000mm: 3x2000mm, 500mm. Odpad $7000 - 6500 = 500 * 0.002 = 1.0\$$
+      \item ------------
+      \item Wybrano rozkrój 3x2000mm, 500mm na długości 7000mm ze względu na mniejszy koszt odpadu
+      \item Do realizacji posostało: 0x3500mm, 0x3000mm, 0x2000mm, 4x500mm
+    \end{itemize}
+    \item Trzeci rozkrój
+    \begin{itemize}
+      \item 500mm mieści się dwanaście razy w 6000mm. Dostępne są cztery element 500mm. Zostaje $6000 - 4*500 - 4*10 = 3960$mm.
+      \item Rozkrój 6000mm: 4x500mm. Odpad $6000 - 4*500 = 4000 * 0.003 = 12\$$
+      \item ------------
+      \item 500mm mieści się czternaście razy w 7000mm. Dostępne są cztery elementy 500mm. zostaje $7000 - 4*500 - 4*10 = 4960$mm
+      \item Rozkrój 7000mm: 4x500mm. Odpad $7000 - 4*500 = 5000 * 0.002 = 10\$$
+      \item ------------
+      \item Wybrano rozkrój 4x500 na długości 7000mm ze względu na mniejszy koszt odpadu
+      \item Do realizacji posostało: 0x3500mm, 0x3000mm, 0x2000mm, 0x500mm
+    \end{itemize}
+    \item Podsumowanie
+    \begin{itemize}
+      \item Rozkroje : 3500mm, 2000mm na długości 7000mm; 3x2000mm, 500mm na długości 7000mm; 4x500 na długości 7000mm.
+      \item Suma odpadów: $6000 * 0.002 = 12\$$
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{Podsumowanie}
+Przedstawiony algorytm jest intuicyjny oraz zwraca poprawne wyniki. Główną wadą jest brak świadomości o następnym kroku oraz kolejnych wykrojach. Dla przykładu: Zosatło 1000mm materiału, do dyspozycji (z długości mniejszych niż 1000mm) jest odcinek 900mm oraz dwa elementy 480mm. Algorytm przydzieli odcinek 900mm, jednak lepszym wyborem byłoby użycie dwóch odcinków 480mm.
