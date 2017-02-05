@@ -4,21 +4,52 @@
 \newcommand{\tsub}[1]{\textsubscript{#1}}
 \newcommand{\tsuper}[1]{\textsuperscript{#1}}
 
-\subsection{Wprowadzenie}
-
 Problem optymalnego rozkroju jest problemem wykroju zadanej liczby elementów z wielu elementów podstawowych takich, jak rury, arkusze papieru lub metalu, w taki sposób aby zminimalizować niewykorzystany materiał (odpad). Jest to problem optymalizacyjny znajdujący zastosowanie głównie w przemyśle.  W odniesieniu do  złożoności obliczeniowej jets to problem z rodziny problemów $\mathcal{NP}$-Trudnych, który może zostać zredukowany do problemu plecakowego (\cref{sec:knapsackProblem}). W rozdziale tym zostanie opisany jednowymiarowy problem optymalnego rozkoroju.
 
 \subsection{Metoda "Delayed Column Generation"}
-Metoda ta została zparoponowana przez Gilmore'a i Gomorego w 1961 roku[\ref{GilmoreGomoryV1Article}]. Gdy problem optymalnego rokroju zostanie sformułowany jako problem programowania całkowitego wówczas liczba zmiennych wchodzących w skład równań powoduje że rozwiązanie jest nieosiąglane. Dla przykładu gdy podstawowa długość to 200 z której ma zostać wycięte 40 różnych elementów o długościach od 20 do 80 wówczas liczba róznych wzorców rozkroju może osiągnąć nawet 100 milionów. Czas potrzebny do przejścia po samych rozkrojach byłby niosiagalny. Metoda ta pozwala na ciągłą generację nowych rozwiązań. Jest ona również metodą która znosi restrykcję liczb całkowitych w trakcie obliczania wyniku, dlatego wynik zostaje zaokraglony w górę, co odnosi skutek w tym że jest produkowane więcej lub tyle samo elementów niż jest wymagane przez zlecenie. Wynikiem tej metody jest rozwiązanie najbliższe optymalnemu.
+Metoda ta została zparoponowana przez Gilmore'a i Gomorego w 1961 roku \cite{GilmoreGomoryV1Article}. Gdy problem optymalnego rokroju zostanie sformułowany jako problem programowania całkowitego wówczas liczba zmiennych wchodzących w skład równań powoduje że rozwiązanie jest nieosiąglane. Dla przykładu gdy podstawowa długość to 200 z której ma zostać wycięte 40 różnych elementów o długościach od 20 do 80 wówczas liczba róznych wzorców rozkroju może osiągnąć nawet 100 milionów. Czas potrzebny do przejścia po samych rozkrojach byłby niosiagalny. Metoda ta pozwala na ciągłą generację nowych rozwiązań. Jest ona również metodą która znosi restrykcję liczb całkowitych w trakcie obliczania wyniku, dlatego wynik zostaje zaokraglony w górę, co odnosi skutek w tym że jest produkowane więcej lub tyle samo elementów niż jest wymagane przez zlecenie. Wynikiem tej metody jest rozwiązanie najbliższe optymalnemu.
+\subsubsection{Wprowadzenie}
+Założeniem metody jest że zamówienie $N_i$ elementów długości $l_i$, gdzie $i=1,2,\dots,m$, wyciętych z rur długości początkowych $L_1, L_2, \dots, L_k$, dla którego spełniony jest warunek, że isntiej takie $j$ że dla każdego $i$ spełnina jest nierówność $L_j \ge l_i$. Całkowity koszt rozkrojów jest całkowitym kosztem użytych elementów podstawowych. Celem rozwiązania problemu jest otrzymanie tylu wykrojów ile jest wymaganych przez zamówienie przy jak najmniejszym koszcie. Warunkiem koniecznym aby zamówinie zostało spełniona jets nierówność
+\begin{equation*}
+a_{i1}x_1 + a_{i2}x_2 + \dots + a_{in}x_i \ge N_i, \qquad i = 1, \dots, m
+\end{equation*}
+gdzie $a_{ij}$ oznacza ile razy w danym schmemacie rozkroju $x_i$ została użyta długość $l_i$. Funkcją kosztu która powinna zostać zminimalizowana wynosi
+\begin{equation}\label{eq:base_cost}
+  c_1x_1 + c_2x_2+\dots+c_nx_n
+\end{equation}
+gdzie  $c_i$ to koszt długości podstawowej z której jest pobierany $i$-ty wykrój. Wprowadzenie dodatkowych zmiennych $x_{n+1},\dots,x_{n+m}$ pozwalają opisać problem optymalnego rozkroju jako problem znalezienia takich liczb całkowitych $x_1,\dots,x_{n+m}$ spełniających
+\begin{align}
+    a_{i1}x_1+\dots+a_{in}x_n-x_{n+i} & =N_i, & \qquad i=1,\dots,m  \label{eq:additional_base}\\
+    x_j & \ge 0, & \qquad j=1,\dots,n+m \label{eq:additional_base_condition}
+\end{align}
+oraz dla których \cref{eq:base_cost} jest jak najmniejsze.
+
+Takie sformułowanie problemu jest niepraktyczne ze względu na ograniczenie do liczb całkowitych oraz z powodu że $n$ może być bardzo duże nawet gdy ilość $k$ elementów podstawowych, jak i ilość $m$ zamówionych długości jest umiarkowana.
+
+Jeśli zostanie usunięty warunek całkowitości rozwiązania wówczas rozwiązanie będzie należało do zbioru liczb rzeczywistych dodatnich. Rozwiązanie to może zostać zaokrąglone w górę lecz wtedy może zostać wyprodukowane więcej elementów niż zostało zamówione. Rozwiązanie może być również zaookrąglana na przemina w górę i w dół, a elementy które nie spełniają założeń zamówienia są dodawane do wykrojów metodą \textit{ad hoc}. Gdy wartości niecałkwite są duże wówczas zaokrąglenie jej nie wpływa znacząco na koszt, jednak gdy wartości są rzędu dziesiątek wówczas zaokrąglenie ma znaczny wpływ na koszt. Omawiana metoda znosi ograniczenie dla liczb całkowitych.
+
+Usunięty warunek całkowitości odnosi skutek w tym, że zmienne dodtkowe mogą zostać usunięte z równiania (\cref{eq:additional_base}). Dopóki rozwiązania (\cref{eq:additional_base}) oraz (\cref{eq:additional_base_condition}) zawierają dodatnie zmienne dodatkowe wówczas istnieje rozwiązanie o takim samym koszcie w którym nie zawierają się dodatnie zmienne dodatkowe. Niech $\bar{x}_1, \dots, \bar{x}_n, \bar{x}_{n+1}, \dots, \bar{x}_{n+m}$ będzie rozwiązaniem (\cref{eq:additional_base}) oraz (\cref{eq:additional_base_condition}) dla którego $\bar{x}_{n+1} \neq 0$. Dla tego rozwiązania istnieje takie $i$ dla którego $a_{1i}\bar{x}_i \ge \bar{x}_{n+1}$, to jest, $i$-ty schemat rozkroju należy do rozwiązania w przynajmniej takiej liczebności aby zamówinie długości $l_1$ było spełnione. Jeśli nie istnieje takie $i$ które spełnia warunek wówczas, niech $j$-ta zmienna przyjmuje niezerową wartość $\bar{x}_j$ oraz niech $k$-ty rozkrój będzie identyczny jak $j$-ty z wyłączeniem uwzględniania długości $l_1$. W takim przypadku w $k$-tym rozkroju długość $l_1$ która została uwzględniona w $j$-tym rozkroju trkatowana jest jako odpad. Rozwiązanie  $\bar{x}_1{'}, \dots, \bar{x}_n{'}, \bar{x}_{n+1}{'}, \dots, \bar{x}_{n+m}{'}$ z tym samym kosztem co poprzednio zostało uzyskane poprzez przypisanie $\bar{x}_i{'} = \bar{x}_i$ dla $i \neq j$, $k$, $n+1$: $\bar{x}_j{'}=0, \bar{x}_k{'}=\bar{x}_k+\bar{x}_j$ oraz $\bar{x}_{n+1}{'}=\bar{x}_{n+1}- a_{1j}\bar{x}_j$ ponieważ koszt zmiennych $x_j$ oraz $x_k$ jest taki sam. W nowym rozwiązaniu zmienna $x_{n+1}$ została zredukowana. Jeśli nie została zmniejszona o tyle aby $a_{1i}\bar{x}_i{'} \ge \bar{x}_{n+1}{'}$ wtedy powyższy proces jet powtarzany dopóki nie zostanie znalezione rozwiązanie w którym jedna zmienna nie spełnia nierówności. Jeśli a_{1i}\bar{x}_i{'} \ge \bar{x}_{n+1}{'}$ jest spełnione wówczas zmienna dodatkowa $x_{n+1}$ może być traktowana jako zmienna z przechowywaną wartością $0$ w rozwiązaniu z takim smaym kosztem jak powyższe rozwiązanie. Niech $k$-ty rozkrój będzie schematem identyczny jak $j$-ty rozkrój z wyłączeniem długości $l_1$ oraz niech okreslna nowe rozwiązanie  $\bar{x}_1{'}, \dots, \bar{x}_n{'}, \bar{x}_{n+1}{'}, \dots, \bar{x}_{n+m}{'}$ poprzez przypisanie $\bar{x}_i{'}=\bar{x}_i$ dla $i \neq j, k, n+1$, $\bar{x}_j{'} = \bar{x}_j - (\bar{x}_{n+1})/a_{1j},\bar{x}_k{'}=\bar{x}_k+(\bar{x}_{n+1})/a_{1j}$ oraz $\bar{x}_{n+1}{'} = 0$. Ponieważ współczynniki odpowiedzialne za koszt są identyczne dla $x_j$ oraz $x_k$, dlatego nowe rozwiązanie posiada taki sam koszt jak poprzednie rozwiązanie.
+
+Zniesienie warunku cąłkowitości rozwiązania pozawala pominąć zmienne dodatkowe, jednak w pewnych przypadkach jest zalecane pozostawienie ich. Bez zmiennych dodatkowych każde minimalne rozwiązanie zawiera zazwyczaj $m$ schematów rozkroju, podczas gdy rozwiązanie ze zmiennymi dodatkowymi może zawierać mniej niż $m$ rozkrojów. Opisywana metoda nie znosi zmiennych dodatkowych.
+
+Metoda simplex która jest stosowana do obliczenia dopuszczalnego rozwiązania (\cref{eq:additional_base}) w odniesieniu do (\cref{eq:additional_base_condition}) dla którego (\cref{eq:base_cost}) jest namjniejsze. Dla podstawowego rozwiązania (\cref{eq:additional_base_condition}) oraz (\cref{eq:base_cost}), metodą simplex sprawdzane są inne zmienne które mogą zastąpić pewne zmienne w bierzącym rozwiązaniu. Niech bierzącym rozwiązniem będzie $x_1,x_2,\dots,x_m$. Niech \mf{P}\tsub{i} będzie wektorem $[a_{1i}, a_{2i}, \dots, a_{mi}]$ oraz niech $c_i$ bedzie kosztem w (\cref{eq:base_cost}) który jest powiązany ze zmienną $x_i$. Jeśli $x_i$ jest zmienną dodatkową wówczas koszt wynosi $0$, a wektor ma jedną niezerową współrzędną wynoszącą $-1$. Niech $\textbf{\textit{P}} = [a_1,a_2,\dots,a_m]$ określa nowy schemat rozkroju który używa długości bazowej $L$ o koszcie $c$. Następnie niech \mf{A} będzie macierzą której kolumnami są wektory $\mf{P}_1,\dots,\mf{P}_m$. Ponieważ $\mf{P}_1, \dots, \mf{P}_m$ określą podstawę macierzy, wektor kolumnowy \mf{U} spełnia równość
+\begin{equation}\label{eq:uMatrixDef}
+  \mf{A} \cdotp \mf{U} = \mf{P}.
+\end{equation}
+Nowy schemat rozkroju może zostać uzyty w rozwiązaniu jako jego ulepszenie wtedy i tylko wtedy, gdy
+\begin{equation}\label{eq:costMatrixEq}
+  \mf{C} \cdotp \mf{U} > c
+\end{equation}
+gdzie \mf{C} jest wektorem wierszowym ze współczynnikami $c_1,c_2,\dots,c_m$. Jeśli wektor wierszowy $\mf{C} \cdotp \mf{A}\tsuper{-1}$ posiada współczynniki $b_1,\dots,b_2$, wtedy z równań (\cref{eq:uMatrixDef}) oraz (\cref{eq:costMatrixEq}) można wywnioskować że istnieje taki rozkrój z elementu podstawowego o długości $L$, który może poprawić rozwiązanie wtety i tylko wtedy, gdy istnieją nieujemne liczby całkowite $a_1,\dots,a_m$ spełniające nierówności
+\begin{align}
+L \ge l_1a_1+\dots+l_ma_m \label{length_eq} \\
+b_1a_1+\dots+b_ma_m > c. \label{cost_eq}
+\end{align}
+$\mf{C} \cdotp \mf{A}\tsuper{-1}$ jest zawsze częścią rozwiązania normalnej metody simplex.
+
+
+
 \subsubsection{Algorytm}
-
-\begin{equation}\label{length_eq}
-L \ge l_1a_1+\dots+l_ma_m
-\end{equation}
-
-\begin{equation}\label{cost_eq}
-b_1a_1+\dots+b_ma_m > c
-\end{equation}
 
 \begin{enumerate}
 \item Określnie $m$ poczatkowych rokrojów i ich kosztu w następujący sposób: dla każdego $i$ wybranie długości bazowej $L_j$ dla której $L_j > l_i$ i określenie $i$-tego rokroju jako wycięcie $a_{ii} = [L_j / l_i]$ elementów o długości $l_i$ z długości $L_j$. Koszt $i$-tego rozkroju będzie równy kosztowi $c_j$ długości $L_j$ z której $i$-ta operacja wycina odcinki o długości $l_i$.
@@ -93,7 +124,7 @@ Każdy element wyjściowy posiada określoną liczebność jaką powinien osi�
 \end{itemize}
 Po zakończeniu przebiegu algorytmu dla jednego układu rozkroju, można określić ile razy będzie on użyty. Zostaje to wyznaczone poprzez obliczenie
 \begin{equation}
-g = floor\{min\{z_i/a_i\}\}, i \in [0..m], g \in Z
+g = \lfloor min\{z_i/a_i\} \rfloor, \qquad i \in [0..m], g \in Z
 \end{equation}
 gdzie $g$ to liczba ile razy dany schemat może zostać użyty, $z$ to liczbność wyjściowego elementu $i$ która pozostała do wycięcia, $a$ to ilość wykrojów elementu $i$ w bierzącym układzie, $m$ to liczba długości umieszczonych w rozkroju. Następnie licznik wymaganych odcinków elemntu $i$ zostaje zmniejszony o $g a_i$.
 
@@ -107,12 +138,10 @@ Jeżeli element jest równy długości bazowej wówczas nie wlicza się szeroko
 Gdyby szerokość cięcia nie zostałą uwzględniona w obliczeniach wówczas dla elementu wejściowego o długości 6000mm i wymaganych odcinkach 4500mm oraz 1500mm, obie długości zostały wycięte z jednego segmentu materiału bazowego. Skutkiem takiego postępowania byłby element krótszy o szerokość ostrza. Zazwyczaj długość ta może być akceptowana jako toleracncja dokładności maszyny. Jednak dla poprawności obliczeń wielkość ta powinna zostać uwzględniona.
 
 \subsubsection{Rozszerzenie o wiele długości bazowych}
-Dla zmniejszenia odpadu można użyć kilku długości bazowych. Rozszerzenie to wprowadza następująca zmianę algorytmu: obliczenia układu muszą zostać powtórzone dla każdego elementu wejściowego. Następnie wybierany jest ten rozkrój, który daje mniejszy odpad. Modyfikacja ta znacząco wpływa na wydajność metody. Jeżeli $n$ oznacza złożoność obliczeniową podstawowego algorytmu, a $m$ oznacza liczbę odcinków wejściowych, wówczas nowa złożonośc obliczeniowa wynosi $m*n$. % a może n^m
+Dla zmniejszenia odpadu można użyć kilku długości bazowych. Rozszerzenie to wprowadza następująca zmianę algorytmu: obliczenia układu muszą zostać powtórzone dla każdego elementu wejściowego. Następnie wybierany jest ten rozkrój, który daje mniejszy odpad. Modyfikacja ta znacząco wpływa na wydajność metody. Jeżeli $n$ oznacza złożoność obliczeniową podstawowego algorytmu, a $m$ oznacza liczbę odcinków wejściowych, wówczas nowa złożoność obliczeniowa wynosi $m*n$. % a może n^m
 
 \subsubsection{Rozszerzenie o cenę materiału wsadowego}
 Rozszerzenie to wprowadza zmianę koncepcyjną. Każdy element bazowy posiada cenę za metr bieżący materiału, umożliwia to obliczenie kosztu odpadu i wybranie tańszej opcji wykroju.
-
-\clearpage
 
 \subsubsection{Przykład}
 \begin{enumerate}
