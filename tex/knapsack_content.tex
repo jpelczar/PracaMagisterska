@@ -215,7 +215,7 @@ Algorytm dla metody podziału i ograniczeń do rozwiązania problemu plecakowego
     \caption{Metoda podziału i ograniczeń - problem plecakowy}
 \end{algorithm}
 
-\subsubsection{Programowanie dynamiczne}
+\subsubsection{Programowanie dynamiczne}\label{knapsack:dynamicProgramming}
 Metoda ta używana jest w przypadku gdy problem można podzielić na małe podproblemy które mogą zostać rozwiązane rekursywnie. Rozwiązanie optymalne podproblemu jest również optymalnym rozwiązaniem problemu głównego. Przedstawione zostanie rozwiązanie problemu plecakowego rodzaju 0-1 \cite{GoddardLecture}.
 
 Jeśli elementy są oznaczone jako $1,\dots,n$ wtedy podproblem będzie odpowiedzialny za znalezienie optymalnego rozwiązania dla $S_k = \{1,2,\dots,k \}$. Niemożliwe jest opisanie rozwiązania końcowego $S_n$ na podstawie podproblemów $S_k$. Rekursywne sformułowanie podproblemu:

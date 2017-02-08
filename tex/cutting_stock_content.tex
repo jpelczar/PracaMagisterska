@@ -45,14 +45,22 @@ gdzie \mf{C} jest wektorem wierszowym ze współczynnikami $c_1,c_2,\dots,c_m$. 
 L \ge l_1a_1+\dots+l_ma_m \label{length_eq} \\
 b_1a_1+\dots+b_ma_m > c. \label{cost_eq}
 \end{align}
-$\mf{C} \cdotp \mf{A}\tsuper{-1}$ jest zawsze częścią rozwiązania normalnej metody simplex.
+$\mf{C} \cdotp \mf{A}\tsuper{-1}$ zawsze jest częścią rozwiązania normalnej metody simplex.
 
+Jeśli istnieje taka nieujemna liczba całkowita $a_i$ która spełnia nierówności (\cref{length_eq}) oraz (\cref{cost_eq}), wówczas isnieje taka nieujemna liczba całkowita która jest rozwiązaniem nierówności (\cref{length_eq}) dla której $b_1a_1+\dots+b_ma_m$ jest maksymalne. Problem wyboru nowej zmiennej dla metody simplex może zostać wyrażony poprzez rozwiązanie $k$ problemów pomocniczych (po jednym dla każdej długości bazowej), które są całkowitymi problemami programowania liniowego. Problemy te mogą zostać rozwiązane poprzez programowanie dynamiczne lub metodą \textit{ad hoc}.
 
+Jako, że maksymalizacja $b_1a_1+\dots+b_ma_m$ w odniesieniu od (\cref{length_eq}) jest generalizacją problemu plecakowego, dlatego można rozwiązać go metoda opisaną przez Dantziga \cite{DantzigArticle} oraz w sekcji (\cref{knapsack:dynamicProgramming}). Niech $F_s(x)$ będzie wartością maksymalną $b_1a_1+\dots+b_sa_s$ w odniesieniu do nierówności $x \ge l_1a_1+\dots+l_sa_s$, wówczas
+\begin{equation*}
+  F_{s+1}(x) = max_r\{rb_{s+1}+F_s(x-rl_{s+1})\},
+\end{equation*}
+gdzie $r$ może zostać wybrane z zakresu $0 \le r \le [x/l{s+1}]$, a nawiasy kwadratowe oznaczają największą częśc całkowitą z wyrażenia. Tylko jedno kompletne obliczenie wyrażenia programowania dynamicznego jest niezbędne aby wprowadzić nową zmienną do metody simplex. Gdy najdłużsyzm elementem jest $L_1$, wówczas automatycznie zostaną obliczone pozostałe długości.
+
+Programowanie dynamiczne często wykonuje więcej obliczeń niż jest konieczne. Aby przyspieszyć proces możliwe jest użycie metody podobnej do zapropnowanej przez Dantziga \cite{DantzigArticle} oraz opisanej w (\cref{brutalForce}). Niech $i_1,\dots,i_m$ będą takie, że $b_i_1/l_i_1 \ge b_i_1/l_i_2 \ge \dots \ge b_i_m/l_i_m$. Następnie obliczone zostają współczynniki $a_i_1=[L/l_i_1], a_i_2=[(L-l_i_1a_i_1)/l_i_2], a_i_3 = [(L - (l_i_1a_i_1 + l_i_2a_i_2))/l_i_3], etc$. Dopiero gdy proste metody nie dostarczą rozwiązania, powinny zostać użyte bardziej złożone metody, jak programowanie dynamiczne.
 
 \subsubsection{Algorytm}
 
 \begin{enumerate}
-\item Określnie $m$ poczatkowych rokrojów i ich kosztu w następujący sposób: dla każdego $i$ wybranie długości bazowej $L_j$ dla której $L_j > l_i$ i określenie $i$-tego rokroju jako wycięcie $a_{ii} = [L_j / l_i]$ elementów o długości $l_i$ z długości $L_j$. Koszt $i$-tego rozkroju będzie równy kosztowi $c_j$ długości $L_j$ z której $i$-ta operacja wycina odcinki o długości $l_i$.
+\item Określnie $m$ początkowych rokrojów i ich kosztu w następujący sposób: dla każdego $i$ wybranie długości bazowej $L_j$ dla której $L_j > l_i$ i określenie $i$-tego rokroju jako wycięcia $a_{ii} = [L_j / l_i]$ elementów o długości $l_i$ z $L_j$. Koszt $i$-tego rozkroju będzie równy cenie $c_j$ długości $L_j$ z której $i$-ta operacja wycina odcinki o długości $l_i$.
 \item Uformowanie macierzy \mf{B}
 \[
 \begin{matrix}
@@ -63,11 +71,11 @@ $\mf{C} \cdotp \mf{A}\tsuper{-1}$ jest zawsze częścią rozwiązania normalnej 
 0 & 0 & 0 & \dots & a_{mm}
 \end{matrix}
 \]
-gdzie $a_{ii}$ jest ilością odcinków o długości $l_i$ wyciętych w $i$-tym rozkroju z długości bazowej o koszcie $c_j$. Ostatnie $m$ kolumn jets powiązane z rozkrojami. Dane te będą aktualizowane gdy zostanie znaleziony wynik który poprawi rozwiązanie.
+gdzie $a_{ii}$ jest ilością odcinków o długości $l_i$ wyciętych w $i$-tym rozkroju z długości bazowej o koszcie $c_j$. Ostatnie $m$ kolumn jest odpowiada kolejmnym rozkrojom. Dane te będą aktualizowane gdy zostanie znaleziony wynik który zmniejsyz koszt rozwiązania.
 
-Utworzenie $m$ $m+1$ wymiarowych wektorów kolumnowych \mf{S\tsub{1}},...,\mf{S\tsub{m}} odnoszących się do zmiennych dodatkowych, gdzie \mf{S\tsub{i}} posiada same zera z wyjątkiem wiersza $(i+1)$ w którym jest $-1$. Dodatkowo utworzenie $m+1$ wymiarowego wektora kolumnowego \mf{N'} który jako pierwszy element przyjmuje 0, a w następnych $i$-tych wierszach posiada wartośic $N_i$.
+Utworzenie $m$ $m+1$ wymiarowych wektorów kolumnowych \mf{S\tsub{1}},...,\mf{S\tsub{m}} odnoszących się do zmiennych dodatkowych, gdzie \mf{S\tsub{i}} zawiera same zera z wyjątkiem wiersza $(i+1)$ któryc przechowuje wartość $-1$. Stworzony również zostaje $m+1$ wymiarowy wektor kolumnowy \mf{N'} który jako pierwszy element przyjmuje 0, a w następnych $i$-tych wierszach posiada wartości $N_i$.
 
-Obliczenie \mf{B}\tsuper{-1} która wynosi:
+Obliczenie macierzy \mf{B}\tsuper{-1} która wynosi:
 \[
 \begin{matrix}
 1 & c_1/a_{11}  & c_2/a_{22}  & \dots & c_m/a_{mm} \\
@@ -78,19 +86,17 @@ Obliczenie \mf{B}\tsuper{-1} która wynosi:
 \end{matrix}
 \]
 
-Niech $\mf{N} = \mf{B}^{-1} \cdotp \mf{N'}$. Sprawdzając czy pierwszy element z $\mf{B}\tsuper{-1} \cdotp \mf{P}$ jest dodatni można określić czy istnieje możliwość polepszenia rozwiązania. Wektor kolumnowy \mf{P} jets wektorem złożonym ze zmiennych nieuzytych w bieżącym rozwiązaniu, np. pierwszy element to negatywny koszt, a pozostałe $m$ wierszy jest równe zmiennym $a_{ij}$.
+Niech $\mf{N} = \mf{B}^{-1} \cdotp \mf{N'}$. Sprawdzając czy pierwszy element z $\mf{B}\tsuper{-1} \cdotp \mf{P}$ jest dodatni można określić czy istnieje możliwość polepszenia rozwiązania. Wektor kolumnowy \mf{P} jest wektorem złożonym ze zmiennych nieużytych w bieżącym rozwiązaniu. Dla przykładu pierwszy element jest kosztem pomnożonym przez $-1$, a pozostałe $m$ wierszy jest równe zmiennym $a_{ij}$.
 
-\item Z powyższego puntku wynika że jeśli $i$-ta zmienna dodatkowa która nie wchodzi w skład rozwiązania może ulepszyć rozwiązanie wtedy i tylko wtedy gdy $(i+1)$ element pierwszego wiersza \mf{B}\tsuper{-1} jest ujemny.
+\item Z powyższego puntku wynika że jeśli $i$-ta zmienna dodatkowa która nie wchodzi w skład rozwiązania, może ulepszyć rozwiązanie wtedy i tylko wtedy, gdy $(i+1)$ element pierwszego wiersza \mf{B}\tsuper{-1} jest ujemny.
 
-\item Jeśli nie jest możliwe polepszenie rozwiązania nalezy określić czy wprowadznie nowego rozkroju ulepszy bieżące rozwiązanie. Jets to możliwe poprzez sprawdznie czy dla $L$ z kosztem $c$ istnieje rozwiązanie nierówności \ref{length_eq} oraz \ref{cost_eq}, gdzie $b_1,\dots,b_m$ to ostatnie $m$ elementów w piwerwszym wierszu \mf{B}\tsuper{-1}. Jeśli te nierównoście nie posiadają rozwiąania dla dowolnej długości $L_1,\dots,L_k$ z kosztem odpowiednio $c_1,\dots,c_m$ wtedy bieżące rozwiązanie jest minimum. Rozwiązanie i jego koszt jest określone poprzez \mf{N}, gdzie pierwszy wiersz to koszt, a pozostałe $m$ wierszy jest, w kolejności, odpowiednimi wartościami $m$-tej kolumny z \mf{B}\tsuper{-1}.
+\item Jeśli nie jest możliwe zmniejszenie kosztu rozwiązania należy określić czy wprowadznie nowego rozkroju poprawi rozwiązanie. Jest to możliwe poprzez sprawdznie czy dla $L$ z kosztem $c$ istnieje rozwiązanie nierówności \ref{length_eq} oraz \ref{cost_eq}, gdzie $b_1,\dots,b_m$ to ostatnie $m$ elementów z pierwszego wiersza \mf{B}\tsuper{-1}. Jeśli te nierówności nie posiadają rozwiązania dla dowolnej długości $L_1,\dots,L_k$ z kosztem odpowiednio $c_1,\dots,c_m$, wówczas bieżące rozwiązanie jest optymalne. Rozwiązanie i jego koszt jest określone poprzez \mf{N}, gdzie pierwszy wiersz odpowiada cenie, a pozostałe $m$ wierszy jest, w kolejności, odpowiednimi wartościami $m$-tej kolumny z \mf{B}\tsuper{-1}.
 
-Jeśli nowy rozkrój poprawi rozwiązanie wtedy formowany jest nowy wektor \mf{P} ze współczynnikami, w kolejności $-c,a_1,a_2,\dots,a_m$.
+Jeśli nowy rozkrój zmniejsza koszt rozwiązania, zostaje uformawany nowy wektor \mf{P} o współczynnikamch, w kolejności $-c,a_1,a_2,\dots,a_m$.
 
-\item Wprowadznie zarówno dodatkowej zmiennej jak i nowego rozkroju może poprawić rozwiązanie. W obu przypadkach \mf{P} będzie kolumnowym wektorem ze zmiennymi. Dla określenia nowych \mf{B}\tsuper{-1} oraz \mf{N} które opisują ulepszone rozwiązanie i jego koszt, co pozawala na przejście przez kkroki 3, 4 oraz kontynujacje kroku 5 w nastepujący sposób: Obliczenie $\mf{B}\tsuper{-1} \cdotp \mf{P}$ - niech elementy wynikime będą elementy $y_1,\dots,y_m,y_{m+1}$ oraz niech elementami bierzącego wektora \mf{N} będą $x_1,\dots,x_m,x_{m+1}$. Ustalenie $i$, $ i \ge 2$ dla każdego $y_i > 0$, $x_i \ge 0$ oraz $x_i/y_i$ jest najminiejsze i przypisanie tej wartości do zmiennej $k$. Minimalny stosunek powinien być zerem aby można było wykorzystać metodę degeneracji.
+\item Wprowadznie zarówno dodatkowej zmiennej jak i nowego rozkroju może poprawić rozwiązanie. W obu przypadkach \mf{P} będzie wektorem kolumnowym. Określenia nowych \mf{B}\tsuper{-1} oraz \mf{N} które opisują ulepszone rozwiązanie i jego koszt, zostaje osiągnięte poprzez przejście kroków 3, 4 oraz kontynujacje kroku 5 w nastepujący sposób: Obliczenie $\mf{B}\tsuper{-1} \cdotp \mf{P}$ - niech wynikiem będą elementy $y_1,\dots,y_m,y_{m+1}$ oraz niech elementami bierzącego wektora \mf{N} będą $x_1,\dots,x_m,x_{m+1}$. Ustalenie $i$, $ i \ge 2$ dla którego $y_i > 0$, $x_i \ge 0$ oraz $x_i/y_i$ jest najminiejsze, a następnie przypisanie tej wartości do zmiennej $k$.
 
-Jeśli stosunek nie jest równy zero wtedy $k$-ty element wektora \mf{P}, $y_k$ będzie elementem wokół którego zajdzie eliminacja Gaussa odbywająca się równocześnie na \mf{B}\tsuper{-1}, $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Eliminacja ta przebiega na macierzy $(m+1) \times (m+3)$ wymiarowej \mf{G} uformowanej z \mf{B}\tsuper{-1} poprzez dołączenie kolumn $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Pierwsze $m+1$ kolumn \mf{G'} formuje nową macierz \mf{B}\tsuper{-1}, a kolumna $m+2$ to nowy wektor \mf{N}. Zależność między kolumnami \mf{B}\tsuper{-1} a rozkrojami lub zmiennymi dodatkowymi jets aktualizowana poprzez usunięcie $k$-tej kolumny i podmienieniu jej na nowy rozkruj lub zmienną dodatkową.
-
-Degeneracja w razie wystąpienia może być obsłużona w tradycyjny sposób. Pewne środki ostrożności powinny zostać podjęte w celu uniknięcia cykliczności. Nowa kolumna \mf{N}\tsuper{1} z dodatnimi elementami $x_1',\dots,x_{m+1}'$ która jest niezależna pd \mf{N} jest dołączana do \mf{G} i wybór takiego $y_i > 0$ dla którego $x_i = 0$ który jest elementem osiowym jets dokonywany na podstawie takiego $i$ dla którego $x_i' > 0$ oraz $x_i'/y_i$ jest najmniejsze. Gdy element osiowy zostanie wybrany, wówczas eliminacja Gaussa zachodzi tak jak w poprzednim przypadku na powiększonej macierzy \mf{G}. Dodatkowa kolumna jest przechowywane w \mf{G} dopóki istnieje takie $i$ dla którego $x_i/y_i$ jest dodatnie i skończone, jeśłi warunek ten jest spełniony wówczas kolumna zostaje usunięta. Powinno to nastąpić w przypadku gdy nie istnieje takie $i$ dla którego $x_i/y_i$ oraz $x_i'/y_i$ są dodatnie i skończone. Wówczas powinna zostać dodana kolumna \mf{N}\tsuper{2} nizależna od \mf{N} oraz \mf{N}\tsuper{1}. Podobnie dowolna liczba kolumn może zostac dodana i usunięta gdy przestanie byc potrzebna. Dopóki kolumny są niezależne w czasie dodawania i pozostają takie po eliminacji Gaussa, nie potrzeba więcej jak $m$ nowych kolumn. Każda dodana kolumna definiuje nowy problem liniowy który eliminuje problem cykliczności tak długo aż degeneracja nie wystąpi.
+Jeśli stosunek nie jest równy zero, wówczas $k$-ty element wektora \mf{P}, $y_k$, będzie elementem wokół którego zajdzie eliminacja Gaussa, odbywająca się równocześnie w \mf{B}\tsuper{-1}, $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Eliminacja ta przebiega dla macierzy $(m+1) \times (m+3)$ wymiarowej \mf{G} uformowanej z \mf{B}\tsuper{-1} poprzez dołączenie kolumn $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Pierwsze $m+1$ kolumn \mf{G'} formuje nową macierz \mf{B}\tsuper{-1}, a kolumna $m+2$ jest nowym wektorem \mf{N}. Zależność między kolumnami \mf{B}\tsuper{-1}, a rozkrojami lub zmiennymi dodatkowymi jest aktualizowana poprzez usunięcie $k$-tej kolumny i podmienieniu jej na nowy rozkrój lub zmienną dodatkową.
 
 \end{enumerate}
 
@@ -101,7 +107,7 @@ Degeneracja w razie wystąpienia może być obsłużona w tradycyjny sposób. Pe
 
 \subsubsection{Przykład}
 
-\subsection{Metoda "Brutal Force"}
+\subsection{Metoda "Brutal Force"}\label{brutalForce}
 \subsubsection{Algorytm wyjściowy}
 Metoda ta opiera się zarówno na intuicji jak i na rozwiązaniu zaproponowanym przez Dantziga dla problemu plecakowego \cite{DantzigArticle}. Jest to metoda która w prosty sposób - nie używając złożonych modeli matematycznych, pozwala osiągnąć optymalny rozkrój materiału.
 
