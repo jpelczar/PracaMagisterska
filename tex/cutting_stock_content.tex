@@ -96,16 +96,21 @@ Jeśli nowy rozkrój zmniejsza koszt rozwiązania, zostaje uformawany nowy wekto
 
 \item Wprowadznie zarówno dodatkowej zmiennej jak i nowego rozkroju może poprawić rozwiązanie. W obu przypadkach \mf{P} będzie wektorem kolumnowym. Określenia nowych \mf{B}\tsuper{-1} oraz \mf{N} które opisują ulepszone rozwiązanie i jego koszt, zostaje osiągnięte poprzez przejście kroków 3, 4 oraz kontynujacje kroku 5 w nastepujący sposób: Obliczenie $\mf{B}\tsuper{-1} \cdotp \mf{P}$ - niech wynikiem będą elementy $y_1,\dots,y_m,y_{m+1}$ oraz niech elementami bierzącego wektora \mf{N} będą $x_1,\dots,x_m,x_{m+1}$. Ustalenie $i$, $ i \ge 2$ dla którego $y_i > 0$, $x_i \ge 0$ oraz $x_i/y_i$ jest najminiejsze, a następnie przypisanie tej wartości do zmiennej $k$.
 
-Jeśli stosunek nie jest równy zero, wówczas $k$-ty element wektora \mf{P}, $y_k$, będzie elementem wokół którego zajdzie eliminacja Gaussa, odbywająca się równocześnie w \mf{B}\tsuper{-1}, $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Eliminacja ta przebiega dla macierzy $(m+1) \times (m+3)$ wymiarowej \mf{G} uformowanej z \mf{B}\tsuper{-1} poprzez dołączenie kolumn $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Pierwsze $m+1$ kolumn \mf{G'} formuje nową macierz \mf{B}\tsuper{-1}, a kolumna $m+2$ jest nowym wektorem \mf{N}. Zależność między kolumnami \mf{B}\tsuper{-1}, a rozkrojami lub zmiennymi dodatkowymi jest aktualizowana poprzez usunięcie $k$-tej kolumny i podmienieniu jej na nowy rozkrój lub zmienną dodatkową.
+Jeśli stosunek nie jest równy zeru, wówczas $k$-ty element wektora \mf{P}, $y_k$, będzie elementem wokół którego zajdzie eliminacja Gaussa, odbywająca się równocześnie w \mf{B}\tsuper{-1}, $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Eliminacja ta przebiega dla macierzy $(m+1) \times (m+3)$ wymiarowej \mf{G} uformowanej z \mf{B}\tsuper{-1} poprzez dołączenie kolumn $\mf{B}\tsuper{-1} \cdotp \mf{P}$ oraz \mf{N}. Pierwsze $m+1$ kolumn \mf{G'} formuje nową macierz \mf{B}\tsuper{-1}, a kolumna $m+2$ jest nowym wektorem \mf{N}. Zależność między kolumnami \mf{B}\tsuper{-1}, a rozkrojami lub zmiennymi dodatkowymi jest aktualizowana poprzez usunięcie $k$-tej kolumny i podmienieniu jej na nowy rozkrój lub zmienną dodatkową.
 
 \end{enumerate}
 
 \subsubsection{Metody użyte w implementacji}
 
-\paragraph{Dwufazowa metoda simplex}
-\paragraph{Metoda podziału i ograniczeń}
+Do obliczenia wartości maksymalnej nierówności która zostanie przypisana do \mf{P} zostały użyte metody:
+\begin{enumerate}
+  \item Dwufazowa metoda simplex - metoda to znajduje zastosowanie gdy bierzące rozwiązanie układu jest ujemne. Zwykła metoda sympleks jest użyta w drugiej fazie omawianej procedury. Faza pierwsza polega na przeprowadzeniu obliczeń metodą simplex ze zmienioną funcją celu. Jeśli zmienna wchodząca w skład rozwiązania układu jest ujemna wówczas do danego równania dodawana jest dodatkowa sztuczna zmienna. Funkcja celu wówczas przyjmuje postać sumy zmiennych które zostały dodane jako sztuczne do równań o ujemnym rozwiązaniu. Po obliczeniu wartości fazy pierwszej, nastepuje ponowne przekształcenie funkcji celu i przeprowadzenie normlanej procedury sympleks, jako fazy 2.
+  \item Metoda podziału i ograniczeń - metoda ta pozwala osiągnąć wyniki całkowite z rozwiązań układów nierówności. Polega ona na budowie drzewa binarnego. Każdy liść staje się rodzicem poprzez stworznie dwóch węzłów poprzez sprawdzenie dwóch warunków. Lewy potomek tworzony jest z dodatkowym warunkiem $x_i \le \lfloor c_i \rfloor$ gdzie $c_i$ jest zmienną niecałkowitą wchodzącą w skład rozwiązania. Prawy potomek posiada warunek $x_i \ge \lceil c_i \rceil$. Następnie dla każdego węzła przeprowadzana jest metoda sympleks. Jeśli dany węzeł posiada rozwiązanie wówczas procedura ta jest powtarzana, aż do osiągnięcia wyniku całkowitego. Poszczególne warunki dołączane są do układu nierówności który przekazywany jest do kolejnych potomków. Jeśli tworzenie drzewa binarnego jest zakończone, wówczas jako rozwiązanie wybierany jest liść z jak największą wartością zwróconą przez metodę simplex.
+\end{enumerate}
 
 \subsubsection{Przykład}
+
+\subsubsection{Podsumowanie}
 
 \subsection{Metoda "Brutal Force"}\label{brutalForce}
 \subsubsection{Algorytm wyjściowy}
