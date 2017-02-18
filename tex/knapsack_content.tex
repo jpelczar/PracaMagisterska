@@ -10,11 +10,11 @@ Problem ten stosowany jest również w dziedzinie finansów. Jest on podstawowym
 
 Wiele problemów związanych z planowaniem może być przyrównana do problemu plecakowego, dla przykładu czas wykonywania operacji na maszynie jest zasobem deficytowym. Jest on szczególnie uwydatniony gdy od aktywności maszyny zależy zysk przedsiębiorstwa. Poprzez rozwiązanie problemu plecakowego możliwe jest przewidzenie zapotrzebowania na materiały podaczas procesu tak aby warunki zamówienia zostały spełnione\cite{BartholdiChapter}.
 
-Kolejnym zagadnieniem wynikającym z problemu plecakowego jest problem optymalnego rozkroju, zostanie on przedstawiony w rozdziale \cref{sec:cuttingStockProblem}.
+Kolejnym zagadnieniem wynikającym z problemu plecakowego jest problem optymalnego rozkroju, zostanie on przedstawiony w rozdziale \ref{sec:cuttingStockProblem}.
 \subsection{Różnorodność problemu plecakowego}
 Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów które mogą zostać wybrane w taki sposób aby zysk został zmaksymalizowany, a pojemość placaka lub wielu plecaków nie została przekroczona. Wszystkie typy problemu należą do rodziny problemów $\mathcal{NP}$-Trudnych co oznacza, że mozliwe jest rozwiązanie problemu z użyciem algorytmów wielomianowych. Możliwe są różne warinaty problemu zależne od rozmieszczenia elementów oraz ilości plecaków\cite{PisingerThesis}:
 \begin{itemize}
-  \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma zysków $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$. Może być sformułowany jako problem maksymalizacji:
+  \item \textit{Problem plecakowy 0-1} - każdy element może być wybrany tylko raz. Problem polega na wyborze $n$ elementów dla których suma zysków $p_j$ jest największa, bez konieczności osiągnięcia całkowitej pojemności $c$ przy objętości $w_j$ elementu. Może być sformułowany jako problem maksymalizacji:
   \begin{equation}\label{01Knapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
@@ -93,11 +93,11 @@ Rozwiązanie problemu plecakowego jest możliwe przy użyciu różnych metod:
 \end{itemize}
 
 \subsubsection{Metoda podziału i ograniczeń}
-Algorytm ten polega na wypisaniu wszystkich możliwych rozwiązań używając struktury drzewa. Algorytm przechodzi kolejno po gałęziach które reprezentują podzbiory rozwiązania. Każda gałąź jest sprawdzana zadanymi warunkami brzegowymi i zostaje odrzucona jeśli nie poprawia rozwiąznaia. Przedstawione zostanie rozwiązanie nieograniczonego problemu plecakowego (\cref{unboundedKnapsack}) \cite{ChvatalBook}. Współczynniki $w_1,\dots,w_m$, $p_1, \dots, p_m$ oraz $c$ są nieujemne. Stosunek $p_j/w_j$ jest wartością jednej jednostki długości $j$-tego elementu. Stosunek ten jest nazywany \textit{wydajnością} zmiennej $x_j$. Pierwszym krokiem algorytmu jest posortowanie zmiennych w porządku malęjącym względem wydajności:
+Algorytm ten polega na wypisaniu wszystkich możliwych rozwiązań używając struktury drzewa. Algorytm przechodzi kolejno po gałęziach które reprezentują podzbiory rozwiązania. Każda gałąź jest sprawdzana zadanymi warunkami brzegowymi i zostaje odrzucona jeśli nie poprawia rozwiąznaia. Przedstawione zostanie rozwiązanie nieograniczonego problemu plecakowego (\ref{unboundedKnapsack}) \cite{ChvatalBook}. Współczynniki $w_1,\dots,w_m$, $p_1, \dots, p_m$ oraz $c$ są nieujemne. Stosunek $p_j/w_j$ jest wartością jednej jednostki długości $j$-tego elementu. Stosunek ten jest nazywany \textit{wydajnością} zmiennej $x_j$. Pierwszym krokiem algorytmu jest posortowanie zmiennych w porządku malęjącym względem wydajności:
 \begin{equation} \label{eq:BBeff}
   p_1/w_1 \ge p_2/w_2 \ge \cdots \ge p_m/w_m
 \end{equation}
-Dla posortowanych elementów każde rozwiązanie optymalne (\cref{unboundedKnapsack}) spełnia warunek:
+Dla posortowanych elementów każde rozwiązanie optymalne (\ref{unboundedKnapsack}) spełnia warunek:
 \begin{equation}
   c - \sum_{j=1}^m w_jx_j < w_m
 \end{equation}
@@ -109,30 +109,30 @@ Głównym elementem algorytmu jest stworzenie drzewa wyliczeń oraz przeprowadze
     &&& x_j \in \mathbb{N}_0
   \end{aligned}
 \end{equation*}
-
 \begin{figure}
-  \includegraphics[width=\textwidth,center]{../image/chvatal_book_sample.png}%
+  \includegraphics[width=\textwidth,center]{../image/chvatal_book_sample.png}
   \caption{Drzewo wyliczeń możliwych rozwiązań}
   \label{fig:chvatalBBTree}
 \end{figure}
-drzewo będzie miało 13 liści (\cref{fig:chvatalBBTree}). Jeśli dany węzeł posiada więcej niż jedno dziecko, wówczas potomek o większej przechowywanej wartości zostaje umieszczony wyżej. Każdy następny węzeł jest obliczany według wzoru:
-\begin{equation*}\label{eq:chvatalBBTree}
+
+
+\noindent drzewo będzie miało 13 liści (\hyperref[fig:chvatalBBTree]{rys.~\ref*{fig:chvatalBBTree}}). Jeśli dany węzeł posiada więcej niż jedno dziecko, wówczas potomek o większej przechowywanej wartości zostaje umieszczony wyżej. Każdy następny węzeł jest obliczany według wzoru:
+\begin{equation}\label{eq:chvatalBBTree}
   \begin{aligned}
     & x_j = \lfloor{(c - \sum_{i=1}^{j-1}w_ix_i)/w_j}\rfloor \qquad i = 1,2,\dots,m \\
     & x_1 = \lfloor{c/w_1}\rfloor
   \end{aligned}
-\end{equation*}
-Podczas poszukiwania węzłów które nie mogą polepszyć rozwiązania i gałęzi które dają szansę na rozwiązanie optymalne $x_1,x_2,\dots,x_m$ ustawione zostaje $k = m-1$. Jeśli zachodzi taka potrzeba zmienna $k$ jest dekrementowana dopóki nie zostanie znalezione takie $x_k$, że $x_k > 0$. Wówczas $x_k = x_{k-1}$, a wartości $x_{k+1}, x_{k+2}, \dots,x_m$ są otrzymywane ze wzoru (\cref{eq:chvatalBBTree}).
+\end{equation}
+Podczas poszukiwania węzłów które nie mogą polepszyć rozwiązania i gałęzi które dają szansę na rozwiązanie optymalne $x_1,x_2,\dots,x_m$ ustawione zostaje $k = m-1$. Jeśli zachodzi taka potrzeba zmienna $k$ jest dekrementowana dopóki nie zostanie znalezione takie $x_k$, że $x_k > 0$. Wówczas $x_k = x_{k-1}$, a wartości $x_{k+1}, x_{k+2}, \dots,x_m$ są otrzymywane ze wzoru (\ref{eq:chvatalBBTree}).
 
-Dla bieżącego rozwiązania $x_1^*,\dots,x_m^*$ zachodzi $\sum_{i=1}^m p_ix_i^* = M$. Maksymalne $k$ takie, że $ k \le m - 1$ oraz $x_k > 0$ zostaje określone przechodząc od węzłów $x_1,x_2,\dots,x_m$ w kierunku korzenia. Podobnie jak wcześniej, niech $\bar{x}_i = x_i$ dla $i=1,2,\dots,k-1$ oraz $\bar{x}_k = x_k -1$ będą zmiennymi kandydującymi do rozwiązania. Aby okreslić czy $\bar{x_i}$ polepszy rozwiązanie $x_i^*$. Zgodnie z (\cref{eq:BBeff}) dla każdej zmiennej $x_{k+1}, x_{k+2}, \dots, x_m$ wydajność wynosi maksymalnie $p_{k+1}/w_{k+1}$, tak więc
+Dla bieżącego rozwiązania $x_1^*,\dots,x_m^*$ zachodzi $\sum_{i=1}^m p_ix_i^* = M$. Maksymalne $k$ takie, że $ k \le m - 1$ oraz $x_k > 0$ zostaje określone przechodząc od węzłów $x_1,x_2,\dots,x_m$ w kierunku korzenia. Podobnie jak wcześniej, niech $\bar{x}_i = x_i$ dla $i=1,2,\dots,k-1$ oraz $\bar{x}_k = x_k -1$ będą zmiennymi kandydującymi do rozwiązania. Aby okreslić czy $\bar{x_i}$ polepszy rozwiązanie $x_i^*$. Zgodnie z (\ref{eq:BBeff}) dla każdej zmiennej $x_{k+1}, x_{k+2}, \dots, x_m$ wydajność wynosi maksymalnie $p_{k+1}/w_{k+1}$, tak więc
 \begin{equation*}
   \sum_{i=k+1}^m p_i\bar{x}_i \le \frac{p_{k+1}}{w_{k+1}}\sum_{i=k+1}^m w_i \bar{x}_i
 \end{equation*}
-połączone razem z (\cref{unboundedKnapsack}) zwraca:
+połączone razem z (\ref{unboundedKnapsack}) zwraca:
 \begin{equation}
   \sum_{i=1}^m p_i\bar{x}_i \le \sum_{i=1}^m w_i \bar{x}_i + \frac{p_i}{w_{i}}( c - \sum_{i=1}^k w_i\bar{x}_i ).
 \end{equation}
-
 Zgodnie z zasadami drzewa wyliczeń, nierówność
 \begin{equation} \label{eq:enumerationTreeConstraint}
   \sum_{i=1}^k p_x\bar{x}_i + \frac{p_{k+1}}{w_{k+1}}(c - \sum_{i=1}^kw_i\bar{x}_i) \le M
@@ -170,7 +170,7 @@ i zastąpuje ona poprzednie rozwiązanie $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$ ora
     8+\frac{5}{51}(120-66) = 13.3
   \end{aligned}
 \end{equation*}
-Jest ona mniejsza niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $k$ dalej jest zmniejszane, a kroki sa powtarzane. Dla $x_1=1$ wynik testu to $12.9 < 14$, a dla $x_1=0$ wynik to $12.2 < 14$ więc gałęzie te są odcinane. Tak więc optymalnym rozwiązaniem jest  $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$. Drzewo wyliczeń zostało zredukowane do postaci \ref{fig:reducedchvatalBBtree}.
+Jest ona mniejsza niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $k$ dalej jest zmniejszane, a kroki sa powtarzane. Dla $x_1=1$ wynik testu to $12.9 < 14$, a dla $x_1=0$ wynik to $12.2 < 14$ więc gałęzie te są odcinane. Tak więc optymalnym rozwiązaniem jest  $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$. Drzewo wyliczeń zostało zredukowane do postaci \hyperref[fig:reducedchvatalBBtree]{rys.~\ref*{fig:reducedchvatalBBtree}}.
 
 \begin{figure}
   \includegraphics[width=\textwidth,center]{../image/reduced_chvatal_book_sample.png}%
@@ -178,7 +178,7 @@ Jest ona mniejsza niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $
   \label{fig:reducedchvatalBBtree}
 \end{figure}
 
-Jeśli odcięta jest gałąź $\bar{x}_1, \dots, \bar{x}_k$ wówczas odcięt również zostaje pozostała część gałęzi bez przeprowadzania dodatkowych testów.
+Jeśli odcięta jest gałąź $\bar{x}_1, \dots, \bar{x}_k$ wówczas odcięta również zostaje pozostała część gałęzi bez przeprowadzania dodatkowych testów.
 
 Algorytm dla metody podziału i ograniczeń do rozwiązania problemu plecakowego, został przedstawiony poniżej
 
