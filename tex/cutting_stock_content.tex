@@ -147,8 +147,8 @@ Początkowo:
 Długości bazowe będą próbowane w kolejności malejącej ponieważ im dłuższy element, tym więcej możliwości rozkroju. Pierwszy układ nierówności:
 \begin{equation*}
   \begin{aligned}
-    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} & \le 9.0 \\
-    3.0 x_{1}+ 6.0 x_{2}+ 6.0 x_{3} & > 10.0
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} & &\le 9.0 \\
+    3.0 x_{1}+ 6.0 x_{2}+ 6.0 x_{3} & &> 10.0
   \end{aligned}
 \end{equation*}
 Rozwiązaniem nierówności jest $(0.0,3.0,0.0)$. Wówczas wektor $\mf{P} = [-10.0, 0.0, 3.0, 0.0]$ oraz
@@ -237,15 +237,15 @@ gdzie element osiowy wynosi $0.5$. Po eliminacji Gaussa:
 Układ nierówności:
 \begin{equation*}
   \begin{aligned}
-    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 9.0 \\
-    2.5 x_{1}+ 2.5 x_{2}+ 5.0 x_{3} > 10.0
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 9.0 \\
+    2.5 x_{1}+ 2.5 x_{2}+ 5.0 x_{3} &> 10.0
   \end{aligned}
 \end{equation*}
 nie posiada rozwiązania całkowitego. Wówczas brana jest następna długośc podstawowa 6. Nowy układ wynosi:
 \begin{equation*}
   \begin{aligned}
-    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 6.0 \\
-    2.5 x_{1}+ 2.5 x_{2}+ 5.0 x_{3} > 7.0
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 6.0 \\
+    2.5 x_{1}+ 2.5 x_{2}+ 5.0 x_{3} &> 7.0
   \end{aligned}
 \end{equation*}
 dla którego wektor \mf{P} wynosi $[-7.0,1.0,0.0,1.0]$ oraz
@@ -271,15 +271,15 @@ gdzie element osiowy wynosi $0.75$. Po eliminacji Gaussa:
 Układ nierówności:
 \begin{equation*}
   \begin{aligned}
-    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 6.0 \\
-    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} > 7.0
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 6.0 \\
+    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} &> 7.0
   \end{aligned}
 \end{equation*}
 nie posiada rozwiązania, tak samo układ
 \begin{equation*}
   \begin{aligned}
-    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 5.0 \\
-    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} > 6.0
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 5.0 \\
+    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} &> 6.0
   \end{aligned}
 \end{equation*}
 również nie posiada rozwiązania.
@@ -287,19 +287,19 @@ również nie posiada rozwiązania.
 Następnie wykorzystywana jest metoda programowanie dynamicznego w celu określenia czy kolejny rozkrój może polepszyć rozwiązanie. Z metody tej wynika że możliwym jest ulepszenie rozwiązania poprzez rozkrój z długości 9. Jednak układ nierówności:
 \begin{equation*}
   \begin{aligned}
-    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 9.0 \\
-    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} > 10.0
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 9.0 \\
+    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} &> 10.0
   \end{aligned}
 \end{equation*}
 nie posiada rozwiązania całkowitego. Wektor \mf{N} równy jest przedostatniej kolumnie ostatniej obliczonej macierzy \mf{G\tsuper{'}}, czyli $[170.0,0.0,10.0,10.0]$ oraz
 \begin{equation*}
   \mf{B} =
-  \begin{pmatrix}
+  \begin{bmatrix}
     1.0 & -10.0 & -10.0 & -7.0 \\
     0.0 & 3.0 & 1.0 & 1.0 \\
     0.0 & 1.0 & 1.0 & 0.0 \\
     0.0 & 0.0 & 1.0 & 1.0
-  \end{pmatrix}
+  \end{bmatrix}
 \end{equation*}
 Na podstawie \mf{N} oraz \mf{B} można uzyskać wynikowe rozkroje. Pierwszy element wektora \mf{N} okrśla że koszt następującego rozkroju wynosi $170$. Następne elementy są ilością kolejnych rozkrojów, tak więc pierwszy rozkrój nie będzie brany pod uwagę, a dwa następne zostaną wykonane $10$ razy. Macierz \mf{B} jest analizowana od drugiej kolumny. Pierwszy wiersz równy jest kosztowi długości z której ma być wykonany rozkrój pomnożonemu przez $-1$. Następnie wiersze w kolumnach określają ile elementów o danej długości powinno znaleźć się w rozkroju.
 
@@ -309,6 +309,9 @@ Rozwiązaniem powyższego przykładu jest układ rozkrojów:
   \item  elementy: $[2.0,4.0]$, ilość: 10, odpad: 0, długość bazowa: 6
 \end{enumerate}
 \subsubsection{Podsumowanie}
+W drugiej części artykułu poświęconemu problemowi optymalnego rozkroju \cite{GilmoreGomoryV2Article}, Gilmore oraz Gomory opisali wyniki eksperymentów wykorzystujących różne warianty metody opoisanej w pierwszej części. Problem który został użyty do testów jets problemem z przemysłu papierniczego. W podstawowym zbiorze 20 problemów długości bazowe miały tę samą długość 200 in lub mnie. Ilość elementów wynikowych była z przedziału od 20 do 40. Długości elementów były od 20 in. do 80 in. z dokładnością do $1/4$ in. Liczba noży była ustawiona na pięć, siedem lub dziewięć.
+
+Średnia ilość iteracji metody simplex dla tego problemu to w przybliżeniu 130 iteracji. Jednak rozpiętość ilości iteracji była duża od 20 do 300. Taka zmienność jest powszechna dla problemóœ programowania linowego. Problemy które są niemal identyczne mogą zachowywać się bardzo odmiennie w odniesieniu do emtdy sympleks. Zgodnie z przewidywaniami, problemy z mniejszą ilością elementów wchodzących w skład rozkroju, potrzebują mniej iteracji. Trend ten jest niedeterministyczny, dla przykładu 35 elementowy rozkrój wymagał 197 iteracji, gdzie problem pokrewny dla 40 elementów wymagał ich tylko 161.
 
 \subsection{Metoda "Brutal Force"}\label{brutalForce}
 \subsubsection{Algorytm wyjściowy}
