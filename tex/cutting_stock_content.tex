@@ -110,6 +110,204 @@ Do obliczenia wartości maksymalnej nierówności która zostanie przypisana do
 
 \subsubsection{Przykład}
 
+Zamówione zostało 20 elementów o długości 2, 10 o długości 3 oraz 20 o długości 4. Jako długości bazowe zostały określone elementy o dłogości 5 z ceną 6, 6 z ceną 7 oraz o długości 9 z ceną 10. \newline
+Początkowo:
+\begin{equation*}
+  \begin{aligned}
+    &\mf{B} =
+    \begin{bmatrix}
+      1.0 & -6.0 & -6.0 & -6.0 \\
+      0.0 & 2.0 & 0.0 & 0.0 \\
+      0.0 & 0.0 & 1.0 & 0.0 \\
+      0.0 & 0.0 & 0.0 & 1.0
+    \end{bmatrix}, \qquad
+    &\mf{N'} =
+    \begin{bmatrix}
+      0.0\\
+      20.0\\
+      10.0\\
+      20.0
+    \end{bmatrix} \\
+    &\mf{B}^{-1} =
+    \begin{bmatrix}
+      1.0 & 3.0 & 6.0 & 6.0 \\
+      0.0 & 0.5 & 0.0 & 0.0 \\
+      0.0 & 0.0 & 1.0 & 0.0 \\
+      0.0 & 0.0 & 0.0 & 1.0
+    \end{bmatrix}, \quad
+    &\mf{N} =
+    \begin{bmatrix}
+      240.0\\
+      10.0\\
+      10.0\\
+      20.0
+    \end{bmatrix}
+  \end{aligned}
+\end{equation*}
+Długości bazowe będą próbowane w kolejności malejącej ponieważ im dłuższy element, tym więcej możliwości rozkroju. Pierwszy układ nierówności:
+\begin{equation*}
+  \begin{aligned}
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} & \le 9.0 \\
+    3.0 x_{1}+ 6.0 x_{2}+ 6.0 x_{3} & > 10.0
+  \end{aligned}
+\end{equation*}
+Rozwiązaniem nierówności jest $(0.0,3.0,0.0)$. Wówczas wektor $\mf{P} = [-10.0, 0.0, 3.0, 0.0]$ oraz
+\begin{equation*}
+  \begin{aligned}
+    \mf{G\tsuper{'}} =
+    \begin{bmatrix}
+      1.0 & 3.0 & 6.0 & 6.0 & 240.0 & 8.0  \\
+      0.0 & 0.5 & 0.0 & 0.0 & 10.0 & 0.0 \\
+      0.0 & 0.0 & 1.0 & 0.0 & 10.0 & 3.0 \\
+      0.0 & 0.0 & 0.0 & 1.0 & 20.0 & 0.0
+    \end{bmatrix}
+  \end{aligned}
+\end{equation*}
+gdzie ostatnią kolumną jest $\mf{B}^{-1} \cdotp \mf{P}$. Jako element psiowy wokół ktorego zajdzie eliminacja Gaussa to wrtość z ostatniej kolumny $3.0$.
+Macierzą po eliminacji Gaussa jest:
+\begin{equation*}
+  \mf{G\tsuper{'}} =
+  \begin{bmatrix}
+    1.0 & 3.0 & 3.33 & 6.0 & 213.33 & 0.0 \\
+    0.0 & 0.5 & 0.0 & 0.0 & 10.0 & 0.0 \\
+    0.0 & 0.0 & 0.33 & 0.0 & 3.33 & 1.0 \\
+    0.0 & 0.0 & 0.0 & 1.0 & 20.0 & 0.0
+  \end{bmatrix}
+\end{equation*}
+Zmieniona zostaje druga nierówność na $3.0 x_{1}+ 3.33 x_{2}+ 6.0 x_{3} > 10.0$. Wektor \mf{P} dla takiego układu wynosi $[-10.0,3.0,1.0,0.0]$ oraz
+\begin{equation*}
+  \mf{G\tsuper{'}} =
+  \begin{bmatrix}
+    1.0 & 3.0 & 3.33 & 6.0 & 213.33 & 2.33 \\
+    0.0 & 0.5 & 0.0 & 0.0 & 10.0 & 1.5 \\
+    0.0 & 0.0 & 0.33 & 0.0 & 3.33 & 0.33 \\
+    0.0 & 0.0 & 0.0 & 1.0 & 20.0 & 0.0
+  \end{bmatrix}
+\end{equation*}
+gdzie element osiowy wynosi $1.5$. Po eliminacji Gaussa:
+\begin{equation*}
+  \mf{G\tsuper{'}} =
+  \begin{bmatrix}
+    1.0 & 2.22 & 3.33 & 6.0 & 197.78 & 0.0 \\
+    0.0 & 0.33 & 0.0 & 0.0 & 6.67 & 1.0 \\
+    0.0 & 0.11 & 0.33 & 0.0 & 1.11 & 0.0 \\
+    0.0 & 0.0 & 0.0 & 1.0 & 20.0 & 0.0
+  \end{bmatrix}
+\end{equation*}
+Zmodyfikowana nierówność wynosi $ 2.22 x_{1}+ 3.33 x_{2}+ 6.0 x_{3} > 10.0$. Wektor \mf{P} dla takiego układu wynosi $[-10.0,0.0,0.0,2.0]$ oraz
+\begin{equation*}
+  \mf{G\tsumper{'}} =
+  \begin{bmatrix}
+    1.0 & 2.22 & 3.33 & 6.0 & 197.78 & 2.0 \\
+    0.0 & 0.33 & 0.0 & 0.0 & 6.67 & 0.0 \\
+    0.0 & 0.11 & 0.33 & 0.0 & 1.11 & 0.0 \\
+    0.0 & 0.0 & 0.0 & 1.0 & 20.0 & 2.0
+  \end{bmatrix}
+\end{equation*}
+gdzie element osiowy wynosi $2.0$. Po eliminacji Gaussa:
+\begin{equation*}
+  \mf{G\tsuper{'}} =
+  \begin{bmatrix}
+    1.0 & 2.22 & 3.33 & 5.0 & 177.78 & 0.0 \\
+    0.0 & 0.33 & 0.0 & 0.0 & 6.67 & 0.0 \\
+    0.0 & 0.11 & 0.33 & 0.0 & 1.11 & 0.0 \\
+    0.0 & 0.0 & 0.0 & 0.5 & 10.0 & 1.0
+  \end{bmatrix}
+\end{equation*}
+Zmodyfikowana nierówność wynosi $ 2.22 x_{1}+ 3.33 x_{2}+ 5.0 x_{3} > 10.0$. Wektor \mf{P} dla takiego układu wynosi $[-10.0,1.0,1.0,1.0]$ oraz
+\begin{equation*}
+  \mf{G\tsumper{'}} =
+  \begin{bmatrix}
+    1.0 & 2.22 & 3.33 & 5.0 & 177.78 & 0.56 \\
+    0.0 & 0.33 & 0.0 & 0.0 & 6.67 & 0.33 \\
+    0.0 & 0.11 & 0.33 & 0.0 & 1.11 & 0.22 \\
+    0.0 & 0.0 & 0.0 & 0.5 & 10.0 & 0.5
+  \end{bmatrix}
+\end{equation*}
+gdzie element osiowy wynosi $0.5$. Po eliminacji Gaussa:
+\begin{equation*}
+  \mf{G\tsuper{'}} =
+  \begin{bmatrix}
+    1.0 & 2.5 & 2.5 & 5.0 & 175.0 & 0.0 \\
+    0.0 & 0.5 & 0.5 & 0.0 & 5.0 & 0.0 \\
+    0.0 & 0.5 & 1.5 & 0.0 & 5.0 & 1.0 \\
+    0.0 & 0.25 & 0.75 & 0.5 & 7.5 & 0.0
+  \end{bmatrix}
+\end{equation*}
+Układ nierówności:
+\begin{equation*}
+  \begin{aligned}
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 9.0 \\
+    2.5 x_{1}+ 2.5 x_{2}+ 5.0 x_{3} > 10.0
+  \end{aligned}
+\end{equation*}
+nie posiada rozwiązania całkowitego. Wówczas brana jest następna długośc podstawowa 6. Nowy układ wynosi:
+\begin{equation*}
+  \begin{aligned}
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 6.0 \\
+    2.5 x_{1}+ 2.5 x_{2}+ 5.0 x_{3} > 7.0
+  \end{aligned}
+\end{equation*}
+dla którego wektor \mf{P} wynosi $[-7.0,1.0,0.0,1.0]$ oraz
+\begin{equation*}
+  \mf{G\tsumper{'}} =
+  \begin{bmatrix}
+    1.0 & 2.5 & 2.5 & 5.0 & 175.0 & 0.5 \\
+    0.0 & 0.5 & 0.5 & 0.0 & 5.0 & 0.5 \\
+    0.0 & 0.5 & 1.5 & 0.0 & 5.0 & 0.5 \\
+    0.0 & 0.25 & 0.75 & 0.5 & 7.5 & 0.75
+  \end{bmatrix}
+\end{equation*}
+gdzie element osiowy wynosi $0.75$. Po eliminacji Gaussa:
+\begin{equation*}
+  \mf{G\tsuper{'}} =
+  \begin{bmatrix}
+    1.0 & 2.33 & 3.0 & 4.67 & 170.0 & 0.0 \\
+    0.0 & 0.33 & 0.0 & 0.33 & 0.0 & 0.0 \\
+    0.0 & 0.33 & 1.0 & 0.33 & 10.0 & 0.0 \\
+    0.0 & 0.33 & 1.0 & 0.67 & 10.0 & 1.0
+  \end{bmatrix}
+\end{equation*}
+Układ nierówności:
+\begin{equation*}
+  \begin{aligned}
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 6.0 \\
+    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} > 7.0
+  \end{aligned}
+\end{equation*}
+nie posiada rozwiązania, tak samo układ
+\begin{equation*}
+  \begin{aligned}
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 5.0 \\
+    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} > 6.0
+  \end{aligned}
+\end{equation*}
+również nie posiada rozwiązania.
+
+Następnie wykorzystywana jest metoda programowanie dynamicznego w celu określenia czy kolejny rozkrój może polepszyć rozwiązanie. Z metody tej wynika że możliwym jest ulepszenie rozwiązania poprzez rozkrój z długości 9. Jednak układ nierówności:
+\begin{equation*}
+  \begin{aligned}
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} \le 9.0 \\
+    2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} > 10.0
+  \end{aligned}
+\end{equation*}
+nie posiada rozwiązania całkowitego. Wektor \mf{N} równy jest przedostatniej kolumnie ostatniej obliczonej macierzy \mf{G\tsuper{'}}, czyli $[170.0,0.0,10.0,10.0]$ oraz
+\begin{equation*}
+  \mf{B} =
+  \begin{pmatrix}
+    1.0 & -10.0 & -10.0 & -7.0 \\
+    0.0 & 3.0 & 1.0 & 1.0 \\
+    0.0 & 1.0 & 1.0 & 0.0 \\
+    0.0 & 0.0 & 1.0 & 1.0
+  \end{pmatrix}
+\end{equation*}
+Na podstawie \mf{N} oraz \mf{B} można uzyskać wynikowe rozkroje. Pierwszy element wektora \mf{N} okrśla że koszt następującego rozkroju wynosi $170$. Następne elementy są ilością kolejnych rozkrojów, tak więc pierwszy rozkrój nie będzie brany pod uwagę, a dwa następne zostaną wykonane $10$ razy. Macierz \mf{B} jest analizowana od drugiej kolumny. Pierwszy wiersz równy jest kosztowi długości z której ma być wykonany rozkrój pomnożonemu przez $-1$. Następnie wiersze w kolumnach określają ile elementów o danej długości powinno znaleźć się w rozkroju.
+
+Rozwiązaniem powyższego przykładu jest układ rozkrojów:
+\begin{enumerate}
+  \item  elementy: $[2.0,3.0,4.0]$, ilość: 10, odpad: 0, długość bazowa: 9
+  \item  elementy: $[2.0,4.0]$, ilość: 10, odpad: 0, długość bazowa: 6
+\end{enumerate}
 \subsubsection{Podsumowanie}
 
 \subsection{Metoda "Brutal Force"}\label{brutalForce}
