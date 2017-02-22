@@ -1,6 +1,6 @@
 Do zbudowania projektu konieczy jest program pdflatex oraz bibtex.
 
-Aby zbudować projekt należy wykonać skrypt make-all.sh - buduje on poszczególne rozdziały, bibliografię oraz pełen tekst pracy.
+Aby zbudować projekt należy wykonać skrypt make-all.sh - buduje on bibliografię oraz pełen tekst pracy.
 Skrypt make.sh przyjmuje jako argument nazwę modułu jaki ma zostać zbudowany np. praca_magisterska lub brutal_force.
 
 Wszelkie wygenerowane pliki zostaną umieszczone w build/ oprócz plików \*.pdf które zostaną przeniesione do pdf/.
