@@ -4,63 +4,63 @@
 \newcommand{\tsub}[1]{\textsubscript{#1}}
 \newcommand{\tsuper}[1]{\textsuperscript{#1}}
 
-Problem optymalnego rozkroju jest problemem wykroju zadanej liczby elementów z wielu elementów podstawowych takich, jak rury, arkusze papieru lub metalu, w taki sposób aby zminimalizować niewykorzystany materiał (odpad). Jest to problem optymalizacyjny znajdujący zastosowanie głównie w przemyśle.  W odniesieniu do  złożoności obliczeniowej jets to problem z rodziny problemów $\mathcal{NP}$-Trudnych, który może zostać zredukowany do problemu plecakowego (\hyperref[sec:knapsackProblem]{rozdział~\ref*{sec:knapsackProblem}}). W rozdziale tym zostanie opisany jednowymiarowy problem optymalnego rozkoroju.
+Problem optymalnego rozkroju jest problemem wykroju zadanej liczby elementów z wielu elementów podstawowych takich, jak rury, arkusze papieru lub metalu, w taki sposób aby zminimalizować niewykorzystany materiał (odpad). Jest to problem optymalizacyjny znajdujący zastosowanie głównie w przemyśle.  W odniesieniu do  złożoności obliczeniowej jest to problem z rodziny problemów $\mathcal{NP}$-Trudnych, który może zostać zredukowany do problemu plecakowego (\hyperref[sec:knapsackProblem]{rozdział~\ref*{sec:knapsackProblem}}). W rozdziale niniejszym zostanie opisany jednowymiarowy problem optymalnego rozkoroju.
 
 \subsection{Metoda "Delayed Column Generation"}
-Metoda ta została zparoponowana przez Gilmore'a i Gomorego w 1961 roku \cite{GilmoreGomoryV1Article}. Gdy problem optymalnego rokroju zostanie sformułowany jako problem programowania całkowitego wówczas liczba zmiennych wchodzących w skład równań powoduje że rozwiązanie jest nieosiąglane. Dla przykładu gdy podstawowa długość to 200 z której ma zostać wycięte 40 różnych elementów o długościach od 20 do 80 wówczas liczba róznych wzorców rozkroju może osiągnąć nawet 100 milionów. Czas potrzebny do przejścia po samych rozkrojach byłby niosiagalny. Metoda ta pozwala na ciągłą generację nowych rozwiązań. Jest ona również metodą która znosi restrykcję liczb całkowitych w trakcie obliczania wyniku, dlatego wynik zostaje zaokraglony w górę, co odnosi skutek w tym że jest produkowane więcej lub tyle samo elementów niż jest wymagane przez zlecenie. Wynikiem tej metody jest rozwiązanie najbliższe optymalnemu.
+Metoda ta została zparoponowana przez Gilmore'a i Gomorego w 1961 roku \cite{GilmoreGomoryV1Article}. Gdy problem optymalnego rokroju zostanie sformułowany jako problem programowania całkowitoliczbowego wówczas liczba zmiennych wchodzących w skład równań powoduje że rozwiązanie jest nieosiąglane. Dla przykładu gdy podstawowa długość to 200 z której ma zostać wycięte 40 różnych elementów o długościach od 20 do 80 wówczas liczba różnych wzorców rozkroju może osiągnąć nawet 100 milionów. Czas potrzebny do przejścia po samych rozkrojach byłby niosiagalny. Metoda ta pozwala na ciągłą generację nowych rozwiązań. Jest ona również metodą która znosi restrykcję liczb całkowitych w trakcie obliczania wyniku, dlatego wynik zostaje zaokraglony w górę, co odnosi skutek w tym że jest produkowane więcej lub tyle samo elementów niż jest wymagane przez zlecenie. Wynikiem tej metody jest rozwiązanie najbliższe optymalnemu.
 \subsubsection{Wprowadzenie}
-Założeniem metody jest że zamówienie $N_i$ elementów długości $l_i$, gdzie $i=1,2,\dots,m$, wyciętych z rur długości początkowych $L_1, L_2, \dots, L_k$, dla którego spełniony jest warunek, że isntiej takie $j$ że dla każdego $i$ spełnina jest nierówność $L_j \ge l_i$. Całkowity koszt rozkrojów jest całkowitym kosztem użytych elementów podstawowych. Celem rozwiązania problemu jest otrzymanie tylu wykrojów ile jest wymaganych przez zamówienie przy jak najmniejszym koszcie. Warunkiem koniecznym aby zamówinie zostało spełniona jets nierówność
+Założeniem metody jest że zamówienie $N_i$ elementów długości $l_i$, gdzie $i=1,2,\dots,m$, wyciętych z rur długości początkowych $L_1, L_2, \dots, L_k$, dla którego spełniony jest warunek, że isntiej takie $j$, że dla każdego $i$ spełnina jest nierówność $L_j \ge l_i$. Całkowity koszt rozkrojów jest całkowitym kosztem użytych elementów podstawowych. Celem rozwiązania problemu jest otrzymanie tylu wykrojów ile jest wymaganych przez zamówienie przy jak najmniejszym koszcie. Warunkiem koniecznym aby zamówinie zostało zrealizowane jest nierówność
 \begin{equation*}
 a_{i1}x_1 + a_{i2}x_2 + \dots + a_{in}x_i \ge N_i, \qquad i = 1, \dots, m
 \end{equation*}
-gdzie $a_{ij}$ oznacza ile razy w danym schmemacie rozkroju $x_i$ została użyta długość $l_i$. Funkcją kosztu która powinna zostać zminimalizowana wynosi
+gdzie $a_{ij}$ oznacza krotność długości $l_i$ w danym schemacie rozkroju $x_i$. Funkcja kosztu która powinna zostać zminimalizowana wynosi
 \begin{equation}\label{eq:base_cost}
   c_1x_1 + c_2x_2+\dots+c_nx_n
 \end{equation}
-gdzie  $c_i$ to koszt długości podstawowej z której jest pobierany $i$-ty wykrój. Wprowadzenie dodatkowych zmiennych $x_{n+1},\dots,x_{n+m}$ pozwalają opisać problem optymalnego rozkroju jako problem znalezienia takich liczb całkowitych $x_1,\dots,x_{n+m}$ spełniających
+gdzie  $c_i$ to koszt długości podstawowej, z której jest pobierany $i$-ty wykrój. Wprowadzenie dodatkowych zmiennych $x_{n+1},\dots,x_{n+m}$ pozwalają opisać problem optymalnego rozkroju jako problem znalezienia takich liczb całkowitych $x_1,\dots,x_{n+m}$ spełniających
 \begin{align}
     a_{i1}x_1+\dots+a_{in}x_n-x_{n+i} & =N_i, & \qquad i=1,\dots,m  \label{eq:additional_base}\\
     x_j & \ge 0, & \qquad j=1,\dots,n+m \label{eq:additional_base_condition}
 \end{align}
-oraz dla których (\ref{eq:base_cost}) jest jak najmniejsze.
+dla których funkcja (\ref{eq:base_cost}) jest jak najmniejsza.
 
-Takie sformułowanie problemu jest niepraktyczne ze względu na ograniczenie do liczb całkowitych oraz z powodu że $n$ może być bardzo duże nawet gdy ilość $k$ elementów podstawowych, jak i ilość $m$ zamówionych długości jest umiarkowana.
+Takie sformułowanie problemu jest niepraktyczne ze względu na ograniczenie do liczb całkowitych oraz z uwagi na fakt, iż $n$ może być bardzo duże nawet gdy ilość $k$ elementów podstawowych, jak i ilość $m$ zamówionych długości jest umiarkowana.
 
-Jeśli zostanie usunięty warunek całkowitości rozwiązania wówczas rozwiązanie będzie należało do zbioru liczb rzeczywistych dodatnich. Rozwiązanie to może zostać zaokrąglone w górę lecz wtedy może zostać wyprodukowane więcej elementów niż zostało zamówione. Rozwiązanie może być również zaookrąglana na przemina w górę i w dół, a elementy które nie spełniają założeń zamówienia są dodawane do wykrojów metodą \textit{ad hoc}. Gdy wartości niecałkwite są duże wówczas zaokrąglenie jej nie wpływa znacząco na koszt, jednak gdy wartości są rzędu dziesiątek wówczas zaokrąglenie ma znaczny wpływ na koszt. Omawiana metoda znosi ograniczenie dla liczb całkowitych.
+Jeśli zostanie usunięty warunek całkowitoliczbowości rozwiązania wówczas rozwiązanie będzie należało do zbioru liczb rzeczywistych dodatnich. Rozwiązanie to może zostać zaokrąglone w górę lecz wtedy może zostać wyprodukowane więcej elementów niż zostało zamówione. Rozwiązanie może być również zaokrąglane na przemina w górę i w dół, a elementy które nie spełniają założeń zamówienia są dodawane do wykrojów metodą \textit{ad hoc}. Gdy wartości niecałkwite są duże wówczas zaokrąglenie jej nie wpływa znacząco na koszt, jednak gdy wartości są rzędu dziesiątek wówczas zaokrąglenie ma znaczny wpływ na koszty. Omawiana metoda znosi ograniczenie dla liczb całkowitych.
 
-Usunięty warunek całkowitości odnosi skutek w tym, że zmienne dodtkowe mogą zostać usunięte z równiania (\ref{eq:additional_base}). Dopóki rozwiązania (\ref{eq:additional_base}) oraz (\ref{eq:additional_base_condition}) zawierają dodatnie zmienne dodatkowe wówczas istnieje rozwiązanie o takim samym koszcie w którym nie zawierają się dodatnie zmienne dodatkowe. Niech $\bar{x}_1, \dots, \bar{x}_n, \bar{x}_{n+1}, \dots, \bar{x}_{n+m}$ będzie rozwiązaniem (\ref{eq:additional_base}) oraz (\ref{eq:additional_base_condition}) dla którego $\bar{x}_{n+1} \neq 0$. Dla tego rozwiązania istnieje takie $i$ dla którego $a_{1i}\bar{x}_i \ge \bar{x}_{n+1}$, to jest, $i$-ty schemat rozkroju należy do rozwiązania w przynajmniej takiej liczebności aby zamówinie długości $l_1$ było spełnione. Jeśli nie istnieje takie $i$ które spełnia warunek wówczas, niech $j$-ta zmienna przyjmuje niezerową wartość $\bar{x}_j$ oraz niech $k$-ty rozkrój będzie identyczny jak $j$-ty z wyłączeniem uwzględniania długości $l_1$. W takim przypadku w $k$-tym rozkroju długość $l_1$ która została uwzględniona w $j$-tym rozkroju trkatowana jest jako odpad. Rozwiązanie  $\bar{x}_1{'}, \dots, \bar{x}_n{'}, \bar{x}_{n+1}{'}, \dots, \bar{x}_{n+m}{'}$ z tym samym kosztem co poprzednio zostało uzyskane poprzez przypisanie $\bar{x}_i{'} = \bar{x}_i$ dla $i \neq j$, $k$, $n+1$: $\bar{x}_j{'}=0, \bar{x}_k{'}=\bar{x}_k+\bar{x}_j$ oraz $\bar{x}_{n+1}{'}=\bar{x}_{n+1}- a_{1j}\bar{x}_j$ ponieważ koszt zmiennych $x_j$ oraz $x_k$ jest taki sam. W nowym rozwiązaniu zmienna $x_{n+1}$ została zredukowana. Jeśli nie została zmniejszona o tyle aby $a_{1i}\bar{x}_i{'} \ge \bar{x}_{n+1}{'}$ wtedy powyższy proces jet powtarzany dopóki nie zostanie znalezione rozwiązanie w którym jedna zmienna nie spełnia nierówności. Jeśli a_{1i}\bar{x}_i{'} \ge \bar{x}_{n+1}{'}$ jest spełnione wówczas zmienna dodatkowa $x_{n+1}$ może być traktowana jako zmienna z przechowywaną wartością $0$ w rozwiązaniu z takim smaym kosztem jak powyższe rozwiązanie. Niech $k$-ty rozkrój będzie schematem identyczny jak $j$-ty rozkrój z wyłączeniem długości $l_1$ oraz niech okreslna nowe rozwiązanie  $\bar{x}_1{'}, \dots, \bar{x}_n{'}, \bar{x}_{n+1}{'}, \dots, \bar{x}_{n+m}{'}$ poprzez przypisanie $\bar{x}_i{'}=\bar{x}_i$ dla $i \neq j, k, n+1$, $\bar{x}_j{'} = \bar{x}_j - (\bar{x}_{n+1})/a_{1j},\bar{x}_k{'}=\bar{x}_k+(\bar{x}_{n+1})/a_{1j}$ oraz $\bar{x}_{n+1}{'} = 0$. Ponieważ współczynniki odpowiedzialne za koszt są identyczne dla $x_j$ oraz $x_k$, dlatego nowe rozwiązanie posiada taki sam koszt jak poprzednie rozwiązanie.
+Usunięty warunek całkowitoliczbowości odnosi skutek w tym, że zmienne dodatkowe mogą zostać usunięte z równiania (\ref{eq:additional_base}). Dopóki rozwiązania (\ref{eq:additional_base}) oraz (\ref{eq:additional_base_condition}) zawierają dodatnie zmienne dodatkowe wówczas istnieje rozwiązanie o takim samym koszcie w którym nie zawierają się dodatnie zmienne dodatkowe. Niech $\bar{x}_1, \dots, \bar{x}_n, \bar{x}_{n+1}, \dots, \bar{x}_{n+m}$ będzie rozwiązaniem (\ref{eq:additional_base}) oraz (\ref{eq:additional_base_condition}) dla którego $\bar{x}_{n+1} \neq 0$. Dla tego rozwiązania istnieje takie $i$, dla którego $a_{1i}\bar{x}_i \ge \bar{x}_{n+1}$, to jest, $i$-ty schemat rozkroju należy do rozwiązania w przynajmniej takiej liczebności aby zamówinie długości $l_1$ było spełnione. Jeśli nie istnieje takie $i$, które spełnia warunek, wówczas niech $j$-ta zmienna przyjmuje niezerową wartość $\bar{x}_j$ oraz niech $k$-ty rozkrój będzie identyczny jak $j$-ty z wyłączeniem uwzględniania długości $l_1$. W takim przypadku w $k$-tym rozkroju długość $l_1$ która została uwzględniona w $j$-tym rozkroju traktowana jest jako odpad. Rozwiązanie  $\bar{x}_1{'}, \dots, \bar{x}_n{'}, \bar{x}_{n+1}{'}, \dots, \bar{x}_{n+m}{'}$ z tym samym kosztem co poprzednio zostało uzyskane poprzez przypisanie $\bar{x}_i{'} = \bar{x}_i$ dla $i \neq j$, $k$, $n+1$: $\bar{x}_j{'}=0, \bar{x}_k{'}=\bar{x}_k+\bar{x}_j$ oraz $\bar{x}_{n+1}{'}=\bar{x}_{n+1}- a_{1j}\bar{x}_j$ ponieważ koszt zmiennych $x_j$ oraz $x_k$ jest taki sam. W nowym rozwiązaniu zmienna $x_{n+1}$ została zredukowana. Jeśli nie została zmniejszona o tyle aby $a_{1i}\bar{x}_i{'} \ge \bar{x}_{n+1}{'}$ wtedy powyższy proces jest powtarzany, dopóki nie zostanie znalezione rozwiązanie w którym jedna zmienna nie spełnia nierówności. Jeśli a_{1i}\bar{x}_i{'} \ge \bar{x}_{n+1}{'}$ jest spełnione, wówczas zmienna dodatkowa $x_{n+1}$ może być traktowana jako zmienna z przechowywaną wartością $0$ w rozwiązaniu z takim smaym kosztem jak powyższe rozwiązanie. Niech $k$-ty rozkrój będzie schematem identyczny jak $j$-ty rozkrój z wyłączeniem długości $l_1$ oraz niech określa nowe rozwiązanie  $\bar{x}_1{'}, \dots, \bar{x}_n{'}, \bar{x}_{n+1}{'}, \dots, \bar{x}_{n+m}{'}$ poprzez przypisanie $\bar{x}_i{'}=\bar{x}_i$ dla $i \neq j, k, n+1$, $\bar{x}_j{'} = \bar{x}_j - (\bar{x}_{n+1})/a_{1j},\bar{x}_k{'}=\bar{x}_k+(\bar{x}_{n+1})/a_{1j}$ oraz $\bar{x}_{n+1}{'} = 0$. Ponieważ współczynniki odpowiedzialne za koszt są identyczne dla $x_j$ oraz $x_k$, nowe rozwiązanie posiada taki sam koszt jak poprzednie rozwiązanie.
 
-Zniesienie warunku cąłkowitości rozwiązania pozawala pominąć zmienne dodatkowe, jednak w pewnych przypadkach jest zalecane pozostawienie ich. Bez zmiennych dodatkowych każde minimalne rozwiązanie zawiera zazwyczaj $m$ schematów rozkroju, podczas gdy rozwiązanie ze zmiennymi dodatkowymi może zawierać mniej niż $m$ rozkrojów. Opisywana metoda nie znosi zmiennych dodatkowych.
+Zniesienie warunku całkowitoliczbowości rozwiązania pozawala pominąć zmienne dodatkowe, jednak w pewnych przypadkach jest zalecane pozostawienie ich. Bez zmiennych dodatkowych każde minimalne rozwiązanie zawiera zazwyczaj $m$ schematów rozkroju, podczas gdy rozwiązanie ze zmiennymi dodatkowymi może zawierać mniej niż $m$ rozkrojów. Opisywana metoda nie znosi zmiennych dodatkowych.
 
-Metoda simplex która jest stosowana do obliczenia dopuszczalnego rozwiązania (\ref{eq:additional_base}) w odniesieniu do (\ref{eq:additional_base_condition}) dla którego (\ref{eq:base_cost}) jest namjniejsze. Dla podstawowego rozwiązania (\ref{eq:additional_base_condition}) oraz (\ref{eq:base_cost}), metodą simplex sprawdzane są inne zmienne które mogą zastąpić pewne zmienne w bierzącym rozwiązaniu. Niech bierzącym rozwiązniem będzie $x_1,x_2,\dots,x_m$. Niech \mf{P}\tsub{i} będzie wektorem $[a_{1i}, a_{2i}, \dots, a_{mi}]$ oraz niech $c_i$ bedzie kosztem w (\ref{eq:base_cost}) który jest powiązany ze zmienną $x_i$. Jeśli $x_i$ jest zmienną dodatkową wówczas koszt wynosi $0$, a wektor ma jedną niezerową współrzędną wynoszącą $-1$. Niech $\textbf{\textit{P}} = [a_1,a_2,\dots,a_m]$ określa nowy schemat rozkroju który używa długości bazowej $L$ o koszcie $c$. Następnie niech \mf{A} będzie macierzą której kolumnami są wektory $\mf{P}_1,\dots,\mf{P}_m$. Ponieważ $\mf{P}_1, \dots, \mf{P}_m$ określą podstawę macierzy, wektor kolumnowy \mf{U} spełnia równość
+Metoda simplex jest stosowana do obliczenia dopuszczalnego rozwiązania (\ref{eq:additional_base}) w odniesieniu do (\ref{eq:additional_base_condition}) dla którego (\ref{eq:base_cost}) jest namjniejsze. Dla podstawowego rozwiązania (\ref{eq:additional_base_condition}) oraz (\ref{eq:base_cost}), metodą simplex sprawdzane są inne zmienne które mogą zastąpić pewne zmienne w bierzącym rozwiązaniu. Niech bierzącym rozwiązniem będzie $x_1,x_2,\dots,x_m$. Niech \mf{P}\tsub{i} będzie wektorem $[a_{1i}, a_{2i}, \dots, a_{mi}]$ oraz niech $c_i$ bedzie kosztem w (\ref{eq:base_cost}) który jest powiązany ze zmienną $x_i$. Jeśli $x_i$ jest zmienną dodatkową wówczas koszt wynosi $0$, a wektor ma jedną niezerową współrzędną wynoszącą $-1$. Niech $\textbf{\textit{P}} = [a_1,a_2,\dots,a_m]$ określa nowy schemat rozkroju który używa długości bazowej $L$ o koszcie $c$. Następnie niech \mf{A} będzie macierzą której kolumnami są wektory $\mf{P}_1,\dots,\mf{P}_m$. Ponieważ $\mf{P}_1, \dots, \mf{P}_m$ określą podstawę macierzy, pomocniczy wektor kolumnowy \mf{U} spełnia układ równań
 \begin{equation}\label{eq:uMatrixDef}
   \mf{A} \cdotp \mf{U} = \mf{P}.
 \end{equation}
-Nowy schemat rozkroju może zostać uzyty w rozwiązaniu jako jego ulepszenie wtedy i tylko wtedy, gdy
+Nowy schemat rozkroju może zostać użyty w rozwiązaniu jako jego ulepszenie wtedy i tylko wtedy, gdy
 \begin{equation}\label{eq:costMatrixEq}
   \mf{C} \cdotp \mf{U} > c
 \end{equation}
-gdzie \mf{C} jest wektorem wierszowym ze współczynnikami $c_1,c_2,\dots,c_m$. Jeśli wektor wierszowy $\mf{C} \cdotp \mf{A}\tsuper{-1}$ posiada współczynniki $b_1,\dots,b_2$, wtedy z równań (\ref{eq:uMatrixDef}) oraz (\ref{eq:costMatrixEq}) można wywnioskować że istnieje taki rozkrój z elementu podstawowego o długości $L$, który może poprawić rozwiązanie wtety i tylko wtedy, gdy istnieją nieujemne liczby całkowite $a_1,\dots,a_m$ spełniające nierówności
+gdzie \mf{C} jest wektorem wierszowym ze współczynnikami $c_1,c_2,\dots,c_m$. Jeśli wektor wierszowy $\mf{C} \cdotp \mf{A}\tsuper{-1}$ posiada współczynniki $b_1,\dots,b_2$, wtedy z równań (\ref{eq:uMatrixDef}) oraz (\ref{eq:costMatrixEq}) można wywnioskować że istnieje taki rozkrój z elementu podstawowego o długości $L$, który może poprawić rozwiązanie wtedy i tylko wtedy, gdy istnieją nieujemne liczby całkowite $a_1,\dots,a_m$ spełniające nierówności
 \begin{align}
 L \ge l_1a_1+\dots+l_ma_m \label{length_eq} \\
 b_1a_1+\dots+b_ma_m > c. \label{cost_eq}
 \end{align}
 $\mf{C} \cdotp \mf{A}\tsuper{-1}$ zawsze jest częścią rozwiązania normalnej metody simplex.
 
-Jeśli istnieje taka nieujemna liczba całkowita $a_i$ która spełnia nierówności (\ref{length_eq}) oraz (\ref{cost_eq}), wówczas isnieje taka nieujemna liczba całkowita która jest rozwiązaniem nierówności (\ref{length_eq}) dla której $b_1a_1+\dots+b_ma_m$ jest maksymalne. Problem wyboru nowej zmiennej dla metody simplex może zostać wyrażony poprzez rozwiązanie $k$ problemów pomocniczych (po jednym dla każdej długości bazowej), które są całkowitymi problemami programowania liniowego. Problemy te mogą zostać rozwiązane poprzez programowanie dynamiczne lub metodą \textit{ad hoc}.
+Jeśli istnieje taka nieujemna liczba całkowita $a_i$ która spełnia nierówności (\ref{length_eq}) oraz (\ref{cost_eq}), wówczas istnieje taka nieujemna liczba całkowita która jest rozwiązaniem nierówności (\ref{length_eq}) dla której $b_1a_1+\dots+b_ma_m$ jest maksymalne. Problem wyboru nowej zmiennej dla metody simplex może zostać wyrażony poprzez rozwiązanie $k$ problemów pomocniczych (po jednym dla każdej długości bazowej), które są całkowitoliczbowymi problemami programowania liniowego. Problemy te mogą zostać rozwiązane poprzez programowanie dynamiczne lub metodą \textit{ad hoc}.
 
-Jako, że maksymalizacja $b_1a_1+\dots+b_ma_m$ w odniesieniu od (\ref{length_eq}) jest generalizacją problemu plecakowego, dlatego można rozwiązać go metoda opisaną przez Dantziga \cite{DantzigArticle} oraz w (\hyperref[knapsack:dynamicProgramming]{sekcji~\ref*{knapsack:dynamicProgramming}}). Niech $F_s(x)$ będzie wartością maksymalną $b_1a_1+\dots+b_sa_s$ w odniesieniu do nierówności $x \ge l_1a_1+\dots+l_sa_s$, wówczas
+Jako, że maksymalizacja $b_1a_1+\dots+b_ma_m$ w odniesieniu do (\ref{length_eq}) jest generalizacją problemu plecakowego, dlatego można rozwiązać go metoda opisaną przez Dantziga \cite{DantzigArticle} (\hyperref[knapsack:dynamicProgramming]{patrz rozdział~\ref*{knapsack:dynamicProgramming}}). Niech $F_s(x)$ będzie wartością maksymalną $b_1a_1+\dots+b_sa_s$ w odniesieniu do nierówności $x \ge l_1a_1+\dots+l_sa_s$, wówczas
 \begin{equation*}
   F_{s+1}(x) = max_r\{rb_{s+1}+F_s(x-rl_{s+1})\},
 \end{equation*}
-gdzie $r$ może zostać wybrane z zakresu $0 \le r \le [x/l{s+1}]$, a nawiasy kwadratowe oznaczają największą częśc całkowitą z wyrażenia. Tylko jedno kompletne obliczenie wyrażenia programowania dynamicznego jest niezbędne aby wprowadzić nową zmienną do metody simplex. Gdy najdłużsyzm elementem jest $L_1$, wówczas automatycznie zostaną obliczone pozostałe długości.
+gdzie $r$ może zostać wybrane z zakresu $0 \le r \le \lfloor x/l{s+1} \rfloor$. Tylko jedno kompletne obliczenie wyrażenia programowania dynamicznego jest niezbędne aby wprowadzić nową zmienną do metody simplex. Gdy najdłuższym elementem jest $L_1$, wówczas automatycznie zostaną obliczone pozostałe długości.
 
-Programowanie dynamiczne często wykonuje więcej obliczeń niż jest konieczne. Aby przyspieszyć proces możliwe jest użycie metody podobnej do zapropnowanej przez Dantziga \cite{DantzigArticle} oraz opisanej w (\hyperref[brutalForce]{sekcji~\ref*{brutalForce}}). Niech $i_1,\dots,i_m$ będą takie, że $b_i_1/l_i_1 \ge b_i_1/l_i_2 \ge \dots \ge b_i_m/l_i_m$. Następnie obliczone zostają współczynniki $a_i_1=[L/l_i_1], a_i_2=[(L-l_i_1a_i_1)/l_i_2], a_i_3 = [(L - (l_i_1a_i_1 + l_i_2a_i_2))/l_i_3], etc$. Dopiero gdy proste metody nie dostarczą rozwiązania, powinny zostać użyte bardziej złożone metody, jak programowanie dynamiczne.
+Programowanie dynamiczne często wymaga więcej obliczeń niż jest konieczne. Aby przyspieszyć proces możliwe jest użycie metody podobnej do zapropnowanej przez Dantziga \cite{DantzigArticle} (\hyperref[brutalForce]{patrz rozdział~\ref*{brutalForce}}). Niech $i_1,\dots,i_m$ będą takie, że $b_i_1/l_i_1 \ge b_i_1/l_i_2 \ge \dots \ge b_i_m/l_i_m$. Następnie obliczone zostają współczynniki $a_i_1=[L/l_i_1], a_i_2=[(L-l_i_1a_i_1)/l_i_2], a_i_3 = [(L - (l_i_1a_i_1 + l_i_2a_i_2))/l_i_3], etc$. Dopiero gdy proste metody nie dostarczą rozwiązania, powinny zostać użyte bardziej złożone metody, jak programowanie dynamiczne.
 
 \subsubsection{Algorytm}
 
 \begin{enumerate}
-\item Określnie $m$ początkowych rokrojów i ich kosztu w następujący sposób: dla każdego $i$ wybranie długości bazowej $L_j$ dla której $L_j > l_i$ i określenie $i$-tego rokroju jako wycięcia $a_{ii} = [L_j / l_i]$ elementów o długości $l_i$ z $L_j$. Koszt $i$-tego rozkroju będzie równy cenie $c_j$ długości $L_j$ z której $i$-ta operacja wycina odcinki o długości $l_i$.
+\item Określnie $m$ początkowych rokrojów i ich kosztu przebiega w następujący sposób: dla każdego $i$ wybranie długości bazowej $L_j$ dla której $L_j > l_i$ i określenie $i$-tego rokroju jako wycięcia $a_{ii} = [L_j / l_i]$ elementów o długości $l_i$ z $L_j$. Koszt $i$-tego rozkroju będzie równy cenie $c_j$ długości $L_j$ z której $i$-ta operacja wycina odcinki o długości $l_i$.
 \item Uformowanie macierzy \mf{B}
 \[
 \begin{matrix}
@@ -71,9 +71,9 @@ Programowanie dynamiczne często wykonuje więcej obliczeń niż jest konieczne.
 0 & 0 & 0 & \dots & a_{mm}
 \end{matrix}
 \]
-gdzie $a_{ii}$ jest ilością odcinków o długości $l_i$ wyciętych w $i$-tym rozkroju z długości bazowej o koszcie $c_j$. Ostatnie $m$ kolumn jest odpowiada kolejmnym rozkrojom. Dane te będą aktualizowane gdy zostanie znaleziony wynik który zmniejsyz koszt rozwiązania.
+gdzie $a_{ii}$ jest ilością odcinków o długości $l_i$ wyciętych w $i$-tym rozkroju z długości bazowej o koszcie $c_j$. Ostatnie $m$ kolumn odpowiada kolejmnym rozkrojom. Dane te będą aktualizowane gdy zostanie znaleziony wynik który zmniejszy koszt rozwiązania.
 
-Utworzenie $m$ $m+1$ wymiarowych wektorów kolumnowych \mf{S\tsub{1}},...,\mf{S\tsub{m}} odnoszących się do zmiennych dodatkowych, gdzie \mf{S\tsub{i}} zawiera same zera z wyjątkiem wiersza $(i+1)$ któryc przechowuje wartość $-1$. Stworzony również zostaje $m+1$ wymiarowy wektor kolumnowy \mf{N'} który jako pierwszy element przyjmuje 0, a w następnych $i$-tych wierszach posiada wartości $N_i$.
+Utworzenie $m$ $m+1$ wymiarowych wektorów kolumnowych \mf{S\tsub{1}},...,\mf{S\tsub{m}} odnoszących się do zmiennych dodatkowych, gdzie \mf{S\tsub{i}} zawiera same zera z wyjątkiem wiersza $(i+1)$ który przechowuje wartość $-1$. Stworzony również zostaje $m+1$ wymiarowy wektor kolumnowy \mf{N'} który jako pierwszy element przyjmuje 0, a w następnych $i$-tych wierszach posiada wartości $N_i$.
 
 Obliczenie macierzy \mf{B}\tsuper{-1} która wynosi:
 \[
@@ -90,9 +90,9 @@ Niech $\mf{N} = \mf{B}^{-1} \cdotp \mf{N'}$. Sprawdzając czy pierwszy element z
 
 \item Z powyższego puntku wynika że jeśli $i$-ta zmienna dodatkowa która nie wchodzi w skład rozwiązania, może ulepszyć rozwiązanie wtedy i tylko wtedy, gdy $(i+1)$ element pierwszego wiersza \mf{B}\tsuper{-1} jest ujemny.
 
-\item Jeśli nie jest możliwe zmniejszenie kosztu rozwiązania należy określić czy wprowadznie nowego rozkroju poprawi rozwiązanie. Jest to możliwe poprzez sprawdznie czy dla $L$ z kosztem $c$ istnieje rozwiązanie nierówności (\ref{length_eq}) oraz \ref{cost_eq}, gdzie $b_1,\dots,b_m$ to ostatnie $m$ elementów z pierwszego wiersza \mf{B}\tsuper{-1}. Jeśli te nierówności nie posiadają rozwiązania dla dowolnej długości $L_1,\dots,L_k$ z kosztem odpowiednio $c_1,\dots,c_m$, wówczas bieżące rozwiązanie jest optymalne. Rozwiązanie i jego koszt jest określone poprzez \mf{N}, gdzie pierwszy wiersz odpowiada cenie, a pozostałe $m$ wierszy jest, w kolejności, odpowiednimi wartościami $m$-tej kolumny z \mf{B}\tsuper{-1}.
+\item Jeśli nie jest możliwe zmniejszenie kosztu rozwiązania należy określić czy wprowadznie nowego rozkroju poprawi rozwiązanie. Jest to możliwe poprzez sprawdznie czy dla $L$ z kosztem $c$ istnieje rozwiązanie nierówności (\ref{length_eq}) oraz (\ref{cost_eq}), gdzie $b_1,\dots,b_m$ to ostatnie $m$ elementów z pierwszego wiersza \mf{B}\tsuper{-1}. Jeśli te nierówności nie posiadają rozwiązania dla dowolnej długości $L_1,\dots,L_k$ z kosztem odpowiednio $c_1,\dots,c_m$, wówczas bieżące rozwiązanie jest optymalne. Rozwiązanie i jego koszt jest określone poprzez \mf{N}, gdzie pierwszy wiersz odpowiada cenie, a pozostałe $m$ wierszy jest, w kolejności, odpowiednimi wartościami $m$-tej kolumny z \mf{B}\tsuper{-1}.
 
-Jeśli nowy rozkrój zmniejsza koszt rozwiązania, zostaje uformawany nowy wektor \mf{P} o współczynnikamch, w kolejności $-c,a_1,a_2,\dots,a_m$.
+Jeśli nowy rozkrój zmniejsza koszt rozwiązania, zostaje uformawany nowy wektor \mf{P} o współczynnikach, w kolejności $-c,a_1,a_2,\dots,a_m$.
 
 \item Wprowadznie zarówno dodatkowej zmiennej jak i nowego rozkroju może poprawić rozwiązanie. W obu przypadkach \mf{P} będzie wektorem kolumnowym. Określenia nowych \mf{B}\tsuper{-1} oraz \mf{N} które opisują ulepszone rozwiązanie i jego koszt, zostaje osiągnięte poprzez przejście kroków 3, 4 oraz kontynujacje kroku 5 w nastepujący sposób: Obliczenie $\mf{B}\tsuper{-1} \cdotp \mf{P}$ - niech wynikiem będą elementy $y_1,\dots,y_m,y_{m+1}$ oraz niech elementami bierzącego wektora \mf{N} będą $x_1,\dots,x_m,x_{m+1}$. Ustalenie $i$, $ i \ge 2$ dla którego $y_i > 0$, $x_i \ge 0$ oraz $x_i/y_i$ jest najminiejsze, a następnie przypisanie tej wartości do zmiennej $k$.
 
@@ -102,15 +102,15 @@ Jeśli stosunek nie jest równy zeru, wówczas $k$-ty element wektora \mf{P}, $y
 
 \subsubsection{Metody użyte w implementacji}
 
-Do obliczenia wartości maksymalnej nierówności która zostanie przypisana do \mf{P} zostały użyte metody:
+Do uzyskania maksymalnego rozwiązania spełniającego nierówności (przykładowo \ref{cost_eq} oraz \ref{length_eq}) które zostanie przypisane do \mf{P} zostały użyte metody:
 \begin{enumerate}
   \item Dwufazowa metoda simplex - metoda to znajduje zastosowanie gdy bierzące rozwiązanie układu jest ujemne. Zwykła metoda sympleks jest użyta w drugiej fazie omawianej procedury. Faza pierwsza polega na przeprowadzeniu obliczeń metodą simplex ze zmienioną funcją celu. Jeśli zmienna wchodząca w skład rozwiązania układu jest ujemna wówczas do danego równania dodawana jest dodatkowa sztuczna zmienna. Funkcja celu wówczas przyjmuje postać sumy zmiennych które zostały dodane jako sztuczne do równań o ujemnym rozwiązaniu. Po obliczeniu wartości fazy pierwszej, nastepuje ponowne przekształcenie funkcji celu i przeprowadzenie normlanej procedury sympleks, jako fazy 2.
-  \item Metoda podziału i ograniczeń - metoda ta pozwala osiągnąć wyniki całkowite z rozwiązań układów nierówności. Polega ona na budowie drzewa binarnego. Każdy liść staje się rodzicem poprzez stworznie dwóch węzłów poprzez sprawdzenie dwóch warunków. Lewy potomek tworzony jest z dodatkowym warunkiem $x_i \le \lfloor c_i \rfloor$ gdzie $c_i$ jest zmienną niecałkowitą wchodzącą w skład rozwiązania. Prawy potomek posiada warunek $x_i \ge \lceil c_i \rceil$. Następnie dla każdego węzła przeprowadzana jest metoda sympleks. Jeśli dany węzeł posiada rozwiązanie wówczas procedura ta jest powtarzana, aż do osiągnięcia wyniku całkowitego. Poszczególne warunki dołączane są do układu nierówności który przekazywany jest do kolejnych potomków. Jeśli tworzenie drzewa binarnego jest zakończone, wówczas jako rozwiązanie wybierany jest liść z jak największą wartością zwróconą przez metodę simplex.
+  \item Metoda podziału i ograniczeń - metoda ta pozwala osiągnąć wyniki całkowite z rozwiązań układów nierówności. Polega ona na budowie drzewa binarnego. Każdy liść staje się rodzicem poprzez stworznie dwóch węzłów oraz sprawdzenie dwóch warunków. Lewy potomek tworzony jest z dodatkowym warunkiem $x_i \le \lfloor c_i \rfloor$ gdzie $c_i$ jest zmienną niecałkowitą wchodzącą w skład rozwiązania. Prawy potomek posiada warunek $x_i \ge \lceil c_i \rceil$. Następnie dla każdego węzła przeprowadzana jest metoda sympleks. Jeśli dany węzeł posiada rozwiązanie wówczas procedura ta jest powtarzana, aż do osiągnięcia wyniku całkowitego. Poszczególne warunki dołączane są do układu nierówności który przekazywany jest do kolejnych potomków. Jeśli tworzenie drzewa binarnego jest zakończone, wówczas jako rozwiązanie wybierany jest liść z jak największą wartością zwróconą przez metodę simplex.
 \end{enumerate}
 
 \subsubsection{Przykład}
 
-Zamówione zostało 20 elementów o długości 2, 10 o długości 3 oraz 20 o długości 4. Jako długości bazowe zostały określone elementy o dłogości 5 z ceną 6, 6 z ceną 7 oraz o długości 9 z ceną 10. \newline
+Zamówione zostało 20 elementów o długości 2, 10 o długości 3 oraz 20 o długości 4. Jako długości bazowe zostały określone elementy o długości 5 z ceną 6, 6 z ceną 7 oraz o długości 9 z ceną 10. \newline
 Początkowo:
 \begin{equation*}
   \begin{aligned}
@@ -147,14 +147,14 @@ Początkowo:
 Długości bazowe będą próbowane w kolejności malejącej ponieważ im dłuższy element, tym więcej możliwości rozkroju. Pierwszy układ nierówności:
 \begin{equation*}
   \begin{aligned}
-    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} & &\le 9.0 \\
-    3.0 x_{1}+ 6.0 x_{2}+ 6.0 x_{3} & &> 10.0
+    2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 9.0 \\
+    3.0 x_{1}+ 6.0 x_{2}+ 6.0 x_{3} &> 10.0
   \end{aligned}
 \end{equation*}
 Rozwiązaniem nierówności jest $(0.0,3.0,0.0)$. Wówczas wektor $\mf{P} = [-10.0, 0.0, 3.0, 0.0]$ oraz
 \begin{equation*}
   \begin{aligned}
-    \mf{G\tsuper{'}} =
+    \mf{G} =
     \begin{bmatrix}
       1.0 & 3.0 & 6.0 & 6.0 & 240.0 & 8.0  \\
       0.0 & 0.5 & 0.0 & 0.0 & 10.0 & 0.0 \\
@@ -163,8 +163,8 @@ Rozwiązaniem nierówności jest $(0.0,3.0,0.0)$. Wówczas wektor $\mf{P} = [-10
     \end{bmatrix}
   \end{aligned}
 \end{equation*}
-gdzie ostatnią kolumną jest $\mf{B}^{-1} \cdotp \mf{P}$. Jako element psiowy wokół ktorego zajdzie eliminacja Gaussa to wrtość z ostatniej kolumny $3.0$.
-Macierzą po eliminacji Gaussa jest:
+gdzie ostatnią kolumną jest $\mf{B}^{-1} \mf{P}$. Element osiowy wokół którego zajdzie eliminacja Gaussa to wartość z ostatniej kolumny wynosząca $3.0$.
+Macierzą po eliminacji Gaussa \mf{G\tsuper{'}} jest:
 \begin{equation*}
   \mf{G\tsuper{'}} =
   \begin{bmatrix}
@@ -176,7 +176,7 @@ Macierzą po eliminacji Gaussa jest:
 \end{equation*}
 Zmieniona zostaje druga nierówność na $3.0 x_{1}+ 3.33 x_{2}+ 6.0 x_{3} > 10.0$. Wektor \mf{P} dla takiego układu wynosi $[-10.0,3.0,1.0,0.0]$ oraz
 \begin{equation*}
-  \mf{G\tsuper{'}} =
+  \mf{G} =
   \begin{bmatrix}
     1.0 & 3.0 & 3.33 & 6.0 & 213.33 & 2.33 \\
     0.0 & 0.5 & 0.0 & 0.0 & 10.0 & 1.5 \\
@@ -196,7 +196,7 @@ gdzie element osiowy wynosi $1.5$. Po eliminacji Gaussa:
 \end{equation*}
 Zmodyfikowana nierówność wynosi $ 2.22 x_{1}+ 3.33 x_{2}+ 6.0 x_{3} > 10.0$. Wektor \mf{P} dla takiego układu wynosi $[-10.0,0.0,0.0,2.0]$ oraz
 \begin{equation*}
-  \mf{G\tsumper{'}} =
+  \mf{G} =
   \begin{bmatrix}
     1.0 & 2.22 & 3.33 & 6.0 & 197.78 & 2.0 \\
     0.0 & 0.33 & 0.0 & 0.0 & 6.67 & 0.0 \\
@@ -216,7 +216,7 @@ gdzie element osiowy wynosi $2.0$. Po eliminacji Gaussa:
 \end{equation*}
 Zmodyfikowana nierówność wynosi $ 2.22 x_{1}+ 3.33 x_{2}+ 5.0 x_{3} > 10.0$. Wektor \mf{P} dla takiego układu wynosi $[-10.0,1.0,1.0,1.0]$ oraz
 \begin{equation*}
-  \mf{G\tsumper{'}} =
+  \mf{G} =
   \begin{bmatrix}
     1.0 & 2.22 & 3.33 & 5.0 & 177.78 & 0.56 \\
     0.0 & 0.33 & 0.0 & 0.0 & 6.67 & 0.33 \\
@@ -241,7 +241,7 @@ Układ nierówności:
     2.5 x_{1}+ 2.5 x_{2}+ 5.0 x_{3} &> 10.0
   \end{aligned}
 \end{equation*}
-nie posiada rozwiązania całkowitego. Wówczas brana jest następna długośc podstawowa 6. Nowy układ wynosi:
+nie posiada rozwiązania całkowitoliczbowego. Wówczas brana jest następna długość podstawowa 6. Nowy układ wynosi:
 \begin{equation*}
   \begin{aligned}
     2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 6.0 \\
@@ -250,7 +250,7 @@ nie posiada rozwiązania całkowitego. Wówczas brana jest następna długośc p
 \end{equation*}
 dla którego wektor \mf{P} wynosi $[-7.0,1.0,0.0,1.0]$ oraz
 \begin{equation*}
-  \mf{G\tsumper{'}} =
+  \mf{G} =
   \begin{bmatrix}
     1.0 & 2.5 & 2.5 & 5.0 & 175.0 & 0.5 \\
     0.0 & 0.5 & 0.5 & 0.0 & 5.0 & 0.5 \\
@@ -275,7 +275,7 @@ Układ nierówności:
     2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} &> 7.0
   \end{aligned}
 \end{equation*}
-nie posiada rozwiązania, tak samo układ
+nie posiada rozwiązania. Podobnie układ
 \begin{equation*}
   \begin{aligned}
     2.0 x_{1}+ 3.0 x_{2}+ 4.0 x_{3} &\le 5.0 \\
@@ -291,7 +291,7 @@ Następnie wykorzystywana jest metoda programowanie dynamicznego w celu określe
     2.33 x_{1}+ 3.0 x_{2}+ 4.67 x_{3} &> 10.0
   \end{aligned}
 \end{equation*}
-nie posiada rozwiązania całkowitego. Wektor \mf{N} równy jest przedostatniej kolumnie ostatniej obliczonej macierzy \mf{G\tsuper{'}}, czyli $[170.0,0.0,10.0,10.0]$ oraz
+nie posiada rozwiązania całkowitoliczbowego. Wektor \mf{N} równy jest przedostatniej kolumnie ostatniej obliczonej macierzy \mf{G\tsuper{'}}, czyli $[170.0,0.0,10.0,10.0]$ oraz
 \begin{equation*}
   \mf{B} =
   \begin{bmatrix}
@@ -301,7 +301,7 @@ nie posiada rozwiązania całkowitego. Wektor \mf{N} równy jest przedostatniej 
     0.0 & 0.0 & 1.0 & 1.0
   \end{bmatrix}
 \end{equation*}
-Na podstawie \mf{N} oraz \mf{B} można uzyskać wynikowe rozkroje. Pierwszy element wektora \mf{N} okrśla że koszt następującego rozkroju wynosi $170$. Następne elementy są ilością kolejnych rozkrojów, tak więc pierwszy rozkrój nie będzie brany pod uwagę, a dwa następne zostaną wykonane $10$ razy. Macierz \mf{B} jest analizowana od drugiej kolumny. Pierwszy wiersz równy jest kosztowi długości z której ma być wykonany rozkrój pomnożonemu przez $-1$. Następnie wiersze w kolumnach określają ile elementów o danej długości powinno znaleźć się w rozkroju.
+Na podstawie \mf{N} oraz \mf{B} można uzyskać wynikowe rozkroje. Pierwszy element wektora \mf{N} okrśla że koszt zbioru rozkrojów wynosi $170$. Następne elementy są ilością kolejnych rozkrojów, tak więc pierwszy schemat nie będzie brany pod uwagę, a dwa następne zostaną wykonane $10$ razy. Macierz \mf{B} jest analizowana od drugiej kolumny. Pierwszy wiersz równy jest kosztowi długości z której ma być wykonany rozkrój, pomnożonemu przez $-1$. Następnie wiersze w kolumnach określają ile elementów o danej długości powinno znaleźć się w rozkroju.
 
 Rozwiązaniem powyższego przykładu jest układ rozkrojów:
 \begin{enumerate}
@@ -309,9 +309,17 @@ Rozwiązaniem powyższego przykładu jest układ rozkrojów:
   \item  elementy: $[2.0,4.0]$, ilość: 10, odpad: 0, długość bazowa: 6
 \end{enumerate}
 \subsubsection{Podsumowanie}
-W drugiej części artykułu poświęconemu problemowi optymalnego rozkroju \cite{GilmoreGomoryV2Article}, Gilmore oraz Gomory opisali wyniki eksperymentów wykorzystujących różne warianty metody opoisanej w pierwszej części. Problem który został użyty do testów jets problemem z przemysłu papierniczego. W podstawowym zbiorze 20 problemów długości bazowe miały tę samą długość 200 in lub mnie. Ilość elementów wynikowych była z przedziału od 20 do 40. Długości elementów były od 20 in. do 80 in. z dokładnością do $1/4$ in. Liczba noży była ustawiona na pięć, siedem lub dziewięć.
+W drugiej części artykułu poświęconemu problemowi optymalnego rozkroju \cite{GilmoreGomoryV2Article}, Gilmore oraz Gomory opisali wyniki eksperymentów wykorzystujących różne warianty metody zawartej w części pierwszej. Problem który został użyty do testów jest problemem z przemysłu papierniczego. W podstawowym zbiorze 20 problemów długości bazowe miały tę samą długość 200 in lub mniej. Liczba elementów wynikowych była z przedziału od 20 do 40. Długości elementów wynosiły od 20 in. do 80 in. z dokładnością do $1/4$ in. Liczba noży wynosiła pięć, siedem lub dziewięć.
 
-Średnia ilość iteracji metody simplex dla tego problemu to w przybliżeniu 130 iteracji. Jednak rozpiętość ilości iteracji była duża od 20 do 300. Taka zmienność jest powszechna dla problemóœ programowania linowego. Problemy które są niemal identyczne mogą zachowywać się bardzo odmiennie w odniesieniu do emtdy sympleks. Zgodnie z przewidywaniami, problemy z mniejszą ilością elementów wchodzących w skład rozkroju, potrzebują mniej iteracji. Trend ten jest niedeterministyczny, dla przykładu 35 elementowy rozkrój wymagał 197 iteracji, gdzie problem pokrewny dla 40 elementów wymagał ich tylko 161.
+Średnia liczba iteracji metody simplex dla tego problemu to w przybliżeniu 130. Jednak ich rozpiętość była duża od 20 do 300. Taka zmienność jest powszechna dla problemów programowania linowego. Problemy które są niemal identyczne mogą zachowywać się bardzo odmiennie w odniesieniu do metody sympleks. Zgodnie z przewidywaniami, problemy z mniejszą liczbą elementów wchodzących w skład rozkroju, potrzebują mniej iteracji. Trend ten jest niedeterministyczny, dla przykładu 35 elementowy rozkrój wymagał 197 iteracji, gdzie problem pokrewny dla 40 elementów wymagał ich tylko 161.
+
+Gilmore oraz Gomory zbadali czy nowy schemat rozkroju powinien być akceptowany przy spełnieniu warunku $\sum b_ia_i > 1$, czy lepsze jest pozostanie przy maksymalizacji $\sum b_ia_i$. Pierwsza metoda prowadzi do większej liczby iteracji, jednak ich czas jest mniejszy niż w przypadku metody drugiej. Wynik eksperymentu odpowiedział na pytanie czy lepiej zastosować więcej krótszych iteracji, czy lepiej mniej ale dłuższych? W 19 na 20 przypadków średni czas potrzebny na rozwiązania problemu z użyciem metody drugiej był mniejszy niż metody pierwszej. Metodę tą można opisać jako znalezienie schematu który najbardziej wpłynie na obniżenie kosztu i zmniejszenie odpadu. Najprostsza implementacja tej metody wymaga wypisania bardzo dużej liczby schemtów rozkroju dla każdej iteracji. Aby zredukować liczbę nakładu obliczeniowego na każdą iteracje, można ostateczne elementy pogrupować w bardzo małe zbiory. Jeśli nowy rozkrój będzie zawierał długość, która jest wymagana w małej ilości, wówczas schemat zostanie użyty tylko kilka razy. Wykorzystanie tego ulepszenia nie ma znaczącego wpływu na wynik. Gilmore oraz Gomory zaproponowali użycie metody medianowej. Metoda ta polega na równym podziale wymaganych elementów ze względu na liczbę elementów wynikowych - na wymagane w dużej lub małej ilości. W każdej drugiej iteracji schemat albo używa jedynie elementów wymaganych wiele razy lub maksymalizuje ulepszenie pośród wszystkich rozkrojów. Metoda medianowa była szybsza w 13 na 20 przypadków. Problemy dla których metoda ta była wolniejsza były małymi problemami które wymagały mało czasu do wykonania. Średnio czas został zredukowany o 40\%.
+
+W przypadkach testowych odpad wahał się od 0.1\% do 10\% oraz zachowywał się nieprzewidywalnie. Zauważone zostało również że problemy z dużym odpadem były rozwiązywane szybciej. Typowy problem z małym odpadem w początkowych iteracjach drastycznie malał, a następnie nieznacznie spadał dalej. Aby przyspieszyć obliczenia Gilmore oraz Gomory zaporponowali aby zakończyć obliczenia jeśli odpad wynosi poniżej 0.1\% po 10 iteracjach. Dzięki zastosowaniu tego skrótu czas wykoywania zmniejszył się o 90\% przy zachowaniu maksyamalnie 0.5\% odpadu przy przedwczensym zakończeniu algorytmu.
+
+Podczas badania zachowania algorytmu dla wielu długości początkowych, zauważono spadek ilości odpadu. Dla pojedynczej długości 168 in. odpad wynosił 7\%. Po dodaniu dodatkowych elementów 145 in., 140 in, oraz 124 in. odpad zmniejszył się do 1.4\%. Czas wykonania wzrósł od 144\% do 211\%.
+
+Limitacja liczby noży nie zmieniła wartości rozwiązania. Po zniesieniu ograniczenia dla 19 przypadków z 20 ilość odpadu pozostała taka sama, przy jednoczesnej zmianie schematów rozkrojów.
 
 \subsection{Metoda "Brutal Force"}\label{brutalForce}
 \subsubsection{Algorytm wyjściowy}

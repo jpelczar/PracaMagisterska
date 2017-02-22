@@ -1,6 +1,6 @@
 \section{Knapsack Problem - Problem plecakowy}
 \label{sec:knapsackProblem}
-Problem plecakowy jest zagadnieniem z zakresu optymalizacji. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując go zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. "Knapsack Problem" zaczął być intensywnie badany po pionierskiej pracy Dantziga\cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja różnorodnych problemów programowania całkowitego\cite{PisingerThesis}.
+Problem plecakowy jest zagadnieniem z zakresu optymalizacji. Problem ten swoją nazwę wziął z analogii do rzeczywistego problemu pakowania plecaka. Rozwiązując go zarówno w praktyce jak i teorii trzeba zachować reguły określające ładowność plecaka dotyczące objętości i nośności plecaka. "Knapsack Problem" zaczął być intensywnie badany po pionierskiej pracy Dantziga\cite{DantzigArticle} w późnych latach 50 XX wieku. Znalazł on natychmiast zastosowanie w przemyśle oraz w zarządzaniu finansami. Z teoretycznego punktu widzenia, problem plecakowy często występuję jako relaksacja różnorodnych problemów programowania całkowitoliczbowego\cite{PisingerThesis}.
 \subsection{Zastosowanie}
 Problem plecakowy stosowany jest nie tylko w sytuacji wynikającej bezpośrednio z nazwy. Znajduje on zastosowanie w wielu dziedzinach życia oraz nauki. Diffi i Helman\cite{DiffieHelmanArticle} w 1976 roku oraz Merkle i Helman\cite{MerkleHelmanArticle} w 1978 roku zaproponowali problem plecakowy jako podstawę do enkrypcji kluczy prywatnych. Jednakże klucze oparte na tym algorytmie w latach późniejszych zostały złamane przez środowisko kryptograficzne i jego miejsce zajęły standardy które są bardziej odporne na złamanie (przykładowo XTR).
 
@@ -71,7 +71,7 @@ Wszystkie elementy z rodziny tego problemu wymagają pewnego zestawu elementów 
     \end{aligned}
   \end{equation}
   gdzie $y_i$ określa czy $i$-te opakowanie zostało użyte, a $x_{ij}$ stanowi czy $j$-ty element powinen zostać umieszcozny w $i$-tym opakowaniu
-  \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ, który jest problemem programowania całkowitego z dodatnimi współczynnikami:
+  \item \textit{Welokrotnie ograniczony problem plecakowy} - najbardziej ogólny typ, który jest problemem programowania całkowitoliczbowego z dodatnimi współczynnikami:
   \begin{equation}\label{generalKnapsack}
     \begin{aligned}
       & \textrm{maksymalizacja} & & \sum_{j=1}^n p_jx_j, \\
@@ -110,7 +110,7 @@ Głównym elementem algorytmu jest stworzenie drzewa wyliczeń oraz przeprowadze
   \end{aligned}
 \end{equation*}
 \begin{figure}
-  \includegraphics[width=\textwidth,center]{../image/chvatal_book_sample.png}
+  \includegraphics[width=\textwidth]{../image/chvatal_book_sample.png}
   \caption{Drzewo wyliczeń możliwych rozwiązań}
   \label{fig:chvatalBBTree}
 \end{figure}
@@ -173,8 +173,8 @@ i zastąpuje ona poprzednie rozwiązanie $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$ ora
 Jest ona mniejsza niż $M+1 =14$, więc gałąź ta jest odcinana. Następnie $k$ dalej jest zmniejszane, a kroki sa powtarzane. Dla $x_1=1$ wynik testu to $12.9 < 14$, a dla $x_1=0$ wynik to $12.2 < 14$ więc gałęzie te są odcinane. Tak więc optymalnym rozwiązaniem jest  $x_1^* = 2, x_2^*=1, x_3^*=x_4^*=0$. Drzewo wyliczeń zostało zredukowane do postaci \hyperref[fig:reducedchvatalBBtree]{rys.~\ref*{fig:reducedchvatalBBtree}}.
 
 \begin{figure}
-  \includegraphics[width=\textwidth,center]{../image/reduced_chvatal_book_sample.png}%
-  \caption{Drzewo wyliczeń możliwych rozwiązań}
+  \includegraphics[width=\textwidth]{../image/reduced_chvatal_book_sample.png}%
+  \caption{Zredukowane drzewo wyliczeń możliwych rozwiązań}
   \label{fig:reducedchvatalBBtree}
 \end{figure}
 
