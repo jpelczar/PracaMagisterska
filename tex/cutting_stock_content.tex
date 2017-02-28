@@ -308,7 +308,7 @@ Rozwiązaniem powyższego przykładu jest układ rozkrojów:
   \item  elementy: $[2.0,3.0,4.0]$, ilość: 10, odpad: 0, długość bazowa: 9
   \item  elementy: $[2.0,4.0]$, ilość: 10, odpad: 0, długość bazowa: 6
 \end{enumerate}
-\subsubsection{Podsumowanie}
+\subsubsection{Podsumowanie} \label{sec:summary}
 W drugiej części artykułu poświęconemu problemowi optymalnego rozkroju \cite{GilmoreGomoryV2Article}, Gilmore oraz Gomory opisali wyniki eksperymentów wykorzystujących różne warianty metody zawartej w części pierwszej. Problem który został użyty do testów jest problemem z przemysłu papierniczego. W podstawowym zbiorze 20 problemów długości bazowe miały tę samą długość 200 in lub mniej. Liczba elementów wynikowych była z przedziału od 20 do 40. Długości elementów wynosiły od 20 in. do 80 in. z dokładnością do $1/4$ in. Liczba noży wynosiła pięć, siedem lub dziewięć.
 
 Średnia liczba iteracji metody simplex dla tego problemu to w przybliżeniu 130. Jednak ich rozpiętość była duża od 20 do 300. Taka zmienność jest powszechna dla problemów programowania linowego. Problemy które są niemal identyczne mogą zachowywać się bardzo odmiennie w odniesieniu do metody sympleks. Zgodnie z przewidywaniami, problemy z mniejszą liczbą elementów wchodzących w skład rozkroju, potrzebują mniej iteracji. Trend ten jest niedeterministyczny, dla przykładu 35 elementowy rozkrój wymagał 197 iteracji, gdzie problem pokrewny dla 40 elementów wymagał ich tylko 161.
