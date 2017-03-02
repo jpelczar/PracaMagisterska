@@ -44,8 +44,25 @@ Program posiada możliwość wczytania danych z pliku CSV, a następnie zapisani
 \end{enumerate}
 
 \subsection{Java}
-Język programowania Java jest jezykiem obiektowym z elementami programowania funkcyjnego wprowadzonymi od wersji 8. Aplikacje stworzone w tej technologii mogą być stosowane w różnych systemach operacyjnych, gdyż programy napisane w języku Java są kompilowane do plików class które umieszczane są w skompresowanej paczce jar. Pliki class następnie są przetwarzane przez maszynę wirtualną Javy (JVM - Java Virtual Machine) do postaci bytocodu który jest wykonywany na urządzeniu. Istnieją implementacje JVM na większość używanych platform.
+Język programowania Java jest jezykiem obiektowym z elementami programowania funkcyjnego wprowadzonymi od wersji 8. Aplikacje stworzone w tej technologii mogą być stosowane w różnych systemach operacyjnych, gdyż programy napisane w języku Java są kompilowane do plików class które umieszczane są w skompresowanej paczce jar. Pliki class następnie są przetwarzane przez maszynę wirtualną Javy (JVM - Java Virtual Machine) do postaci bytecode który jest wykonywany na urządzeniu. Istnieją implementacje JVM na większość używanych platform.
 
-Tworzenie aplikacji w technologii Java jest możliwe poprzez użycie zestawu JDK (Java Development Kit). Uruchamianie tych aplikacji jest możliwe w środowisku JRE (Java Runtime Environment).
+Tworzenie aplikacji w technologii Java jest możliwe poprzez użycie zestawu JDK (Java Development Kit). Uruchamianie tych aplikacji jest możliwe w środowisku JRE (Java Runtime Environment)  (\hyperref[fig:java_arch]{rys.~\ref*{fig:java_arch}}).
+
+\begin{figure}[h]
+  \center
+  \includegraphics[scale=0.4]{../image/java_arch.png}
+  \caption{Elementy składowe technologi Java \cite{OracleJavaArch}}
+  \label{fig:java_arch}
+\end{figure}
+
+Podstawowym elementem technologii jest maszyna wirtualna. Jest to element technologii odpowiedzialny za niezależność programów od specyfikacji urządzenia oraz systemu operacyjnego. JVM jest abstarakcyjną maszyną obliczeniową. Podobnie jak rzeczywiste urządzenia posiada zestaw instrukcji pozwlających na sterowanie nią oraz wyonywanymi zadaniami. Maszyna wirtualna Javy nie zna języka Java, jedynie jego postać binarną zapisana w plikach class. Pliki te zawierają instrukcje dla JVM lub bytecode oraz inne wymagane informacje. Wiele języków programowania wykorzystuje tą cechę maszyny wirtualnej. Wymaganiem jest aby program był w postaci poprawnego pliku class, aby mógł zostać wykonany na maszynie wirtualniej.
+
+Technologia Java zawiera ponadto zestaw podstawowaych bibliotek pozwlających między innymi na budowanie plików JAR, refleksję czyli dostęp do metod oraz pól klasy bez zachowania zasad bezpieczeństwa, zdalne wywoływanie metod (RMI) oraz tworzenie graficznego interfejsu użytkownika Swing oraz AWT. Środowisko deweloperskie jest rozszerzone o narzędzia potrzebne do stworzenia programu, przykładowo: javac - kompilator przetwarzający pliki java do plików class, javadoc - narzędzie do tworzenia dokumentacji oraz język opisu interfejsów IDL służacy do komunikacji międzyprocesowej.
 \subsection{Kotlin}
+Kotlin jest obiektowym językiem programowania który jest interpretowany do bytecode wywoływanego na maszynie wirtualnej Javy. Kotlin w porównaniu z Javą wnosi usprawnienia do programownaia proceduralnego. Kotlin jest zgodny z językiem Java, odnosi to skutek w możliwości łączenia obu języków programowania. Jest to technologia podobna do języka Scala jednak czas kompilacji został skrócony. Jest to język silnie rozwijający się w środowisku programistycznym Androida. Dopiero najnowsza wersja narzędzi deweloperskich Androida pozwala na wykorzystywanie niektórych elementów Javy 8. Kotlin zmniejsza liczbę nadmiarowego kodu potrzebnego do napisania przez programistę. Głównymi celami stworzenia technologii Kotlin były: pełna kompatybilność z językiem Java, zwiększenia bezpieczeństwa względem Javy (null safe), bardziej elastyczny oraz nieskomplikowany kod. Jedną z najciekawszych funkcjonalności języka Kotlin jest tworzenie metod rozszerzających daną klasę. Przykładowo może zostać zdefiniowana metoda $isNotEmpty()$ dla klasy $String$:
+\lstset{language=Java}
+\begin{lstlisting}[frame=single]
+  fun String.isNotEmpty() = !this.isEmpty()
+\end{lstlisting}
+Metoda ta będzię dostępna dla każdego obiektu typu $String$ w programie.
 \subsection{JavaFX}
