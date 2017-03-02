@@ -1,9 +1,9 @@
 \section{Wyniki}
 
-Niniejsza sekcja przedstawia i porównuje wyniki otrzymane w eksperymencie. Metody wchodzące w skład porównania to "Delayed Column Generation" (\hyperref[sec:dcg]{rozdział~\ref*{sec:dcg}}) oraz "Brutal Force" (\hyperref[brutalForce]{rozdział~\ref*{brutalForce}}). Warunki przeprowadzenia testu:
+Niniejszy rozdział przedstawia i porównuje wyniki otrzymane eksperymentalnie. Metody wykorzystane do porównania to "Delayed Column Generation" (\hyperref[sec:dcg]{rozdział~\ref*{sec:dcg}}) oraz "Brutal Force" (\hyperref[brutalForce]{rozdział~\ref*{brutalForce}}). Warunki przeprowadzenia testu:
 \begin{itemize}
   \item Losowo generowane odcinki wynikowe o długości od 1 do 21 cm, przy liczebności od 1 do 200 elementów.
-  \item Losowo generowane 5 długości początkowych od 22 do 42 cm, o koszcie od 1\$. Każda długość posiada inną cenę.
+  \item Losowo generowanych 5 długości początkowych od 22 do 42 cm, o koszcie od 1 zł. Każda długość posiada inną cenę.
   \item Obie metody testowane są z tymi samymi danymi.
   \item Wykonano 28 różnych rozkrojów.
   \item Czas wykonania mierzony od dostarczenia danych do zwrócenia wyniku, bez uwzględnianienia czasu przygotowania danych oraz ich zapisu.
@@ -18,7 +18,7 @@ Niniejsza sekcja przedstawia i porównuje wyniki otrzymane w eksperymencie. Meto
 \end{itemize}
 \subsection{Porównanie}
 
-Dane z tabeli \ref{tab:result} przedstawiają porównanie podstawowych statystyk dla każdego kroku eksperymentu. Natomiast tabela \ref{tab:average} przedstawia średnie wartości statystyk przedstawionych w tabeli ją poprzedzającej.
+Dane z tabeli \ref{tab:result} przedstawiają porównanie podstawowych statystyk dla każdego kroku eksperymentu: czas wykonania, koszt całkowity rozkroju oraz odpad powstały w wyniku zastosowania schematu. Natomiast tabela \ref{tab:average} przedstawia średnie wartości statystyk przedstawionych w tabeli ją poprzedzającej.
 
 \begin{table}[]
 \centering
@@ -77,13 +77,13 @@ Dane z tabeli \ref{tab:result} przedstawiają porównanie podstawowych statystyk
 
 Dane przedstawione w tabelach \ref{tab:result} oraz \ref{tab:average} wskzaują jednoznacznie że, metoda brutalnej siły (dalej BF) jest szybsza niż druga metoda użyta w porównaniu. Tabela \ref{tab:average} wskazuje iż metoda opóźnionej generacji kolumn (dalej DCG) jest prawie 30156 razy wolniejsza niż metoda BF. Ma to związek z nakładem obliczeniowym metody DCG. Metoda ta wykonuje wiele obliczeń macierzowych, dla każdej itereacji zachodzi odwracanie macierzy, mnożenie wektorów, eliminacja Gaussa oraz rozwiązywanie układu nierówności dwufazową metodą sympleks. Najwyższy czas wykonania metody DCG wynosi 446814 ms, czyli ponad 7 minut. Najmniejszy czas wykonania tej samej metody przy innych danych wejściowych i zachowaniu warunków testu wynosi 4664 ms, czyli 4,7 s. Rozbieżność czasów wykonania metody DCG wskazują na silną zależność między danymi wejściowymi, a czasem wykonania. Czas wykonania metody BF jest bardzo niski, na poziomie kilkunastu milisekund, jest to związane ze spsobem implementacji. Głównym elementem tej metody jest przeszukiwanie, przechodzenie oraz uzupełnianie tablic. Operacje te są znacznie szybsze niż operacje macierzowe. Mediana czasów obu metod pokazuje że, metoda DCG nadal jest dużo wolniejsza niż BF, jednak w innej skali niż porównanie średnich. Mediana dla metody DCG to 62718.5 ms, a dla BF to 2.5 s. Metoda DCG jest ponad 25087 razy wolniejsza niż metoda BF.
 
-Kolejna część tabel odnosi się do średniego kosztu wykroju całkowitego. Koszt uzyskany metodą BF jest średnio 1.4 razy większy niż metodą DCG. Stosunek kosztu metody pierwszej oraz drugej jest relatywnie niski. Jednak po sprawdzeniu wielkości kosztów wynika iż, różnica między ceną rozwiązania metodą DCG oraz metodą BF wynosi 1118,21\$. Rząd wielkości oznacza że, różnica w cenie jest znacząca. Metoda DCG jako główny cel przyjmuje minimalizację kosztu, natomiast metoda BF jak najmniejszą cenę odpadu w ujęciu bierzącecgo schematu rozkroju.
+Kolejna część tabel odnosi się do średniego kosztu wykroju całkowitego. Koszt uzyskany metodą BF jest średnio 1.4 razy większy niż metodą DCG. Stosunek kosztu metody pierwszej oraz drugej jest relatywnie niski. Jednak po sprawdzeniu wielkości kosztów wynika iż, różnica między ceną rozwiązania metodą DCG oraz metodą BF wynosi 1118,21 zł. Rząd wielkości oznacza że, różnica w cenie jest znacząca. Metoda DCG jako główny cel przyjmuje minimalizację kosztu, natomiast metoda BF jak najmniejszą cenę odpadu w ujęciu bieżącego schematu rozkroju.
 
-Końcowe częsci tabel ukazują odpad powstały z rozkroju otrzymanymi schmatami. Odpad wyprodukowany z metody DCG jest ponad 6 razy większy niż odpad z metdoy BF. W jednym przypadku na 28, odpad z metdy DCG był mniejszy niż z metody BF. Tak jak zostało wspomnianie w powyższym akapicie metoda BF skupia się na minimalizacji kosztu odpadu, w uogólnionym przypadku minimalizuje odpad.   
+Końcowe częsci tabel ukazują odpad powstały z rozkroju. Odpad uzyskany przy użyciu metody DCG jest ponad 6 razy większy niż odpad uzyskany przy użyciu metody BF. W jednym przypadku na 28, odpad uzyskany przy użyciu metdy DCG był mniejszy niż z metody BF. Tak jak zostało to wspomnianie w rozdziale \ref{brutalForce} metoda BF skupia się na minimalizacji kosztu odpadu, w uogólnionym przypadku minimalizuje odpad.   
 
 Zgdodnie z eksperymentem przeprowadzonym przez Gilmorea oraz Gomorego \cite{GilmoreGomoryV2Article}, prawdą jest że, im szybciej metoda zakończy obliczenia, tym większy będzie odpad. Trend ten jest zauważalny w tabeli \ref{tab:result}.
 
-Poniższe tabele \ref{tab:dcg_result} oraz \ref{tab:bf_result} prezentują wynik jednego wywołania metody opóźnionej generacji kolumn oraz metody brutalnej siły.
+Tabele \ref{tab:dcg_result} oraz \ref{tab:bf_result} prezentują wynik jednego wywołania metody opóźnionej generacji kolumn oraz metody brutalnej siły.
 
 \clearpage
 \begin{longtable}{lllllllll}
@@ -197,7 +197,7 @@ Czas (ms)       & 1        &           &                  &    &    &   &   &   
   \hline
 \end{longtable}
 
-Dane w powyższych tabelach przedstawiają iż, metoda DCG tworzy znacznie mniej rozkrojów w układzie, stosunek 9 do 14 w metodzie BF. Rozkroje metodą BF są bardziej homogeniczne niż wynik metody DCG. Obie metody użyły tych samych długości podstawowych, metoda BF użyła dodatkowo długości 36. Dane przedstawione w tabeli \ref{tab:dcg_result} w sekcji "Wynik" prezentują ile elementów zostało wyciętych, jest ich nie mniej niż w zamówieniu. Ma to związek z tym że, metoda DCG podaje rozwiązanie najbliższe optymalnemu. Jest to skutkiem zniesienia warunku całkowitości i zaokrąglania wyniku w górę.
+Dane w powyższych tabelach wzskazują, iż metoda DCG tworzy znacznie mniej rozkrojów w układzie, 9 do 14 w stosunku do BF. Rozkroje metodą BF są bardziej homogeniczne niż wynik metody DCG. Obie metody użyły tych samych długości podstawowych, metoda BF użyła dodatkowo długości 36. Dane przedstawione w tabeli \ref{tab:dcg_result} w sekcji "Wynik" prezentują liczbę wyciętych elementów, jest ich nie mniej niż w zamówieniu. Ma to związek z tym że, metoda DCG podaje rozwiązanie najbliższe optymalnemu. Jest to skutkiem zniesienia warunku całkowitości i zaokrąglania wyniku w górę.
 
 Końcowa część tabeli \ref{tab:dcg_result} przedstawia spadek kosztu w kolejnych iteracjach metody. Początkowo spadek jest największy, następnie w większości zmniejsza się różnica pomiędzy poszczególnymi krokami (\hyperref[fig:regression]{rys.~\ref*{fig:regression}}).
 
@@ -210,6 +210,6 @@ Końcowa część tabeli \ref{tab:dcg_result} przedstawia spadek kosztu w kolej
 Wyniki eksperymentu są zgodne z wynikami testu Gilmorea i Gomorego (\hyperref[sec:dcg]{rozdział~\ref*{sec:summary}})
 
 \subsection{Wnioski}
-Obie porównywane metody posiadają lepsze oraz gorsze cechy. Porównując metodę BF do DCG można określić że jest ona znacznie szybsza oraz daje bardziej homogeniczne rozkroje. Takie same długosci w jendym układzie powodują brak konieczności przestawiania noża podczas cięcia, skutkuje to mniejszym nakładem pracy podczas stosowania metody w warunkach rzeczywistych. Metoda ta odpowiednia jest do szybkiego prototypowania oraz szacowania kosztu. Przewagą metody DCG jest znaczna minimalizacja kosztu mimo większej liczby wykrojów i znacznie większego odpadu. Czas wykonania metody DCG powoduje iż, jest to metoda nieodpowiednia do planowania, lecz do określania konkretnych wykrojów. Jest to metoda bardziej oszczędna niż metoda BF.
+Obie porównywane metody posiadają wady i zalety. Porównując metodę BF do DCG można stwierdzić, że jest ona znacznie szybsza oraz daje bardziej homogeniczne rozkroje. Takie same długosci w jendym układzie powodują brak konieczności przestawiania noża podczas cięcia, skutkuje to mniejszym nakładem pracy podczas stosowania metody w warunkach rzeczywistych. Metoda ta odpowiednia jest do szybkiego prototypowania oraz szacowania kosztu. Przewagą metody DCG jest znaczna minimalizacja kosztu mimo większej liczby wykrojów i znacznie większego odpadu. Czas wykonania metody DCG powoduje iż, jest to metoda nieodpowiednia do planowania, lecz do określania konkretnych wykrojów. Jest to metoda bardziej oszczędna niż metoda BF.
 
 Implementacja metody DCG użyta do testu, jest wariantem podstawowym zaprpopnowanym przez Gilmorea oraz Gomorego \cite{GilmoreGomoryV1Article}. Po wprowadzeniu usprawnień zaproponowanych w \cite{GilmoreGomoryV2Article} oraz optymalizacji implementacji, czas wykonania programu prawdopodobnie zostałby skrócony.
