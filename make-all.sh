@@ -44,5 +44,5 @@ do
 done
 
 cd ..
-
-xreader ./pdf/praca_magisterska.pdf &
+pdfjam --suffix Jakub_Pelczar -- title.pdf - pdf/praca_magisterska.pdf
+xreader ./praca_magisterska-Jakub_Pelczar.pdf &

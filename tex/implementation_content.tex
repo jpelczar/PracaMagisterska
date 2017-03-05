@@ -25,17 +25,17 @@ Architektura aplikacji jest modułowa. Zostały wydzielone części odpowiedzial
 
 Architektura modułu odpowiedzialnego za implementację algorytmów posiada strukturę wzorca projektowego fasada. Klasy odpowiedzialne za konkretną implementację metody obliczenia rozkrojów rozszerzają klasę abstarkacyjną która definiuje wspólne funkcje oraz deklaruje metody które powinny zostać zdefiniowane w klasach potomnych. Główny moduł aplikacji wraz z modułem odpowiedzialnym za model danych tworzy implementację wzoraca Model-Widok-Kontroler (MVC). Klasa kontrolera zarządza widokiem stworzonym w języku FXML.
 
-\hyperref[fig:java_arch]{Rynukek~\ref*{fig:app_arch}} opisuje korelację pomiędzy poszczególnymi modułami aplikacji wykorzystanymi do stworzenia programu z graficznym interfejsem użytkownika. Moduł Main odpowiedzialny jest za połączenie funkcjonalności aplikacji z GUI. Znajdują się w nim definicje widoku, wywołanie metod obliczających wynik z danych pobranych przez moduł excel oraz zapis rezultatu obliczeń. Moduł Model zawiera klasy odpowiedzialne za przechowywanie danych w aplikacji. Moduł Excel zawiera metody użyte do odczytu oraz zapisu danych w formacie CSV. Moduł Math zawiera operacje wykonywane na macierzach, jak również zawiera metodę do obliczania wartości nierówności metodą dwufazowej metody simplex, metodę podziału i ograniczeń do obliczenia wyniku całkowitego układu nierówności, metodę eliminacji Gaussa. W module tym znajduje się również klasa odpowiedzialna za tworzenie drzewa wykorzystanego przez metodę podziału i ograniczeń. Moduł Algorithm zawiera klasy odpowiedzialne za obliecznie schematu rozkroju z wykorzystaniem metod brutalnej siły oraz opóźnionej generacji kolumn.
+\hyperref[fig:java_arch]{Rynukek~\ref*{fig:app_arch}} opisuje relacje pomiędzy poszczególnymi modułami aplikacji wykorzystanymi do stworzenia programu z graficznym interfejsem użytkownika. Moduł Main odpowiedzialny jest za połączenie funkcjonalności aplikacji z GUI. Znajdują się w nim definicje widoku, wywołanie metod obliczających wynik z danych pobranych przez moduł excel oraz zapis rezultatu obliczeń. Moduł Model zawiera klasy odpowiedzialne za przechowywanie danych w aplikacji. Moduł Excel zawiera metody użyte do odczytu oraz zapisu danych w formacie CSV. Moduł Math zawiera operacje wykonywane na macierzach, jak również zawiera metodę do obliczania wartości nierówności metodą dwufazowej metody simplex, metodę podziału i ograniczeń do obliczenia wyniku całkowitego układu nierówności, metodę eliminacji Gaussa. W module tym znajduje się również klasa odpowiedzialna za tworzenie drzewa wykorzystanego przez metodę podziału i ograniczeń. Moduł Algorithm zawiera klasy odpowiedzialne za obliecznie schematu rozkroju z wykorzystaniem metod brutalnej siły oraz opóźnionej generacji kolumn.
 
 Rysunki \ref{fig:empty_win} oraz \ref{fig:fill_win} przedstawiają okno aplikacji, odpowiednio przed wypełnieniem danymi oraz po zakończeniu obliczeń.
 
 Program posiada możliwość wczytania danych z pliku CSV, a następnie zapisanie danych wyjściowych również do pliku CSV lub TXT. Kolejnymi zaimplementowanymi funkcjonalnościami są:
 \begin{enumerate}
-  \item wyświetlenie danych wejściowych oaz wyniku w oknie aplikacji
-  \item wybór algorytmu rozkroju
-  \item dodanie wielu długości podstawowych z różnym kosztem - domyślnie koszt jest równy długości.
-  \item wyświetlenie długości podstawowych w oknie aplikacji
-  \item dodanie szerkości cięcia dla metody brutalnej siły
+  \item Wyświetlenie danych wejściowych oaz wyniku w oknie aplikacji.
+  \item Wybór algorytmu rozkroju.
+  \item Dodanie wielu długości podstawowych z różnym kosztem - domyślnie koszt jest równy długości..
+  \item Wyświetlenie długości podstawowych w oknie aplikacji.
+  \item Dodanie szerkości cięcia dla metody brutalnej siły.
 \end{enumerate}
 
 \begin{figure}[h]
@@ -64,7 +64,7 @@ Tworzenie aplikacji w technologii Java jest możliwe poprzez użycie zestawu JDK
   \label{fig:java_arch}
 \end{figure}
 
-Podstawowym elementem technologii jest maszyna wirtualna. Jest to element technologii odpowiedzialny za niezależność programów od specyfikacji urządzenia oraz systemu operacyjnego. JVM jest abstarakcyjną maszyną obliczeniową. Podobnie jak rzeczywiste urządzenia posiada zestaw instrukcji pozwlających na sterowanie nią oraz wykonywanymi zadaniami. Maszyna wirtualna Javy nie zna języka Java, jedynie jego postać binarną zapisana w plikach class. Pliki te zawierają instrukcje dla JVM lub bytecode oraz inne wymagane informacje. Wiele języków programowania wykorzystuje tą cechę maszyny wirtualnej. Wymaganiem jest aby program był w postaci poprawnego pliku class, tak by mógł zostać wykonany na maszynie wirtualniej.
+Podstawowym elementem technologii jest maszyna wirtualna. Jest to element technologii odpowiedzialny za niezależność programów od specyfikacji urządzenia oraz systemu operacyjnego. JVM jest abstarakcyjną maszyną obliczeniową. Podobnie jak rzeczywiste urządzenia posiada zestaw instrukcji pozwlających na sterowanie nią oraz wykonywanymi zadaniami. Maszyna wirtualna Javy nie zna języka Java, jedynie jego postać binarną zapisaną w plikach class. Pliki te zawierają instrukcje dla JVM lub bytecode oraz inne wymagane informacje. Wiele języków programowania wykorzystuje tą cechę maszyny wirtualnej. Wymaganiem jest aby program był w postaci poprawnego pliku class, tak by mógł zostać wykonany na maszynie wirtualniej.
 
 Technologia Java zawiera ponadto zestaw podstawowaych bibliotek pozwlających między innymi na budowanie plików JAR, refleksję czyli dostęp do metod oraz pól klasy bez zachowania zasad bezpieczeństwa, zdalne wywoływanie metod (RMI) oraz tworzenie graficznego interfejsu użytkownika Swing oraz AWT. Środowisko deweloperskie jest rozszerzone o narzędzia potrzebne do stworzenia programu, przykładowo: javac - kompilator przetwarzający pliki java do plików class, javadoc - narzędzie do tworzenia dokumentacji oraz język opisu interfejsów IDL służacy do komunikacji międzyprocesowej.
 \subsection{JavaFX}
@@ -74,7 +74,7 @@ Zgodnie z (\hyperref[fig:java_arch]{rysunkiem~\ref*{fig:java_arch}}), JavaFX jes
   \item Język FXML który jest językiem znaczników bazujący na języku XML. Jest on wykorzystywany do opisu graficznego interfesju użytkownika, podobnie jak HTML.
   \item WebView jest to technologia wykorzystująca WebKitHTML która umożliwia zagnieżdzanie stron internetowych w aplikacjach JavaFX. JavaScript uruchominy w widoku strony internetowej może wywoływać metody dostępne w języku Java. Od wersji JavaFX 8 możliwa jest również obsługa HTML5.
   \item Istniejące aplikacje Swing mogą zostać zaktualizowane o możliwości JavaFX takie jak odtwarzanie treści multimedialnych oraz wyświetlanie stron internetowych.
-  \item Wbudowana obsługa kaskadowych arkuszów stylów oraz komponentów intefejsu użytkownika umożliwia tworzenie spersonalizowanych aplikacji pod względem wyglądu interfejsu użytkownika.
+  \item Wbudowana obsługa kaskadowych arkuszy stylów oraz komponentów intefejsu użytkownika umożliwia tworzenie spersonalizowanych aplikacji pod względem wyglądu interfejsu użytkownika.
   \item Obsługa grafiki 3D została dodana w wersji 8 JavaFX. Obiekty trójwymiarowe mogą być wyświetlane na odpowiednich z scenach z zastosowanym światłem. Klasa Camera odpowiedzialna jest za rendering widoku.
   \item Obsługa Canvas API umożliwia bezpośrednie rysowanie po obiekcie sceny która zawiera jeden element graficzny.
   \item Aplikacja zbudowana z Java oraz JavaFX jest umieszczona w paczce która może zostać uruchomiana na każdym urządzeniu które obsługuje wirtualną maszynę Javy.
