@@ -209,8 +209,3 @@ Końcowa część tabeli \ref{tab:dcg_result} przedstawia spadek kosztu w kolej
 \end{figure}
 
 Wyniki eksperymentu są zgodne z wynikami testu Gilmorea i Gomorego (\hyperref[sec:dcg]{rozdział~\ref*{sec:summary}})
-
-\subsection{Wnioski}
-Obie porównywane metody posiadają wady i zalety. Porównując metodę BF do DCG można stwierdzić, że jest ona znacznie szybsza oraz daje bardziej homogeniczne rozkroje. Takie same długosci w jendym układzie powodują brak konieczności przestawiania noża podczas cięcia, skutkuje to mniejszym nakładem pracy podczas stosowania metody w warunkach rzeczywistych. Metoda ta odpowiednia jest do szybkiego prototypowania oraz szacowania kosztu. Przewagą metody DCG jest znaczna minimalizacja kosztu mimo większej liczby wykrojów i znacznie większego odpadu. Czas wykonania metody DCG powoduje iż, jest to metoda nieodpowiednia do planowania, lecz do określania konkretnych wykrojów. Jest to metoda bardziej oszczędna niż metoda BF.
-
-Implementacja metody DCG użyta do testu, jest wariantem podstawowym zaprpopnowanym przez Gilmorea oraz Gomorego \cite{GilmoreGomoryV1Article}. Po wprowadzeniu usprawnień zaproponowanych w \cite{GilmoreGomoryV2Article} oraz optymalizacji implementacji, czas wykonania programu prawdopodobnie zostałby skrócony.
